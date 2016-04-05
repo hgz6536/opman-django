@@ -1,0 +1,40 @@
+body {
+	font: normal 11px verdana;
+	}
+
+ul {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+	width: 150px; /* Width of Menu Items */
+	border-bottom: 1px solid #ccc;
+	}
+	
+ul li {
+	position: relative;
+	}
+	
+li ul {
+	position: absolute;
+	left: 149px; /* Set 1px less than menu width */
+	top: 0;
+	display: none;
+	}
+
+/* Styles for Menu Items */
+ul li a {
+	display: block;
+	text-decoration: none;
+	color: #777;
+	background: #fff; /* IE6 Bug */
+	padding: 5px;
+	border: 1px solid #ccc; /* IE6 Bug */
+	border-bottom: 0;
+	}
+	
+/* Holly Hack. IE Requirement \*/
+* html ul li { float: left; height: 100%; }
+* html ul li a { height: 100%; }
+/* End */
+
+li:hover ul, li.over ul { display: block; } /* The magic */

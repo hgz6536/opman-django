@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>更新IDC节点</title>
+
+</head>
+<body>
+{% include "top.html" %}
+<div style="float:left;">
+    {% include "dh.html" %}
+</div>
+
+<div
+    style="border:1px dashed;width:990px;height:600px;margin-top:30px;margin-left:300px">
+    <div style="border:1px dashed;width:500px;height:550px;margin-top:10px;margin-left:220px;border-top: hidden;border-right: hidden;border-left: hidden;border-bottom: hidden">
+        <a style="font-size: 25px;text-align:center">+更新IDC节点</a>
+        <form action="/idcedit_commit/" method="get" class="well form-inline">
+           <input style="border:1px dashed;margin-top:20px;margin-left:80px" value="{{ id }}" name="id" type="hidden">
+           <label>IDC名称 <input style="border:1px dashed;margin-top:20px;margin-left:50px" value="{{ idcname }}" type="text" name="idcname" class="bg-success"></label> *</br>
+           <label>所在城市 <input style="border:1px dashed;margin-top:20px;margin-left:50px" value="{{ cityname }}" type="text" name="cityname" class="bg-success"></label> *</br>
+           <label>机房地址 <input style="border:1px dashed;margin-top:20px;margin-left:50px" value="{{ position }}" type="text" name="position" class="bg-success"></label> *</br>
+           <label>主机数量 <input style="border:1px dashed;margin-top:20px;margin-left:50px" value="{{ hostnum }}" type="text" name="hostnum" class="bg-success"></label> *</br>
+           <label>机房带宽(M) <input style="border:1px dashed;margin-top:20px;margin-left:30px" value="{{ bandwidth }}" type="text" name="bandwidth" class="bg-success"></label> *</br>
+           <label>机房年费(元) <input style="border:1px dashed;margin-top:20px;margin-left:30px" value="{{ expense }}" type="text" name="expense" class="bg-success"></label> *</br>
+           <label>开始合作 <input style="border:1px dashed;margin-top:20px;margin-left:50px" value="{{ starttime }}" type="text" name="starttime" class="bg-success"></label> *</br>
+           <label>机房电话 <input style="border:1px dashed;margin-top:20px;margin-left:50px" value="{{ iphonecall }}" type="tel" name="iphonecall" class="bg-success"></label> *</br>
+           <label>使用状态 <select style="border:1px dashed;margin-top:20px;margin-left:50px" name="status" id="changelist-filter">
+            {% if status == True %}
+                <option value="OK">OK</option>
+                <option value="NO">NO</option>
+            {% else %}
+                <option value="NO">NO</option>
+                <option value="OK">OK</option>
+            {% endif %}
+        </select></label></br>
+        <a href="/idcedit_commit/?id={{ id }}"><button>更新</button></a>
+        <!--button style="margin-top:20px" type="submit" class="btn">更新</button>-->
+        </form>
+    </div>
+</div>
+</body>
+</html>

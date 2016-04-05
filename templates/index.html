@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>首页</title>
+</head>
+<body>
+{% include "top.html" %}
+<!--<object type="text/x-scriptlet" data="base.html" width=100% height=100%></object>-->
+<div style="float:left;">
+    {% include "dh.html" %}
+<!--iframe name="content_frame" marginwidth=0 marginheight=0 height=300 src="dh.html" frameborder=0></iframe>-->
+</div>   
+
+<div
+  style="border:1px dashed;width:990px;height:600px;margin-top:30px;margin-left:300px">
+  <font style="font-size: 25px;text-align:center">❀  系统概况</font>
+  <hr style="border-top : 1px dashed;" />
+  <div
+    style="border:2px dashed;width:200px;height:50px;margin-top:10px;margin-left:35px;text-align:center;line-height:50px;float:left;">
+    网络设备:20台
+  </div>
+  <div
+    style="border:2px dashed;width:200px;height:50px;margin-top:10px;margin-left:35px;text-align:center;line-height:50px;float:left;">
+    服务器总数:100台
+  </div>
+  <div
+    style="border:2px dashed;width:200px;height:50px;margin-top:10px;margin-left:35px;text-align:center;line-height:50px;float:left;">
+    损坏设备数:5台
+  </div>
+  <div
+    style="border:2px dashed;width:200px;height:50px;margin-top:10px;margin-left:35px;text-align:center;line-height:50px;float:left;">
+    空闲的设备:5台
+  </div>
+</div>
+</body>
+</html>
