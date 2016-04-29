@@ -14,16 +14,17 @@ Including another URLconf
     2. Add a URL to urlpatterns:  url(r'^blog/', include(blog_urls))
 """
 from django.conf.urls import include, url
+from opman.views import index, idcinfo, idcadd_play, idcadd_data, idcdel_data, idcedit_commit, idcedit_data
 
 # from django.contrib import admin
 
 urlpatterns = [
     # url(r'^admin/', include(admin.site.urls)),
-    url(r'^$', 'opman.views.index'),
-    url(r'^idc/$', 'opman.views.idcinfo'),
-    url(r'^idcadd_play/$', 'opman.views.idcadd_play'),
-    url(r'^idcadd_data/$', 'opman.views.idcadd_data'),
-    url(r'^idcdel_data/$', 'opman.views.idcdel_data'),
-    url(r'^idcedit_data/$', 'opman.views.idcedit_data'),
-    url(r'^idcedit_commit/$','opman.views.idcedit_commit'),
+    url(r'^$', index),
+    url(r'^idc/$', idcinfo),
+    url(r'^idcadd_play/$', idcadd_play),
+    url(r'^idcadd_data/$', idcadd_data),
+    url(r'^idcdel_data/$', idcdel_data),
+    url(r'^idcedit_data/$', idcedit_data),
+    url(r'^idcedit_commit/$',idcedit_commit),
 ]

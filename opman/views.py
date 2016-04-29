@@ -25,16 +25,13 @@ def idcadd_play(req):
 
 
 def idcadd_data(req):
+    req_get_key = ['iphonecall', 'bandwidth', 'expense', 'hostnum', 'position', 'status', 'cityname', 'idcname', 'starttime']
     if 'idcname' and 'cityname' and 'position' and 'hostnum' and 'iphonecall' and 'status' in req.GET:
-        idcname_new = req.GET['idcname']
-        cityname_new = req.GET['cityname']
-        position_new = req.GET['position']
-        hostnum_new = req.GET['hostnum']
-        bandwidth_new = req.GET['bandwidth']
-        expense_new = req.GET['expense']
-        starttime_new = req.GET['starttime']
-        iphonecall_new = req.GET['iphonecall']
-        sta = req.GET['status']
+        data_list = []
+        for k in req_get_key:
+            data_list.append(req.GET[k])
+
+        iphonecall_new, bandwidth_new, expense_new, hostnum_new, position_new, sta, cityname_new, idcname_new, starttime_new = data_list
         if sta == 'OK':
             status_new = 1
         else:
@@ -64,15 +61,8 @@ def idcdel_data(req):
 def idcedit_data(req):
     id_now = req.GET['id']
     i = IdcList.objects.get(id=id_now)
-    idcname_now = i.idcname
-    cityname_now = i.cityname
-    position_now = i.position
-    hostnum_now = i.hostnum
-    bandwidth_now = i.bandwidth
-    expense_now = i.expense
-    starttime_now = str(i.starttime)
-    iphonecall_now = i.iphonecall
-    status_now = i.status
+    data_list = [i.idcname, i.cityname, i.position, i.hostnum, i.bandwidth, i.expense, str(i.starttime), i.iphonecall, i.status]
+    idcname_now, cityname_now, position_now, hostnum_now, bandwidth_now, expense_now, starttime_now, iphonecall_now, status_now = data_list
     return render_to_response('idc_edit.html', {'id': id_now,
                                                'idcname': idcname_now,
                                                'cityname': cityname_now,
@@ -88,15 +78,11 @@ def idcedit_data(req):
 def idcedit_commit(req):
     id_now = req.GET['id']
     #print(id_now)
-    idcname_now = req.GET['idcname']
-    cityname_now = req.GET['cityname']
-    position_now = req.GET['position']
-    hostnum_now = req.GET['hostnum']
-    bandwidth_now = req.GET['bandwidth']
-    expense_now = req.GET['expense']
-    starttime_now = req.GET['starttime']
-    iphonecall_now = req.GET['iphonecall']
-    sta = req.GET['status']
+    req_get_key = ['iphonecall', 'bandwidth', 'expense', 'hostnum', 'position', 'status', 'cityname', 'idcname', 'starttime']
+    data_list = []
+    for k in req_get_key:
+        data_list.append(req.GET[k])
+    iphonecall_now, bandwidth_now, expense_now, hostnum_now, position_now, sta, cityname_now, idcname_now, starttime_now = data_list
     if sta == 'OK':
         status_now = 1
     else:
