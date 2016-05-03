@@ -112,6 +112,15 @@ def useradd_data(req):
     else:
         return HttpResponse('有必填项未完成')
 
+def userdel_data(req):
+    id_now = req.GET['id']
+    try:
+        i = User.objects.get(id=id_now)
+        i.delete()
+        return HttpResponseRedirect('/user/')
+    except Exception as e:
+        return HttpResponse(e)
+
 def useredit_data(req):
     id_now = req.GET['id']
     u = User.objects.get(id=id_now)
