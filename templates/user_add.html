@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>添加新用户</title>
+
+</head>
+<body>
+{% include "top.html" %}
+<div style="float:left;">
+    {% include "dh.html" %}
+</div>
+
+<div
+    style="border:1px dashed;width:990px;height:600px;margin-top:30px;margin-left:300px">
+    <div style="border:1px dashed;width:500px;height:550px;margin-top:10px;margin-left:220px;border-top: hidden;border-right: hidden;border-left: hidden;border-bottom: hidden">
+        <a style="font-size: 25px;text-align:center">+添加用户</a>
+        <form action="/useradd_data/" method="get" class="well form-inline">
+           真实姓名 <input style="border:1px dashed;margin-top:20px;margin-left:50px" type="text" name="username" class="bg-success" placeholder="如：张三">*</br>
+           用户邮箱 <input style="border:1px dashed;margin-top:20px;margin-left:50px" type="text" name="mail" class="bg-success" placeholder="如：root@niubilety.com">*</br>
+           输入密码 <input style="border:1px dashed;margin-top:20px;margin-left:50px" type="password" id="pw1" name="pw1" class="bg-success" >*</br>
+           再次输入 <input style="border:1px dashed;margin-top:20px;margin-left:50px" type="password" id = "pw2" name="pw2" onkeyup="keyup()" class="bg-success" >* <strong id="warning" style="color: #F00;"></strong></br>
+           所属分组 <select style="border:1px dashed;margin-top:20px;margin-left:50px" name="groupnum" id="changelist-filter">
+           <option></option>
+           {% for groupnum in groupnum_list %}
+               {% if groupnum == 0 %}
+                    <option>运维</option>
+               {% else %}
+                    <option>开发</option>
+               {% endif %}
+           {% endfor %}
+        </select></br>
+        <button style="margin-top:20px" type="submit" class="btn">添加</button>
+        </form>
+    </div>
+</div>
+</body>
+</html>
+<script>
+    function keyup() {
+        var pw1 = document.getElementById("pw1").value;
+        var pw2 = document.getElementById("pw2").value;
+        if(pw1 !== pw2) {
+            document.getElementById("warning").textContent="两次输入的密码不一样";
+
+        }
+        else {
+            document.getElementById("warning").textContent="";
+        }
+    }
+    </script>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>更新用户信息</title>
+
+</head>
+<body>
+{% include "top.html" %}
+<div style="float:left;">
+    {% include "dh.html" %}
+</div>
+
+<div
+    style="border:1px dashed;width:990px;height:600px;margin-top:30px;margin-left:300px">
+    <div style="border:1px dashed;width:500px;height:550px;margin-top:10px;margin-left:220px;border-top: hidden;border-right: hidden;border-left: hidden;border-bottom: hidden">
+        <a style="font-size: 25px;text-align:center">+更新用户信息</a>
+        <form action="/useredit_commit/" method="get" class="well form-inline">
+           <input style="border:1px dashed;margin-top:20px;margin-left:80px" value="{{ id }}" name="id" type="hidden">
+           真实姓名 <input style="border:1px dashed;margin-top:20px;margin-left:50px" value="{{ username }}" type="text" name="username" class="bg-success"> *</br>
+           用户邮箱 <input style="border:1px dashed;margin-top:20px;margin-left:50px" value="{{ mail }}" type="text" name="mail" class="bg-success"> *</br>
+           输入密码 <input style="border:1px dashed;margin-top:20px;margin-left:50px" value="{{ pwd }}" type="password" id="pw1" name="pw1" class="bg-success"> *</br>
+           再次输入 <input style="border:1px dashed;margin-top:20px;margin-left:50px" value="{{ pwd }}" type="password" id="pw2" name="pw2" onkeyup="keyup()" class="bg-success"> *<strong id="warning" style="color: #F00;"></strong></br>
+           所属分组 <select style="border:1px dashed;margin-top:20px;margin-left:50px" name="groupnum" id="changelist-filter">
+            {% if groupnum == 0 %}
+                <option value="运维">运维</option>
+                <option value="开发">开发</option>
+            {% else %}
+                <option value="开发">开发</option>
+                <option value="运维">运维</option>
+            {% endif %}
+        </select></label></br>
+        <a href="/useredit_commit/?id={{ id }}"><button>更新</button></a>
+        </form>
+    </div>
+</div>
+</body>
+</html>
+<script>
+    function keyup() {
+        var pw1 = document.getElementById("pw1").value;
+        var pw2 = document.getElementById("pw2").value;
+        if(pw1 !== pw2) {
+            document.getElementById("warning").textContent="两次输入的密码不一样";
+
+        }
+        else {
+            document.getElementById("warning").textContent="";
+        }
+    }
+    </script>
