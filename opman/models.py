@@ -3,6 +3,11 @@ from django.db import models
 
 
 # Create your models here.
+
+'''
+IDC 管理模块的表格
+'''
+
 class HostList(models.Model):
     idcinfo = models.CharField(max_length=100, verbose_name=u'机房')
     ipinfo = models.GenericIPAddressField()
@@ -50,3 +55,16 @@ class IdcList(models.Model):
     def __unicode__(self):
         return self.idcname
 '''
+
+'''
+用户管理模块的表格
+'''
+class User(models.Model):
+    mail = models.CharField(max_length=20, default='null', verbose_name=u'用户邮箱')
+    username = models.CharField(max_length=20, default='null', verbose_name=u'用户名字')
+    pwd = models.CharField(max_length=20, verbose_name=u'用户密码')
+    groupnum = models.SmallIntegerField(default= 0)
+
+class UserGroup(models.Model):
+    groupname = models.CharField(max_length=10,default='null', verbose_name=u'分组名字')
+    groupnum = models.SmallIntegerField(default=0)
