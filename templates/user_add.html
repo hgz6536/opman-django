@@ -18,8 +18,8 @@
         <form action="/useradd_data/" method="get" class="well form-inline">
            真实姓名 <input style="border:1px dashed;margin-top:20px;margin-left:50px" type="text" name="username" class="bg-success" placeholder="如：张三">*</br>
            用户邮箱 <input style="border:1px dashed;margin-top:20px;margin-left:50px" type="text" name="mail" class="bg-success" placeholder="如：root@niubilety.com">*</br>
-           输入密码 <input style="border:1px dashed;margin-top:20px;margin-left:50px" type="password" id="pw1" name="pw1" class="bg-success" >*</br>
-           再次输入 <input style="border:1px dashed;margin-top:20px;margin-left:50px" type="password" id = "pw2" name="pw2" onkeyup="keyup()" class="bg-success" >* <strong id="warning" style="color: #F00;"></strong></br>
+           输入密码 <input style="border:1px dashed;margin-top:20px;margin-left:50px" type="password" id="pw1" name="pw1" onkeyup="keyup()" class="bg-success" >*<strong id="warning1" style="color: #F00;"></strong></br>
+           再次输入 <input style="border:1px dashed;margin-top:20px;margin-left:50px" type="password" id = "pw2" name="pw2" onkeyup="keyup()" class="bg-success" >* <strong id="warning2" style="color: #F00;"></strong></br>
            所属分组 <select style="border:1px dashed;margin-top:20px;margin-left:50px" name="groupnum" id="changelist-filter">
            <option></option>
            {% for groupnum in groupnum_list %}
@@ -30,7 +30,7 @@
                {% endif %}
            {% endfor %}
         </select></br>
-        <button style="margin-top:20px" type="submit" class="btn">添加</button>
+        <button style="margin-top:20px" type="submit" id="test" class="btn">添加</button>
         </form>
     </div>
 </div>
@@ -40,12 +40,24 @@
     function keyup() {
         var pw1 = document.getElementById("pw1").value;
         var pw2 = document.getElementById("pw2").value;
-        if(pw1 !== pw2) {
-            document.getElementById("warning").textContent="两次输入的密码不一样";
-
+        var regex = new RegExp('(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[^a-zA-Z0-9]).{6,20}');
+        var mytest = regex.test(pw1)
+        if(mytest==false) {
+            document.getElementById("warning1").textContent="保证密码长度6-20,包含数字,字母特殊字符";
+            document.getElementById('test').disabled=true;
+            return false;
         }
         else {
-            document.getElementById("warning").textContent="";
+            document.getElementById("warning1").textContent="";
+            document.getElementById('test').disabled=false;
+        }
+        if(pw1 !== pw2) {
+            document.getElementById("warning2").textContent="两次输入的密码不一样";
+            document.getElementById('test').disabled=true;
+        }
+        else {
+            document.getElementById("warning2").textContent="";
+            document.getElementById('test').disabled=false;
         }
     }
     </script>
