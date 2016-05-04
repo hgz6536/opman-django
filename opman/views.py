@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from django.shortcuts import render_to_response
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, HttpResponseServerError
 from opman.models import IdcList, User, UserGroup
 # Create your views here.
 # from django.http import request
@@ -128,11 +128,15 @@ def useredit_data(req):
 
 def useredit_commit(req):
     id_now = req.GET['id']
-    req_get_key = ['username', 'mail', 'pw2', 'groupnum']
+    req_get_key = ['username', 'mail', 'pw1', 'pw2', 'groupnum']
     data_list = []
     for key in req_get_key:
         data_list.append(req.GET[key])
-    username_now, mail_now, pw2_now, groupnum_new = data_list
+    username_now, mail_now, pw1_now, pw2_now, groupnum_new = data_list
+    if pw1_now == pw2_now:
+        pass
+    else:
+        return HttpResponseServerError(u'500 Error,两次输入的密码不一样')
     if groupnum_new == '运维':
         groupnum_new = 0
     else:
