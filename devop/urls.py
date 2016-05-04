@@ -14,8 +14,7 @@ Including another URLconf
     2. Add a URL to urlpatterns:  url(r'^blog/', include(blog_urls))
 """
 from django.conf.urls import include, url
-from opman.views import index, idcinfo, idcadd_play, idcadd_data, idcdel_data, idcedit_commit, idcedit_data, userinfo, useradd_play, useradd_data, useredit_data, useredit_commit
-
+from opman.views import index, idcinfo, idcadd_play, idcadd_data, idcdel_data, idcedit_commit, idcedit_data, userinfo, useradd_play, useradd_data, userdel_data, useredit_data, useredit_commit
 # from django.contrib import admin
 
 urlpatterns = [
@@ -31,6 +30,7 @@ urlpatterns = [
     url(r'^user/$', userinfo),
     url(r'^useradd_play/$', useradd_play),
     url(r'^useradd_data/$', useradd_data),
+    url(r'^userdel_data/$', userdel_data),
     url(r'^useredit_data/$', useredit_data),
     url(r'^useredit_commit/$', useredit_commit),
 ]
