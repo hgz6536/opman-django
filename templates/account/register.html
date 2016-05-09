@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block title %}新用户注册{% endblock %}
+
+{% block content %}
+    <h1>注册新帐号 加入奔流</h1>
+    <form action="{% url "register" %}" method="post">
+        {{ user_form.as_p }}
+        {% csrf_token %}
+        <p><input type="submit" value="完成注册"></p>
+    </form>
+{% endblock %}
