@@ -50,3 +50,4 @@ urlpatterns = [
     #用户注册
     url(r'^register/$', register, name='register'),
 ]
+

@@ -1,6 +1,6 @@
 # coding:utf-8
 from django.db import models
-
+from django.contrib.auth.models import BaseUserManager, AbstractBaseUser
 
 # Create your models here.
 
@@ -58,7 +58,7 @@ class IdcList(models.Model):
 
 '''
 用户管理模块的表格
-'''
+
 class User(models.Model):
     mail = models.CharField(max_length=20, default='null', verbose_name=u'用户邮箱')
     username = models.CharField(max_length=20, default='null', verbose_name=u'用户名字')
@@ -68,3 +68,51 @@ class User(models.Model):
 class UserGroup(models.Model):
     groupname = models.CharField(max_length=10,default='null', verbose_name=u'分组名字')
     groupnum = models.SmallIntegerField(default=0)
+'''
+'''
+权限相关
+'''
+class PermissonList(models.Model):
+    name = models.CharField(max_length=64)
+    url = models.CharField(max_length=255)
+
+    def __unicode__(self):
+        return '%s(%s)' %(self.name, self.url)
+
+class RoleList(models.Model):
+    name = models.CharField(max_length=64)
+    permission = models.ManyToManyField(PermissonList, null = True, blank= True)
+
+    def __unicode__(self):
+        return self.name
+
+class UserManager(BaseUserManager):
+    def create_user(self, email, username, password=None):
+        if not email:
+            raise ValueError(u'邮件地址必填')
+
+        user = self.model(
+            email = self.normalize_email(email),
+            username = username,
+        )
+
+        user.set_password(password)
+        user.save(using = self.db)
+        return user
+
+class User(AbstractBaseUser):
+    username = models.CharField(max_length=40, unique=True, db_index=True)
+    email = models.EmailField(max_length=255)
+    is_active = models.BooleanField(default=False)
+    is_superuser = models.BooleanField(default=False)
+    nickname = models.CharField(max_length=64, null=True)
+    sex = models.CharField(max_length=2, null=True)
+    role = models.ForeignKey(RoleList, null=True, blank=True)
+
+    object = UserManager()
+    UERNAME_FIELD = 'username'
+    REQUIRED_FIELDS = ['email']
+
+    def has_perm(self, perm, obj=None):
+        if self.is_active and self.is_superuser:
+            return True

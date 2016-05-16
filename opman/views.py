@@ -3,9 +3,20 @@ from django.shortcuts import render_to_response, render
 from django.http import HttpResponse, HttpResponseRedirect, HttpResponseServerError
 from django.contrib.auth import authenticate, login
 from opman.models import IdcList, User, UserGroup
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+
 # Create your views here.
 # from django.http import request
-
+def SelfPaginator(request, List, Limit):
+    paginator = Paginator(List, ini(Limit))
+    page = request.GET('page')
+    try:
+        lst = paginator.page(page)
+    except PageNotAnInteger:
+        lst = paginator.page(1)
+    except EmptyPage:
+        lst = paginator.page(paginator.num_pages)
+    return lst
 #首页
 def index(req):
     return render_to_response('index.html')
