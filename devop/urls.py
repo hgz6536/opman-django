@@ -18,11 +18,12 @@ from opman.views import index, idcinfo, idcadd_play, idcadd_data, idcdel_data, i
     dashboard, register
 from django.contrib import admin
 from django.contrib.auth.views import login, logout, logout_then_login, password_change, password_change_done, password_reset, password_reset_done, password_reset_confirm, password_reset_complete
-
+from devop.views.permission import *
+from devop.views.user import ListUser
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
     #url(r'^$', index),
-    url(r'^idc/$', idcinfo),
+    url(r'^idc/$', idcinfo, name='idcinfo'),
     url(r'^idcadd_play/$', idcadd_play),
     url(r'^idcadd_data/$', idcadd_data),
     url(r'^idcdel_data/$', idcdel_data),
@@ -30,6 +31,7 @@ urlpatterns = [
     url(r'^idcedit_commit/$',idcedit_commit),
     #用户信息
     url(r'^user/$', userinfo),
+    url(r'^user/list/$', ListUser, name='listuserurl'),
     url(r'^useradd_play/$', useradd_play),
     url(r'^useradd_data/$', useradd_data),
     url(r'^userdel_data/$', userdel_data),
@@ -49,4 +51,12 @@ urlpatterns = [
     url(r'^password-reset/complete/$', password_reset_complete, name='password_reset_complete'),
     #用户注册
     url(r'^register/$', register, name='register'),
+    #权限控制
+    url(r'^permission/deny/$', Nopermisson, name='permissiondenyurl'),
+    url(r'^permission/add/$', AddPermission, name='addpermissionurl'),
+    url(r'^permission/list/$', ListPermission, name='listpermissionurl'),
+    url(r'^permission/edit/(?P<ID>\d+)/$', EditPermission, name='editpermissionurl'),
+    url(r'^permission/delete/(?P<ID>\d+)/$', DelePermission, name='deletepermissionurl'),
+
 ]
+

@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-#coding = uft-8
+# coding = uft-8
 
 from django.core.urlresolvers import reverse
 from django.http import HttpResponse, HttpResponseRedirect
@@ -7,7 +7,8 @@ from django.shortcuts import render_to_response, RequestContext
 from django.contrib.auth.decorators import login_required
 
 from opman.forms import PermissionListForm
-from opman.models import User, RoleList, PermissonList
+from opman.models import RoleList, PermissonList
+from django.contrib.auth.models import User
 from opman.views import SelfPaginator
 
 def PermissionVerify():
@@ -19,7 +20,7 @@ def PermissionVerify():
 
     def decorator(view_func):
         def _wrapped_view(request, *args, **kwargs):
-            iUser = User.object.get(username=request.user)
+            iUser = User.objects.get(username=request.user)
 
             if not iUser.is_superuser:
                 if not iUser.role:
@@ -55,8 +56,8 @@ def Nopermisson(request):
     return render_to_response('UserManage/permission.no.html', kwvars, RequestContext(request))
 
 @login_required
-@PermissionVerify
-def AddPermisson(request):
+@PermissionVerify()
+def AddPermission(request):
     form = PermissionListForm(request.POST)
     if form.is_valid():
         form.save()
@@ -72,7 +73,7 @@ def AddPermisson(request):
     return render_to_response('UserManage/permission.add.html',kwvars, RequestContext(request))
 
 @login_required
-@PermissionVerify
+@PermissionVerify()
 def ListPermission(request):
     mList = PermissonList.objects.all()
 
@@ -87,7 +88,7 @@ def ListPermission(request):
     render_to_response('UserManage/permission.list.html', kwvars, RequestContext(request))
 
 @login_required
-@PermissionVerify
+@PermissionVerify()
 def EditPermission(request, ID):
     iPermission = PermissonList.objects.get(id=ID)
 
@@ -107,7 +108,7 @@ def EditPermission(request, ID):
     return render_to_response('UserManage/permission.edit.html',kwvars, RequestContext(request))
 
 @login_required
-@PermissionVerify
+@PermissionVerify()
 def DelePermission(request, ID):
     PermissonList.objects.filter(id= ID).delete()
 

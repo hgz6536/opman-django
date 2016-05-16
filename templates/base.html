@@ -4,6 +4,7 @@
 <head>
     <title>{% block title %}{% endblock %}</title>
     <link href="{% static "css/base.css" %}" rel="stylesheet">
+    <link href="{% static "css/main.css" %}" rel="stylesheet">
 </head>
 <body>
     <div id="header">
@@ -28,7 +29,9 @@
         {% endif %}
         </span>
     </div>
-    
+    {% if request.user.is_authenticated %}
+        {% include "sidebar.html" %}
+    {% endif %}
     {% if messages %}
         <ul class="messages">
             {% for message in messages %}
@@ -39,10 +42,11 @@
             {% endfor %}
         </ul>
     {% endif %}
-    
+
     <div id="content">
         {% block content %}
         {% endblock %}
     </div>
+
 </body>
 </html>

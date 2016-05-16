@@ -1,15 +1,6 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <!--meta charset="utf-8">-->
-    <title>机房信息</title>
-    <!--link href="../static/buttons.css" type="text/css" rel="stylesheet">-->
-</head>
-<body>
-{% include "top.html" %}
-<div style="float:left;">
-    {% include "dh.html" %}
-</div>
+{% extends "base.html" %}
+
+{% block title %}机房信息{% endblock %}
 
 <div style="border:1px dashed;width:990px;height:600px;margin-top:30px;margin-left:300px">
   <a style="font-size: 25px;text-align:center">❀ IDC概况</a>
@@ -61,5 +52,5 @@
       {% endfor %}
   </table>
 </div>
-</body>
-</html>
+
+

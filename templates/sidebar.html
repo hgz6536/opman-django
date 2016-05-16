@@ -1,0 +1,27 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>导航</title>
+    <link href="{% static "css/common.css" %}" rel="stylesheet">
+    <link href="{% static "css/main.css" %}" rel="stylesheet">
+</head>
+<body>
+    <div class="sidebar-wrap">
+        <div class="sidebar-title">
+            菜单
+        </div>
+        <div class="sidebar-content">
+            <ul class="sidebar-list">
+                <li>
+                    <a href="{% url "idcinfo" %}">
+                        <i class="icon-font">&#xe040</i>
+                        IDC概况
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>

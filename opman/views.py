@@ -2,16 +2,31 @@
 from django.shortcuts import render_to_response, render
 from django.http import HttpResponse, HttpResponseRedirect, HttpResponseServerError
 from django.contrib.auth import authenticate, login
+from django.views.decorators.csrf import csrf_protect
+
 from opman.models import IdcList, User, UserGroup
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.contrib.auth.decorators import login_required
 # Create your views here.
 # from django.http import request
-
+def SelfPaginator(request, List, Limit):
+    paginator = Paginator(List, int(Limit))
+    page = request.GET.get('page')
+    try:
+        lst = paginator.page(page)
+    except PageNotAnInteger:
+        lst = paginator.page(1)
+    except EmptyPage:
+        lst = paginator.page(paginator.num_pages)
+    return lst
 #首页
 def index(req):
     return render_to_response('index.html')
 
 #IDC 模块
-def idcinfo(req):
+@csrf_protect
+@login_required
+def idcinfo(request):
     idc_list = IdcList.objects.all()
     return render_to_response('idc_info.html',{'idc_list':idc_list})
 
@@ -171,9 +186,8 @@ def user_login(request):
                 return HttpResponse('Invalid login')
     else:
         form = LoginForm()
-    return render(request, 'login/login.html', {'form':form})
+    return render(request, 'registration/login.html', {'form':form})
 
-from django.contrib.auth.decorators import login_required
 
 def register(request):
     if request.method == 'POST':
