@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block title %}
+    编辑权限
+{% endblock %}
+
+{% block content %}
+    <div class="btn-toolbar">
+        <div class="btn-group">
+            {% url "addpermissionurl" as theaddpermissionurl %}
+            <a class="btn btn-default {% if request.path == theaddpermissionurl %}
+            active
+            {% endif %}"
+               href={{ theaddpermissionurl }}><span class="glyphicon glyphicon-edit"></span>新建权限</a>
+            {% url "listpermissionurl" as thelistpermissionurl %}
+            <a class="btn btn-default {% if request.path == thelistpermissionurl %}
+            active
+            {% endif %}"
+               href={{ thelistpermissionurl }}><span class="glyphicon glyphicon-list"></span>权限列表</a>
+        </div>
+    </div>
+
+    <hr/>
+
+    <form class="form-horizontal" role="form" action={% url "editpermissionurl" ID %} method="POST">
+    {% csrf_token %}
+        {% for item in form %}
+            <div class="form-group">
+                <label class="control-label col-md-1">{{ item.label }}</label>
+                <div class="col-md-2">
+                    {{ item }}
+                </div>
+                <div class="col-md-offset-1 col-md-10">
+                    {{ item.errors }}
+                </div>
+            </div>
+        {% endfor %}
+        <div class="form-group">
+            <div class="col-md-offset-1 col-md-10">
+                <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('确认更新吗？')">更 新</button>
+            </div>
+        </div>
+    </form>
+{% endblock %}
