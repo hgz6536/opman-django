@@ -8,7 +8,7 @@ from django.contrib.auth.decorators import login_required
 
 from opman.forms import PermissionListForm
 from opman.models import RoleList, PermissonList
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, Group
 from opman.views import SelfPaginator
 
 def PermissionVerify():
@@ -21,14 +21,11 @@ def PermissionVerify():
     def decorator(view_func):
         def _wrapped_view(request, *args, **kwargs):
             iUser = User.objects.get(username=request.user)
-
             if not iUser.is_superuser:
-                if not iUser.role:
+                if not PermissonList.objects.get(username=request.user):
                     return HttpResponseRedirect(reverse('permissiondenyurl'))
-
-                role_permisson = RoleList.objects.get(name=iUser.role)
+                role_permisson = PermissonList.objects.get(username=iUser.username)
                 role_permisson_list = role_permisson.permission.all()
-
                 matchurl = []
                 for x in role_permisson_list:
                     if request.path == x.url or request.path.rstrip('/') == x.url:
@@ -85,7 +82,7 @@ def ListPermission(request):
         'request':request,
     }
 
-    render_to_response('UserManage/permission.list.html', kwvars, RequestContext(request))
+    return render_to_response('UserManage/permission.list.html', kwvars, RequestContext(request))
 
 @login_required
 @PermissionVerify()

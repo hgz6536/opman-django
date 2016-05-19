@@ -11,7 +11,7 @@
             <a class="btn btn-default {% if request.path == theaddpermissonurl %}
             active
             {% endif %}"
-               href={{ theaddpermissonurl }}><span class="glyphicon glyphicon-edit"></span>新建权限</a>"
+               href={{ theaddpermissonurl }}><span class="glyphicon glyphicon-edit"></span>新建权限</a>
             {% url "listpermissionurl" as thelistpermissionurl %}
             <a class="btn btn-default {%if request.path == thelistpermissionurl%}
             active

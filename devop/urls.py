@@ -53,7 +53,7 @@ urlpatterns = [
     url(r'^register/$', register, name='register'),
     #权限控制
     url(r'^permission/deny/$', Nopermisson, name='permissiondenyurl'),
-    url(r'^permission/add/$', AddPermission, name='addpermissionurl'),
+    url(r'^permission/add/$', AddPermission, name='addpermissonurl'),
     url(r'^permission/list/$', ListPermission, name='listpermissionurl'),
     url(r'^permission/edit/(?P<ID>\d+)/$', EditPermission, name='editpermissionurl'),
     url(r'^permission/delete/(?P<ID>\d+)/$', DelePermission, name='deletepermissionurl'),

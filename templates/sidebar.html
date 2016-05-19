@@ -6,6 +6,7 @@
     <title>导航</title>
     <link href="{% static "css/common.css" %}" rel="stylesheet">
     <link href="{% static "css/main.css" %}" rel="stylesheet">
+    <script src="{% static "js/libs/modernizr.min.js" %}" type="text/javascript"></script>
 </head>
 <body>
     <div class="sidebar-wrap">
@@ -15,10 +16,16 @@
         <div class="sidebar-content">
             <ul class="sidebar-list">
                 <li>
-                    <a href="{% url "idcinfo" %}">
-                        <i class="icon-font">&#xe040</i>
-                        IDC概况
+                    <a href="{% url "listuserurl" %}">
+                        <i class="icon-font">&#xe014</i>
+                        用户管理
                     </a>
+                    <ul class="sub-menu">
+                        <li><a href="#"><i class="icon-font">&#xe003</i>群组</a> </li>
+                    </ul>
+                    <ul class="sub-menu">
+                        <li><a href="{% url "listpermissionurl" %}"><i class="icon-font">&#xe017</i>权限</a> </li>
+                    </ul>
                 </li>
             </ul>
         </div>

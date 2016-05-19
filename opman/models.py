@@ -75,6 +75,8 @@ class UserGroup(models.Model):
 class PermissonList(models.Model):
     name = models.CharField(max_length=64)
     url = models.CharField(max_length=255)
+    username = models.CharField(max_length=30, default=None)
+    groupname = models.CharField(max_length=80, default=None)
 
     def __unicode__(self):
         return '%s(%s)' %(self.name, self.url)

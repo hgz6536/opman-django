@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.models import User
-from opman.models import PermissonList
+from opman.models import PermissonList, RoleList
 
 class LoginForm(forms.Form):
     username = forms.CharField()
@@ -36,3 +36,18 @@ class PermissionListForm(forms.ModelForm):
         self.fields['url'].label = u'URL'
         self.fields['url'].error_messages = {'required':u'请输入URL'}
 
+class RoleListForm(forms.ModelForm):
+    class Meta:
+        model=RoleList
+        fields = '__all__'
+        widgets = {
+            'name': forms.TextInput(attrs={'class':'form-control'}),
+            'permission':forms.SelectMultiple(attrs={'class':'form-control','size':'10','multiple':'multiple'}),
+        }
+
+    def __init__(self, *args, ** kwargs):
+        super(RoleListForm, self).__init__(*args, **kwargs)
+        self.fields['name'].label=u'名称'
+        self.fields['name'].error_messages={'required':u'请输入名称'}
+        self.fields['permission'].label=u'URL'
+        self.fields['permission'].required=False

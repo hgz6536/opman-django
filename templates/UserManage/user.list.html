@@ -27,15 +27,16 @@
             <th>上次登录</th>
             <th>操作</th>
         </tr>
-        <tr>
+
         {% for foo in lpage %}
+        <tr>
             <td class="tc">
                 <input type="checkbox" value="" name="id[]">
             </td>
             <td>{{ foo.id }}</td>
             <td>{{ foo.username }}</td>
             <td>{{ foo.email }}</td>
-            <td>{{ foo.first_name }}{{ foo.last_name }}</td>
+            <td>{{ foo.last_name }}{{ foo.first_name }}</td>
             <td>
                 {% if foo.is_active %}
                     <span class="label label-success">启用</span>
@@ -44,46 +45,13 @@
                 {% endif %}
             </td>
             <td>{{ foo.last_login }}</td>
-        {% endfor %}
+            <td class="host_buttom">
+                <a class="btn btn-warning btn-xs"  href="#" >编辑</a>
+                <a class="btn btn-danger btn-xs" href="#" >删除</a>
+            </td>
         </tr>
+        {% endfor %}
+
 
     </table>
-    <table class="table table-hover table-striped  table-bordered table-condensed">
-        <tr>
-            <th>账号</th>
-            <th>姓名</th>
-            <th>性别</th>
-            <th>Email</th>
-            <th>状态</th>
-            <th>角色</th>
-            <th>最后登录时间</th>
-            <th>操作</th>
-        </tr>
-
-
-            {% for i in lPage %}
-                <tr style="font-size: 13px;">
-                    <td>{{ i.username }}</td>
-                    <td>{{ i.nickname|default:"----" }}</td>
-                    <td>{{ i.sex|default:"----" }}</td>
-                    <td>{{ i.email }}</td>
-                    <td>
-                        {% if i.is_active %}
-                            <span class="label label-success">启用</span>
-                        {% else %}
-                            <span class="label label-default">禁用</span>
-                        {% endif %}
-                    </td>
-                    <td>{{ i.role|default:"----" }}</td>
-                    <td>{{ i.last_login|date:"Y-m-d H:i:s" }}</td>
-                    <td class="host_buttom">
-                        <a class="btn btn-warning btn-xs"  href={% url "edituserurl" i.id %} >编辑</a>
-                        <a class="btn btn-danger btn-xs" href={% url "deleteuserurl" i.id %} >删除</a>
-                    </td>
-                </tr>
-            {% endfor %}
-
-        </table>
-
-
 {% endblock %}
