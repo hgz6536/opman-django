@@ -21,9 +21,7 @@ def PermissionVerify():
     def decorator(view_func):
         def _wrapped_view(request, *args, **kwargs):
             iUser = User.objects.get(username=request.user)
-
             uid = iUser.id
-            print(uid)
             if not iUser.is_superuser:
                 if not PermissonList.objects.get(username=request.user):
                     return HttpResponseRedirect(reverse('permissiondenyurl'))
@@ -81,7 +79,7 @@ def ListPermission(request):
     lst = SelfPaginator(request, mList, 20)
 
     kwvars = {
-        '1Page':lst,
+        'lpage':lst,
         'request':request,
     }
 

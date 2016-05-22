@@ -13,7 +13,7 @@ from devop.views.permission import PermissionVerify, SelfPaginator
 @PermissionVerify()
 def ListUser(request):
     mList = User.objects.all()
-    lst = SelfPaginator(request, mList, 3)
+    lst = SelfPaginator(request, mList, 20)
     kwvars = {
         'lpage':lst,
         'request':request,
