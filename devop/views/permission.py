@@ -21,14 +21,18 @@ def PermissionVerify():
     def decorator(view_func):
         def _wrapped_view(request, *args, **kwargs):
             iUser = User.objects.get(username=request.user)
-            uid = iUser.id
+            group_list = Group.objects.filter(user=request.user)
+            #uid = iUser.id
             if not iUser.is_superuser:
-                if not PermissonList.objects.get(username=request.user):
-                    return HttpResponseRedirect(reverse('permissiondenyurl'))
-                role_permisson = PermissonList.objects.get(username=iUser.username)
-                role_permisson_list = role_permisson.permission.all()
+                try:
+                    group_list.get(name='sa')
+                except:
+                    if not PermissonList.objects.get(username=request.user):
+                        return HttpResponseRedirect(reverse('permissiondenyurl'))
+                role_permisson = PermissonList.objects.filter(groupname='sa')
+                role_permisson = role_permisson.all()
                 matchurl = []
-                for x in role_permisson_list:
+                for x in role_permisson:
                     if request.path == x.url or request.path.rstrip('/') == x.url:
                         matchurl.append(x.url)
                     elif request.path.startswith(x.url):
