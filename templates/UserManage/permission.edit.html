@@ -5,7 +5,7 @@
 {% endblock %}
 
 {% block content %}
-    <div class="btn-toolbar">
+    <div>
         <div class="btn-group">
             {% url "addpermissionurl" as theaddpermissionurl %}
             <a class="btn btn-default {% if request.path == theaddpermissionurl %}

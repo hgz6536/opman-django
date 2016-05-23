@@ -63,7 +63,7 @@ def AddPermission(request):
     form = PermissionListForm(request.POST)
     if form.is_valid():
         form.save()
-        return HttpResponseRedirect(reverse('listpermissonurl'))
+        return HttpResponseRedirect(reverse('listpermissionurl'))
     else:
         form = PermissionListForm()
 
@@ -98,7 +98,7 @@ def EditPermission(request, ID):
         form = PermissionListForm(request.POST, instance=iPermission)
         if form.is_valid():
             form.save()
-            return HttpResponseRedirect(reverse("listpermissononurl"))
+            return HttpResponseRedirect(reverse("listpermissionurl"))
     else:
         form = PermissionListForm(instance=iPermission)
 
