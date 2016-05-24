@@ -21,27 +21,31 @@ def PermissionVerify():
     def decorator(view_func):
         def _wrapped_view(request, *args, **kwargs):
             iUser = User.objects.get(username=request.user)
-            group_list = Group.objects.filter(user=request.user)
+            iGroup = Group.objects.filter(user=request.user)
             #uid = iUser.id
+            glst=[]
+            for g in iGroup.all():
+                glst.append(str(g))
             if not iUser.is_superuser:
-                try:
-                    group_list.get(name='sa')
-                except:
-                    if not PermissonList.objects.get(username=request.user):
+                if 'sa' not in glst:
+                    if not PermissonList.objects.filter(username=iUser.username):
                         return HttpResponseRedirect(reverse('permissiondenyurl'))
-                role_permisson = PermissonList.objects.filter(groupname='sa')
-                role_permisson = role_permisson.all()
-                matchurl = []
-                for x in role_permisson:
-                    if request.path == x.url or request.path.rstrip('/') == x.url:
-                        matchurl.append(x.url)
-                    elif request.path.startswith(x.url):
-                        matchurl.append(x.url)
                     else:
-                        pass
-                print('%s---->matchUrl:%s' %(request.user, str(matchurl)))
-                if len(matchurl) == 0:
-                    return HttpResponseRedirect(reverse('permissiondenyurl'))
+                        role_permisson = PermissonList.objects.filter(username=request.user)
+                        role_permisson = role_permisson.all()
+                        matchurl = []
+                        for x in role_permisson:
+                            if request.path == x.url or request.path.rstrip('/') == x.url:
+                                matchurl.append(x.url)
+                            elif request.path.startswith(x.url):
+                                matchurl.append(x.url)
+                            else:
+                                pass
+                        print('%s---->matchUrl:%s' %(request.user, str(matchurl)))
+                        if len(matchurl) == 0:
+                            return HttpResponseRedirect(reverse('permissiondenyurl'))
+                else:
+                    pass
             else:
                 pass
             return view_func(request, *args, **kwargs)
@@ -55,7 +59,7 @@ def Nopermisson(request):
         'request':request,
     }
 
-    return render_to_response('UserManage/permission.no.html', kwvars, RequestContext(request))
+    return render_to_response('UserManage/permission.no.html', kwvars)
 
 @login_required
 @PermissionVerify()
@@ -87,7 +91,7 @@ def ListPermission(request):
         'request':request,
     }
 
-    return render_to_response('UserManage/permission.list.html', kwvars, RequestContext(request))
+    return render_to_response('UserManage/permission.list.html', kwvars)
 
 @login_required
 @PermissionVerify()

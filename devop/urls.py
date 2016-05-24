@@ -19,7 +19,8 @@ from opman.views import idcinfo, idcadd_play, idcadd_data, idcdel_data, idcedit_
 from django.contrib import admin
 from django.contrib.auth.views import login, logout, logout_then_login, password_change, password_change_done, password_reset, password_reset_done, password_reset_confirm, password_reset_complete
 from devop.views.permission import *
-from devop.views.user import ListUser
+from devop.views.group import *
+from devop.views.user import ListUser, EditUser, DeleteUser
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
 
@@ -36,11 +37,14 @@ urlpatterns = [
 
     # 用户信息
     url(r'^user/list/$', ListUser, name='listuserurl'),
-    url(r'^useradd_play/$', useradd_play),
-    url(r'^useradd_data/$', useradd_data),
-    url(r'^userdel_data/$', userdel_data),
-    url(r'^useredit_data/$', useredit_data),
-    url(r'^useredit_commit/$', useredit_commit),
+    url(r'^user/edit/(?P<ID>\d+)/$', EditUser, name='edituserurl'),
+    url(r'^user/delete/(?P<ID>\d+)/$', DeleteUser, name='deleteuserurl'),
+
+    #用户组管理
+    url(r'^role/add/$', AddGroup, name='addroleurl'),
+    url(r'^role/list/$', ListGroup, name='listroleurl'),
+    url(r'^role/edit/(?P<ID>\d+)/$', EditGroup, name='editroleurl'),
+    url(r'^role/delete/(?P<ID>\d+)/$', ListGroup, name='deleteroleurl'),
 
     # 密码管理
     url(r'^password-change/$', password_change, name='password_change'),

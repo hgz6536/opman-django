@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Role Edit
+{% endblock %}
+
+{% block head %}
+    <script src="/static/js/jquery.bootstrap-duallistbox.js"></script>
+    <link rel="stylesheet" type="text/css" href="/static/css/bootstrap-duallistbox.css">
+{% endblock %}
+
+{% block content %}
+    <div class="btn-toolbar">
+        <div class="btn-group">
+            {% url "addroleurl" as theaddroleurl %}
+            <a class="btn btn-default {%if request.path == theaddroleurl%} active {%endif%}" href={{ theaddroleurl }}><span class="glyphicon glyphicon-edit"></span>新建角色</a>
+            {% url "listroleurl" as thelistroleurl %}
+            <a class="btn btn-default {%if request.path == thelistroleurl%} active {%endif%}" href={{ thelistroleurl }}><span class="glyphicon glyphicon-list"></span>角色列表</a>
+        </div>
+    </div>
+
+    <hr/>
+
+    <form class="form-horizontal" role="form" action={% url "editroleurl" ID %} method="POST" >
+    {% csrf_token %}
+
+        {% for item in form %}
+            <div class="form-group">
+                <label class="control-label col-md-1">{{item.label}}</label>
+                <div class="col-md-11">
+                    {{item}}
+                </div>
+                <div class="col-md-offset-1 col-md-10">
+                    {{item.errors}}
+                </div>
+            </div>
+        {% endfor %}
+
+        <div class="form-group">
+            <div class="col-md-offset-1 col-md-10">
+                <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('确认更新吗？')">更 新</button>
+            <div>
+        </div>
+
+    </form>
+
+    <script>
+        var demo1 = $('select[name="permission"]').bootstrapDualListbox({
+              nonSelectedListLabel: '可选择权限',
+              selectedListLabel: '已选择权限',
+              preserveSelectionOnMove: 'moved',
+              moveOnSelect: false,
+        });
+    </script>
+
+{% endblock %}

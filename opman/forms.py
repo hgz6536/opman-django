@@ -57,3 +57,14 @@ class RoleListForm(forms.ModelForm):
         self.fields['name'].error_messages={'required':u'请输入名称'}
         self.fields['permission'].label=u'URL'
         self.fields['permission'].required=False
+
+class EditUserForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ('username','email', 'is_active', 'first_name', 'last_name')
+        widgets = {
+            'username' : forms.TextInput(attrs={'class':'form-control'}),
+            #'password': forms.HiddenInput,
+            'email' : forms.TextInput(attrs={'class':'form-control'}),
+            'is_active' : forms.Select(choices=((True, u'启用'),(False, u'禁用')),attrs={'class':'form-control'}),
+        }

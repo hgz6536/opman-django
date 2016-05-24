@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Edit User
+{% endblock %}
+
+{% block content %}
+    <div>
+        <div class="btn-group">
+            {% url "adduserurl" as theadduserurl %}
+            <a class="btn btn-default {%if request.path == theadduserurl%} active {%endif%}" href={{ theadduserurl }}><span class="glyphicon glyphicon-edit"></span>新建用户</a>
+            {% url "listuserurl" as thelistuserurl %}
+            <a class="btn btn-default {%if request.path == thelistuserurl%} active {%endif%}" href={{ thelistuserurl }}><span class="glyphicon glyphicon-list"></span>用户列表</a>
+        </div>
+    </div>
+
+    <hr/>
+
+    <form class="form-horizontal" role="form" action={% url "edituserurl" ID %} method="POST" >
+    {% csrf_token %}
+
+        {% for item in form %}
+            <div class="form-group">
+                <label class="control-label col-md-1">{{item.label}}</label>
+                <div class="col-md-2">
+                    {{item}}
+                </div>
+                <div class="col-md-offset-1 col-md-10">
+                    {{item.errors}}
+                </div>
+            </div>
+        {% endfor %}
+
+        <div class="form-group">
+            <div class="col-md-offset-1 col-md-10">
+                <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('确认更新吗？')">更 新</button>
+                <a class="btn btn-danger btn-sm" href={% url "password_reset" %} onclick="return confirm('确认重置密码吗？？')">重置密码</a>
+            </div>
+        </div>
+    </form>
+{% endblock %}
