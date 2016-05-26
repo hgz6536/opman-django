@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+
+{% block title %}
+    IDC列表
+{% endblock %}
+
+{% block content %}
+    <div>
+        <div class="btn-group">
+            {% url "addidcurl" as theaddidcurl %}
+            <a class="btn btn-default {%if request.path == theaddidcurl%} active {%endif%}" href={{ theaddidcurl }}><span class="glyphicon glyphicon-edit"></span>新建IDC</a>
+            {% url "listidcurl" as thelistidcurl %}
+            <a class="btn btn-default {%if request.path == thelistidcurl%} active {%endif%}" href={{ thelistidcurl }}><span class="glyphicon glyphicon-list"></span>IDC列表</a>
+        </div>
+    </div>
+
+    <hr/>
+
+    <table class="result-tab" width="100%">
+        <tr>
+            <th class="tc" width="5%"></th>
+            <th>ID</th>
+            <th>合作商</th>
+            <th>所在城市</th>
+            <th>地理位置</th>
+            <th>机器数量</th>
+            <th>机房带宽(M)</th>
+            <th>机房年费(元)</th>
+            <th>合作时间</th>
+            <th>值班电话</th>
+            <th>机房状态</th>
+            <th>可用操作</th>
+
+        </tr>
+
+        {% for foo in lpage %}
+        <tr>
+            <td class="tc">
+                <input type="checkbox" value="" name="id[]">
+            </td>
+            <td>{{ foo.id }}</td>
+            <td>{{ foo.idcname }}</td>
+            <td>{{ foo.cityname }}</td>
+            <td>{{ foo.position }}</td>
+            <td>{{ foo.hostnum }}</td>
+            <td>{{ foo.bandwidth }}</td>
+            <td>{{ foo.expense }}</td>
+            <td>{{ foo.starttime }}</td>
+            <td>{{ foo.iphonecall }}</td>
+
+            <td>
+                {% if foo.status == 1 %}
+                    <span class="label label-success">启用</span>
+                {% else %}
+                    <span class="label label-default">禁用</span>
+                {% endif %}
+            </td>
+            <td class="host_buttom">
+                <a class="btn btn-warning btn-xs" href={% url "editidcurl" foo.id %} onclick="return confirm('是否确认编辑？')">编辑</a>
+                <a class="btn btn-danger btn-xs" href={% url "deleteidcurl" foo.id %} onclick="return confirm('是否确认删除？')">删除</a>
+            </td>
+        </tr>
+        {% endfor %}
+
+
+    </table>
+    {% include "paginator.html" %}
+{% endblock %}

@@ -10,6 +10,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 
 from devop.views.permission import PermissionVerify, SelfPaginator
 from opman.forms import EditUserForm
+
 @login_required
 @PermissionVerify()
 def ListUser(request):
@@ -33,8 +34,7 @@ def EditUser(request,ID):
             form.save()
             return HttpResponseRedirect(reverse('listuserurl'))
     else:
-        form = EditUserForm(instance=user
-        )
+        form = EditUserForm(instance=user)
 
     kwvars = {
         'ID':ID,

@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block title %}
+    编辑IDC
+{% endblock %}
+
+{% block content %}
+    <div>
+        <div class="btn-group">
+            {% url "addidcurl" as theaddidcurl %}
+            <a class="btn btn-default {%if request.path == theaddidcurl%} active {%endif%}" href={{ theaddidcurl }}><span class="glyphicon glyphicon-edit"></span>新建IDC</a>
+            {% url "listidcurl" as thelistidcurl %}
+            <a class="btn btn-default {%if request.path == thelistidcurl%} active {%endif%}" href={{ thelistidcurl }}><span class="glyphicon glyphicon-list"></span>IDC列表</a>
+        </div>
+    </div>
+
+    <hr/>
+
+    <form class="form-horizontal" role="form" action={% url "editidcurl" ID %} method="POST" >
+    {% csrf_token %}
+
+        {% for item in form %}
+            <div class="form-group">
+                <label class="control-label col-md-1">{{item.label}}</label>
+                <div class="col-md-2">
+                    {{item}}
+                </div>
+                <div class="col-md-offset-1 col-md-10">
+                    {{item.errors}}
+                </div>
+            </div>
+        {% endfor %}
+
+        <div class="form-group">
+            <div class="col-md-offset-1 col-md-10">
+                <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('确认更新吗？')">更 新</button>
+                <a class="btn btn-success btn-sm" href={% url "listidcurl" %}>返回</a>
+            </div>
+        </div>
+    </form>
+{% endblock %}

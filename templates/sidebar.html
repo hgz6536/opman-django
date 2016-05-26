@@ -28,6 +28,21 @@
                     </ul>
                 </li>
             </ul>
+
+            <ul class="sidebar-list">
+                <li>
+                    <a href="{% url "listidcurl" %}">
+                        <i class="icon-font">&#xe040</i>
+                        IDC管理
+                    </a>
+                    <ul class="sub-menu">
+                        <li><a href="{% url "listroleurl" %}"><i class="icon-font">&#xe041</i>群组</a> </li>
+                    </ul>
+                    <ul class="sub-menu">
+                        <li><a href="{% url "listpermissionurl" %}"><i class="icon-font">&#xe062</i>主机</a> </li>
+                    </ul>
+                </li>
+            </ul>
         </div>
     </div>
 </body>

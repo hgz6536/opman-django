@@ -1,0 +1,45 @@
+<!-- 分页功能 -->
+<!--
+<div class="list-page">
+  {{ lpage.count }}  第 {{ lpage.number }} 页,共 {{ lpage.paginator.num_pages }} 页.
+
+    <ul class="pager pull-right" style="margin: -5px 0;">
+        <li><a href="?page=1">首页</a></li>
+
+        {% if lpage.has_previous %}
+            <li><a href="?page={{ lpage.previous_page_number }}">上一页</a></li>
+        {% else %}
+            <li class="disabled"><a onclick="javascript:return false;">上一页</a></li>
+        {% endif %}
+
+        {% if lpage.has_next %}
+            <li><a href="?page={{ lpage.next_page_number }}">下一页</a></li>
+        {% else %}
+            <li class="disabled"><a onclick="javascript:return false;">下一页</a></li>
+        {% endif %}
+
+        <li><a href="?page={{ lpage.paginator.num_pages }}">尾页</a></li>
+    </ul>
+</div>
+-->
+<div class="panel-default">
+    <center>
+        <ul class="pagination">
+            <li><a href="{{ request.path }}?page=1">«</a></li>
+            {% if lpage.has_previous %}
+                <li><a href="{{ request.path }}?&page={{ lpage.previous_page_number }}">上一页</a></li>
+            {% else %}
+                <li class="previous disabled"><a>上一页</a></li>
+            {% endif %}
+            {% for i in lpage.paginator.page_range %}
+                <li {% if lpage.number == i %}class="active"{% endif %}><a href="{{ request.path }}?page={{ i }}">{{ i }}</a></li>
+            {% endfor %}
+            {% if lpage.has_next %}
+                <li><a href="{{ request.path }}?page={{ lpage.next_page_number }}">下一页</a></li>
+            {% else %}
+                <li class="previous disabled"><a>下一页</a></li>
+            {% endif %}
+            <li><a href="{{ request.path }}?page={{ lpage.paginator.num_pages }}">»</a></li>
+        </ul>
+    </center>
+</div>

@@ -14,13 +14,13 @@ Including another URLconf
     2. Add a URL to urlpatterns:  url(r'^blog/', include(blog_urls))
 """
 from django.conf.urls import include, url
-from opman.views import idcinfo, idcadd_play, idcadd_data, idcdel_data, idcedit_commit, idcedit_data, userinfo, useradd_play, useradd_data, userdel_data, useredit_data, useredit_commit, \
-    dashboard, register
+from opman.views import idcinfo, idcadd_play, idcadd_data, idcdel_data, idcedit_commit, idcedit_data, dashboard, register
 from django.contrib import admin
 from django.contrib.auth.views import login, logout, logout_then_login, password_change, password_change_done, password_reset, password_reset_done, password_reset_confirm, password_reset_complete
 from devop.views.permission import *
 from devop.views.group import *
 from devop.views.user import ListUser, EditUser, DeleteUser
+from devop.views.idc import ListIdc, AddIdc, EditIdc, DeleIdc
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
 
@@ -62,11 +62,9 @@ urlpatterns = [
     url(r'^permission/delete/(?P<ID>\d+)/$', DelePermission, name='deletepermissionurl'),
 
     # IDC机房信息管理
-    url(r'^idc/$', idcinfo, name='idcinfo'),
-    url(r'^idcadd_play/$', idcadd_play),
-    url(r'^idcadd_data/$', idcadd_data),
-    url(r'^idcdel_data/$', idcdel_data),
-    url(r'^idcedit_data/$', idcedit_data),
-    url(r'^idcedit_commit/$', idcedit_commit),
+    url(r'^idc/list/$', ListIdc, name='listidcurl'),
+    url(r'^idc/add/$', AddIdc, name='addidcurl'),
+    url(r'^idc/delete/(?P<ID>\d+)/$', DeleIdc, name='deleteidcurl'),
+    url(r'^idc/edit/(?P<ID>\d+)/$', EditIdc, name='editidcurl'),
 ]
 
