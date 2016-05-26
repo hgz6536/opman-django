@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+
+{% block title %}
+    主机列表
+{% endblock %}
+
+{% block content %}
+    <div>
+        <div class="btn-group">
+            {% url "addhosturl" as theaddhosturl %}
+            <a class="btn btn-default {%if request.path == theaddhosturl%} active {%endif%}" href={{ theaddhosturl }}><span class="glyphicon glyphicon-edit"></span>添加主机</a>
+            {% url "listhosturl" as thelisthosturl %}
+            <a class="btn btn-default {%if request.path == thelisthosturl%} active {%endif%}" href={{ thelisthosturl }}><span class="glyphicon glyphicon-list"></span>主机列表</a>
+        </div>
+    </div>
+
+    <hr/>
+
+    <table class="result-tab" width="100%">
+        <tr>
+            <th class="tc" width="5%"></th>
+            <th>ID</th>
+            <th>所在机房</th>
+            <th>IP  地址</th>
+            <th>维修信息</th>
+            <th>主机品牌</th>
+            <th>购买时间</th>
+            <th>主机名字</th>
+            <th>主机系统</th>
+            <th>主机类型</th>
+            <th>内存大小</th>
+            <th>硬盘大小</th>
+            <th>CPU 型号</th>
+            <th>售后代码</th>
+            <th>主机用途</th>
+            <th>启用状态</th>
+            <th>可用操作</th>
+        </tr>
+
+        {% for foo in lpage %}
+        <tr>
+            <td class="tc">
+                <input type="checkbox" value="" name="id[]">
+            </td>
+            <td>{{ foo.id }}</td>
+            <td>{{ foo.idcinfo }}</td>
+            <td>{{ foo.ipinfo }}</td>
+            <td>
+                {% if foo.repairinfo == 1 %}
+                    <span class="label label-success">正常</span>
+                {% else %}
+                    <span class="label label-warning">故障</span>
+                {% endif %}
+            </td>
+            <td>{{ foo.brandinfo }}</td>
+            <td>{{ foo.buytime }}</td>
+            <td>{{ foo.hostname }}</td>
+            <td>{{ foo.osinfo }}</td>
+            <td>{{ foo.modelinfo }}</td>
+            <td>{{ foo.memoryinfo }}</td>
+            <td>{{ foo.diskinfo }}</td>
+            <td>{{ foo.cpuinfo }}</td>
+            <td>{{ foo.snnum }}</td>
+            <td>{{ foo.usefor }}</td>
+
+            <td>
+                {% if foo.status == 1 %}
+                    <span class="label label-success">启用</span>
+                {% else %}
+                    <span class="label label-default">禁用</span>
+                {% endif %}
+            </td>
+            <td class="host_buttom">
+                <a class="btn btn-warning btn-xs" href={% url "edithosturl" foo.id %} onclick="return confirm('是否确认编辑？')">编辑</a>
+                <a class="btn btn-danger btn-xs" href={% url "deletehosturl" foo.id %} onclick="return confirm('是否确认删除？')">删除</a>
+            </td>
+        </tr>
+        {% endfor %}
+
+
+    </table>
+    {% include "paginator.html" %}
+{% endblock %}

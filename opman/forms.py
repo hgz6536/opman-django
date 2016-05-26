@@ -1,8 +1,9 @@
 from django import forms
 from django.contrib.auth.models import User
 from opman.models import PermissonList, RoleList
-from opman.models import IdcList
+from opman.models import IdcList, HostList
 
+#用户登录,注册,编辑,权限
 class LoginForm(forms.Form):
     username = forms.CharField()
     password = forms.CharField(widget=forms.PasswordInput)
@@ -20,6 +21,17 @@ class UserRegistrationForm(forms.ModelForm):
         if cd['password'] != cd['password2']:
             raise forms.ValidationError(u'两次输入的密码不一样')
         return cd['password2']
+
+class EditUserForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ('username','email', 'is_active', 'first_name', 'last_name')
+        widgets = {
+            'username' : forms.TextInput(attrs={'class':'form-control'}),
+            #'password': forms.HiddenInput,
+            'email' : forms.TextInput(attrs={'class':'form-control'}),
+            'is_active' : forms.Select(choices=((True, u'启用'),(False, u'禁用')),attrs={'class':'form-control'}),
+        }
 
 class PermissionListForm(forms.ModelForm):
     class Meta:
@@ -42,7 +54,7 @@ class PermissionListForm(forms.ModelForm):
         self.fields['username'].error_messages = {'required': u'请输入用户名'}
         self.fields['groupname'].label = u'组名'
         self.fields['groupname'].error_messages = {'required': u'请输入组名'}
-
+#用户组
 class RoleListForm(forms.ModelForm):
     class Meta:
         model=RoleList
@@ -59,17 +71,7 @@ class RoleListForm(forms.ModelForm):
         self.fields['permission'].label=u'URL'
         self.fields['permission'].required=False
 
-class EditUserForm(forms.ModelForm):
-    class Meta:
-        model = User
-        fields = ('username','email', 'is_active', 'first_name', 'last_name')
-        widgets = {
-            'username' : forms.TextInput(attrs={'class':'form-control'}),
-            #'password': forms.HiddenInput,
-            'email' : forms.TextInput(attrs={'class':'form-control'}),
-            'is_active' : forms.Select(choices=((True, u'启用'),(False, u'禁用')),attrs={'class':'form-control'}),
-        }
-
+#IDC
 class IdcListForm(forms.ModelForm):
     STAS_CHOICES = (
         ('1', 'OK'),
@@ -110,4 +112,76 @@ class IdcListForm(forms.ModelForm):
         self.fields['starttime'].error_messages = {'required': u'请输入开始合作时间'}
         self.fields['iphonecall'].label = u'机房电话'
         self.fields['iphonecall'].error_messages = {'required': u'请输入机房电话'}
+        self.fields['status'].label = u'使用状态'
+
+#主机
+
+class HostListForm(forms.ModelForm):
+    STAS_CHOICES = (
+        ('1', u'启用中'),
+        ('0', u'未使用'),
+    )
+    REPAIR_CHOICES = (
+        ('1',u'正常'),
+        ('0',u'故障'),
+    )
+    status = forms.IntegerField(
+        widget=forms.Select(choices=STAS_CHOICES)
+    )
+    repairinfo = forms.IntegerField(
+        widget=forms.Select(choices=REPAIR_CHOICES)
+    )
+    class Meta:
+        model = HostList
+        fields = '__all__'
+        widgets = {
+            'idcinfo': forms.TextInput(attrs={'class':'form-control'}),
+            'ipinfo': forms.TextInput(attrs={'class':'form-control'}),
+            #'repairinfo': forms.TextInput(attrs={'class':'form-control'}),
+            'brandinfo': forms.TextInput(attrs={'class': 'form-control'}),
+            'buytime': forms.TextInput(attrs={'class': 'form-control'}),
+            'hostname': forms.TextInput(attrs={'class': 'form-control'}),
+            'osinfo': forms.TextInput(attrs={'class': 'form-control'}),
+            'modelinfo': forms.TextInput(attrs={'class': 'form-control'}),
+            'memoryinfo': forms.TextInput(attrs={'class': 'form-control'}),
+            'diskinfo': forms.TextInput(attrs={'class': 'form-control'}),
+            'cpuinfo': forms.TextInput(attrs={'class': 'form-control'}),
+            'snnum': forms.TextInput(attrs={'class': 'form-control'}),
+            'usefor': forms.TextInput(attrs={'class': 'form-control'}),
+        }
+
+    def __init__(self, *args, **kwargs):
+        super(HostListForm, self).__init__(*args, **kwargs)
+        '''
+        for field in self.fields.values():
+            field.error_messages = {'required':'*'}
+
+        self.fields['idcinfo'].label= u'所在机房'
+        self.fields['idcinfo'].error_messages = {'required':u'请输入机房名称'}
+        self.fields['ipinfo'].label = u'主机ip'
+        self.fields['ipinfo'].error_messages = {'required':u'请输入主机ip'}
+        self.fields['repairinfo'].label = u'维修信息'
+        self.fields['repairinfo'].error_messages = {'required': u'请输入维修信息'}
+        self.fields['brandinfo'].label = u'主机品牌'
+        self.fields['brandinfo'].error_messages = {'required': u'主机品牌'}
+        self.fields['buytime'].label= u'购买时间'
+        self.fields['buytime'].error_messages = {'required':u'请输入购买时间'}
+        self.fields['hostname'].label = u'主机名字'
+        self.fields['hostname'].error_messages = {'required':u'请输入主机名字'}
+        self.fields['osinfo'].label = u'主机系统'
+        self.fields['osinfo'].error_messages = {'required': u'请输入主机系统'}
+        self.fields['modelinfo'].label = u'主机类型'
+        self.fields['modelinfo'].error_messages = {'required': u'请输入主机类型'}
+        self.fields['memoryinfo'].label = u'内存大小'
+        self.fields['memoryinfo'].error_messages = {'required': u'请输入内存大小'}
+        self.fields['diskinfo'].label = u'硬盘大小'
+        self.fields['diskinfo'].error_messages = {'required': u'请输入硬盘大小'}
+        self.fields['cpuinfo'].label = u'CPU型号'
+        self.fields['cpuinfo'].error_messages = {'required': u'请输入CPU 型号'}
+        self.fields['snnum'].label = u'售后代码'
+        self.fields['snnum'].error_messages = {'required': u'请输入售后代码'}
+        self.fields['usefor'].label = u'主机用途'
+        self.fields['usefor'].error_messages = {'required': u'请输入主机用途'}
+        '''
+        self.fields['repairinfo'].label = u'维修信息'
         self.fields['status'].label = u'使用状态'

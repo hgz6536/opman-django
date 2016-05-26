@@ -1,27 +1,27 @@
 {% extends "base.html" %}
 
 {% block title %}
-    添加IDC
+    添加主机
 {% endblock %}
 
 {% block content %}
     <div>
         <div class="btn-group">
-            {% url "addidcurl" as theaddidcurl %}
-            <a class="btn btn-default {% if request.path == theaddidcurl %}
+            {% url "addhosturl" as theaddhosturl %}
+            <a class="btn btn-default {% if request.path == theaddhosturl %}
             active
             {% endif %}"
-               href={{ theaddidcurl }}><span class="glyphicon glyphicon-edit"></span>添加IDC</a>
+               href={{ theaddhosturl }}><span class="glyphicon glyphicon-edit"></span>添加主机</a>
             {% url "listidcurl" as thelistidcurl %}
-            <a class="btn btn-default {% if request.path == thelistidcurl %}
+            <a class="btn btn-default {% if request.path == theaddhosturl %}
             active
             {% endif %}"
-               href={{ thelistidcurl }}><span class="glyphicon glyphicon-list"></span>主机列表</a>
+               href={{ thelisthosturl }}><span class="glyphicon glyphicon-list"></span>主机列表</a>
         </div>
     </div>
     <hr/>
 
-    <form class="form-horizontal" role="form" action={% url "addidcurl" %} method="post">
+    <form class="form-horizontal" role="form" action={% url "addhosturl" %} method="post">
     {% csrf_token %}
 
         {% for item in form %}

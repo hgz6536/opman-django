@@ -21,6 +21,7 @@ from devop.views.permission import *
 from devop.views.group import *
 from devop.views.user import ListUser, EditUser, DeleteUser
 from devop.views.idc import ListIdc, AddIdc, EditIdc, DeleIdc
+from devop.views.hosts import ListHost, AddHost, DeleHost, EditHost
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
 
@@ -66,5 +67,11 @@ urlpatterns = [
     url(r'^idc/add/$', AddIdc, name='addidcurl'),
     url(r'^idc/delete/(?P<ID>\d+)/$', DeleIdc, name='deleteidcurl'),
     url(r'^idc/edit/(?P<ID>\d+)/$', EditIdc, name='editidcurl'),
+
+    #主机管理
+    url(r'^host/list/$', ListHost, name='listhosturl'),
+    url(r'^host/add/$', AddHost, name='addhosturl'),
+    url(r'^host/delete/(?P<ID>\d+)/$', DeleHost, name='deletehosturl'),
+    url(r'^host/edit/(?P<ID>\d+)/$', EditHost, name='edithosturl'),
 ]
 

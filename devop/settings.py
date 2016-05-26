@@ -42,7 +42,6 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'django.contrib.admin',
     'opman',
-    'guardian',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -77,7 +76,6 @@ TEMPLATES = [
 
 AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend', # default
-    'guardian.backends.ObjectPermissionBackend',
 )
 
 ANONYMOUS_USER_ID = -1

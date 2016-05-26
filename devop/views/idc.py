@@ -4,7 +4,7 @@
 from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render_to_response,RequestContext
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponseRedirect
 from opman.models import IdcList
 from devop.views.permission import PermissionVerify, SelfPaginator
 from opman.forms import IdcListForm

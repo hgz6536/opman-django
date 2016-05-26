@@ -10,18 +10,19 @@ IDC 管理模块的表格
 
 class HostList(models.Model):
     idcinfo = models.CharField(max_length=100, verbose_name=u'机房')
-    ipinfo = models.GenericIPAddressField()
-    repairinfo = models.BigIntegerField()
+    ipinfo = models.GenericIPAddressField(verbose_name=u'主机IP')
+    repairinfo = models.IntegerField(verbose_name=u'维修状态')
     brandinfo = models.CharField(max_length=15, verbose_name=u'品牌')
-    buytime = models.TimeField()
+    buytime = models.DateField(verbose_name=u'购买日期')
     hostname = models.CharField(max_length=50, verbose_name=u'主机名')
     osinfo = models.CharField(max_length=50, verbose_name=u'系统版本')
     modelinfo = models.CharField(max_length=50, verbose_name=u'型号')
     memoryinfo = models.CharField(max_length=15, verbose_name=u'内存信息')
     diskinfo = models.CharField(max_length=50, verbose_name=u'硬盘信息')
     cpuinfo = models.CharField(max_length=50, verbose_name=u'CPU信息')
-    snnum = models.BigIntegerField()
+    snnum = models.CharField(max_length=30, verbose_name=u'服务编号')
     usefor = models.CharField(max_length=80, verbose_name=u'用途')
+    status = models.IntegerField(default=None, verbose_name=u'是否在用')
 
 class RepairInfo(models.Model):
     ipaddr = models.GenericIPAddressField()

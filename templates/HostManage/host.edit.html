@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block title %}
+    编辑主机
+{% endblock %}
+
+{% block content %}
+    <div>
+        <div class="btn-group">
+            {% url "addhosturl" as theaddhosturl %}
+            <a class="btn btn-default {%if request.path == theaddhosturl%} active {%endif%}" href={{ theaddhosturl }}><span class="glyphicon glyphicon-edit"></span>添加主机</a>
+            {% url "listhosturl" as thelisthosturl %}
+            <a class="btn btn-default {%if request.path == thelisthosturl%} active {%endif%}" href={{ thelisthosturl }}><span class="glyphicon glyphicon-list"></span>主机列表</a>
+        </div>
+    </div>
+
+    <hr/>
+
+    <form class="form-horizontal" role="form" action={% url "edithosturl" ID %} method="POST" >
+    {% csrf_token %}
+
+        {% for item in form %}
+            <div class="form-group">
+                <label class="control-label col-md-1">{{item.label}}</label>
+                <div class="col-md-2">
+                    {{item}}
+                </div>
+                <div class="col-md-offset-1 col-md-10">
+                    {{item.errors}}
+                </div>
+            </div>
+        {% endfor %}
+
+        <div class="form-group">
+            <div class="col-md-offset-1 col-md-10">
+                <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('确认更新吗？')">更 新</button>
+                <a class="btn btn-success btn-sm" href={% url "listhosturl" %}>返回</a>
+            </div>
+        </div>
+    </form>
+{% endblock %}
