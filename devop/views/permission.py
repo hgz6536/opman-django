@@ -11,6 +11,7 @@ from opman.models import RoleList, PermissonList
 from django.contrib.auth.models import User, Group
 from opman.views import SelfPaginator
 
+
 def PermissionVerify():
     '''
     权限认证模块;
@@ -22,8 +23,8 @@ def PermissionVerify():
         def _wrapped_view(request, *args, **kwargs):
             iUser = User.objects.get(username=request.user)
             iGroup = Group.objects.filter(user=request.user)
-            #uid = iUser.id
-            glst=[]
+            # uid = iUser.id
+            glst = []
             for g in iGroup.all():
                 glst.append(str(g))
             if not iUser.is_superuser:
@@ -41,7 +42,7 @@ def PermissionVerify():
                                 matchurl.append(x.url)
                             else:
                                 pass
-                        print('%s---->matchUrl:%s' %(request.user, str(matchurl)))
+                        print('%s---->matchUrl:%s' % (request.user, str(matchurl)))
                         if len(matchurl) == 0:
                             return HttpResponseRedirect(reverse('permissiondenyurl'))
                 else:
@@ -49,17 +50,20 @@ def PermissionVerify():
             else:
                 pass
             return view_func(request, *args, **kwargs)
+
         return _wrapped_view
+
     return decorator
+
 
 @login_required
 def Nopermisson(request):
-
     kwvars = {
-        'request':request,
+        'request': request,
     }
 
     return render_to_response('UserManage/permission.no.html', kwvars)
+
 
 @login_required
 @PermissionVerify()
@@ -72,26 +76,28 @@ def AddPermission(request):
         form = PermissionListForm()
 
     kwvars = {
-        'form':form,
-        'request':request,
+        'form': form,
+        'request': request,
     }
 
-    return render_to_response('UserManage/permission.add.html',kwvars, RequestContext(request))
+    return render_to_response('UserManage/permission.add.html', kwvars, RequestContext(request))
+
 
 @login_required
 @PermissionVerify()
 def ListPermission(request):
     mList = PermissonList.objects.all()
 
-    #分页展示
+    # 分页展示
     lst = SelfPaginator(request, mList, 20)
 
     kwvars = {
-        'lpage':lst,
-        'request':request,
+        'lpage': lst,
+        'request': request,
     }
 
     return render_to_response('UserManage/permission.list.html', kwvars)
+
 
 @login_required
 @PermissionVerify()
@@ -107,15 +113,16 @@ def EditPermission(request, ID):
         form = PermissionListForm(instance=iPermission)
 
     kwvars = {
-        'ID':ID,
-        'form':form,
-        'request':request,
+        'ID': ID,
+        'form': form,
+        'request': request,
     }
-    return render_to_response('UserManage/permission.edit.html',kwvars, RequestContext(request))
+    return render_to_response('UserManage/permission.edit.html', kwvars, RequestContext(request))
+
 
 @login_required
 @PermissionVerify()
 def DelePermission(request, ID):
-    PermissonList.objects.filter(id= ID).delete()
+    PermissonList.objects.filter(id=ID).delete()
 
     return HttpResponseRedirect(reverse('listpermissionurl'))

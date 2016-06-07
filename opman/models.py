@@ -8,6 +8,7 @@ from django.contrib.auth.models import BaseUserManager, AbstractBaseUser
 IDC 管理模块的表格
 '''
 
+
 class HostList(models.Model):
     idcinfo = models.CharField(max_length=100, verbose_name=u'机房')
     ipinfo = models.GenericIPAddressField(verbose_name=u'主机IP')
@@ -24,6 +25,7 @@ class HostList(models.Model):
     usefor = models.CharField(max_length=80, verbose_name=u'用途')
     status = models.IntegerField(default=None, verbose_name=u'是否在用')
 
+
 class RepairInfo(models.Model):
     ipaddr = models.GenericIPAddressField()
     starttime = models.TimeField()
@@ -31,6 +33,8 @@ class RepairInfo(models.Model):
     repairmethod = models.CharField(max_length=100, verbose_name=u'维修方案')
     endtime = models.TimeField()
     costifno = models.CharField(max_length=50, verbose_name=u'维修费用')
+
+
 '''
 class HostGroup(models.Model):
     groupname = models.CharField(max_length=20, verbose_name=u'组名')
@@ -52,6 +56,8 @@ class IdcList(models.Model):
     starttime = models.DateField(auto_now_add=False, verbose_name=u'开始时间')
     iphonecall = models.CharField(max_length=20, verbose_name=u'值班电话')
     status = models.BooleanField()
+
+
 '''
     def __unicode__(self):
         return self.idcname
@@ -66,13 +72,18 @@ class User(models.Model):
     pwd = models.CharField(max_length=20, verbose_name=u'用户密码')
     groupnum = models.SmallIntegerField(default= 0)
 '''
+
+
 class UserGroup(models.Model):
-    groupname = models.CharField(max_length=10,default='null', verbose_name=u'分组名字')
+    groupname = models.CharField(max_length=10, default='null', verbose_name=u'分组名字')
     groupnum = models.SmallIntegerField(default=0)
+
 
 '''
 权限相关
 '''
+
+
 class PermissonList(models.Model):
     name = models.CharField(max_length=64)
     url = models.CharField(max_length=255)
@@ -80,14 +91,16 @@ class PermissonList(models.Model):
     groupname = models.CharField(max_length=80, default=None)
 
     def __unicode__(self):
-        return '%s(%s)' %(self.name, self.url)
+        return '%s(%s)' % (self.name, self.url)
+
 
 class RoleList(models.Model):
     name = models.CharField(max_length=64)
-    permission = models.ManyToManyField(PermissonList, null = True, blank= True)
+    permission = models.ManyToManyField(PermissonList, null=True, blank=True)
 
     def __unicode__(self):
         return self.name
+
 
 class UserManager(BaseUserManager):
     def create_user(self, email, username, password=None):
@@ -95,13 +108,14 @@ class UserManager(BaseUserManager):
             raise ValueError(u'邮件地址必填')
 
         user = self.model(
-            email = self.normalize_email(email),
-            username = username,
+            email=self.normalize_email(email),
+            username=username,
         )
 
         user.set_password(password)
-        user.save(using = self.db)
+        user.save(using=self.db)
         return user
+
 
 class User(AbstractBaseUser):
     username = models.CharField(max_length=40, unique=True, db_index=True)

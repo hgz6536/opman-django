@@ -13,9 +13,9 @@
             {% endif %}"
                href={{ theaddpermissonurl }}><span class="glyphicon glyphicon-edit"></span>新建权限</a>
             {% url "listpermissionurl" as thelistpermissionurl %}
-            <a class="btn btn-default {%if request.path == thelistpermissionurl%}
+            <a class="btn btn-default {% if request.path == thelistpermissionurl %}
             active
-            {%endif%}"
+            {% endif %}"
                href={{ thelistpermissionurl }}><span class="glyphicon glyphicon-list"></span>权限列表</a>
         </div>
     </div>
@@ -23,27 +23,29 @@
     <hr/>
 
     <table class="result-tab" width="100%">
-            <tr>
-                <th>权限名称</th>
-                <th>URL</th>
-                <th>所属组</th>
-                <th>所属人</th>
-                <th>操作</th>
+        <tr>
+            <th>权限名称</th>
+            <th>URL</th>
+            <th>所属组</th>
+            <th>所属人</th>
+            <th>操作</th>
+        </tr>
+
+        {% for i in lpage %}
+            <tr style="font-size: 13px;">
+                <td>{{ i.name }}</td>
+                <td>{{ i.url }}</td>
+                <td>{{ i.groupname }}</td>
+                <td>{{ i.username }}</td>
+
+                <td>
+                    <a href={% url "editpermissionurl" i.id %} onclick="return confirm('确认编辑权限吗？？')"><span
+                        class="glyphicon glyphicon-edit btn-xs"></span></a>
+                    <a href={% url "deletepermissionurl" i.id %} onclick="return confirm('确认删除权限吗？？')"><span
+                        class="glyphicon glyphicon-trash btn-xs"></span></a>
+                </td>
             </tr>
-
-            {% for i in lpage %}
-                <tr style="font-size: 13px;">
-                    <td>{{ i.name }}</td>
-                    <td>{{ i.url }}</td>
-                    <td>{{ i.groupname }}</td>
-                    <td>{{ i.username }}</td>
-
-                    <td>
-                        <a href={% url "editpermissionurl" i.id %} onclick="return confirm('确认编辑权限吗？？')"><span class="glyphicon glyphicon-edit btn-xs"></span></a>
-                        <a href={% url "deletepermissionurl" i.id %} onclick="return confirm('确认删除权限吗？？')"><span class="glyphicon glyphicon-trash btn-xs"></span></a>
-                    </td>
-                </tr>
-            {% endfor %}
+        {% endfor %}
     </table>
     {% include "paginator.html" %}
 {% endblock %}
