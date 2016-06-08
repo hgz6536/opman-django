@@ -90,15 +90,15 @@ class PermissonList(models.Model):
     username = models.CharField(max_length=30, default=None)
     groupname = models.CharField(max_length=80, default=None)
 
-    def __unicode__(self):
+    def __str__(self):
         return '%s(%s)' % (self.name, self.url)
 
 
 class RoleList(models.Model):
     name = models.CharField(max_length=64)
-    permission = models.ManyToManyField(PermissonList, null=True, blank=True)
+    permission = models.ManyToManyField(PermissonList, blank=True)
 
-    def __unicode__(self):
+    def __str__(self):
         return self.name
 
 
