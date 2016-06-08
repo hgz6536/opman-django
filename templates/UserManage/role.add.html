@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block title %}
-    Role Edit
+    添加部门
 {% endblock %}
 
 {% block head %}
@@ -10,18 +10,18 @@
 {% endblock %}
 
 {% block content %}
-    <div class="btn-toolbar">
+    <div>
         <div class="btn-group">
             {% url "addroleurl" as theaddroleurl %}
-            <a class="btn btn-default {%if request.path == theaddroleurl%} active {%endif%}" href={{ theaddroleurl }}><span class="glyphicon glyphicon-edit"></span>新建角色</a>
+            <a class="btn btn-default {%if request.path == theaddroleurl%} active {%endif%}" href={{ theaddroleurl }}><span class="glyphicon glyphicon-edit"></span>新建部门</a>
             {% url "listroleurl" as thelistroleurl %}
-            <a class="btn btn-default {%if request.path == thelistroleurl%} active {%endif%}" href={{ thelistroleurl }}><span class="glyphicon glyphicon-list"></span>角色列表</a>
+            <a class="btn btn-default {%if request.path == thelistroleurl%} active {%endif%}" href={{ thelistroleurl }}><span class="glyphicon glyphicon-list"></span>部门列表</a>
         </div>
     </div>
 
     <hr/>
 
-    <form class="form-horizontal" role="form" action={% url "editroleurl" ID %} method="POST" >
+    <form class="form-horizontal" role="form" action={% url "addroleurl" %} method="POST" >
     {% csrf_token %}
 
         {% for item in form %}
@@ -38,8 +38,8 @@
 
         <div class="form-group">
             <div class="col-md-offset-1 col-md-10">
-                <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('确认更新吗？')">更 新</button>
-            </div>
+                <button type="submit" class="btn btn-danger btn-sm">新 增</button>
+            <div>
         </div>
 
     </form>

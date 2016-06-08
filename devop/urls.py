@@ -19,7 +19,7 @@ from django.contrib import admin
 from django.contrib.auth.views import login, logout, logout_then_login, password_change, password_change_done, \
     password_reset, password_reset_done, password_reset_confirm, password_reset_complete
 from devop.views.permission import *
-from devop.views.group import *
+from devop.views.role import *
 from devop.views.user import ListUser, EditUser, DeleteUser
 from devop.views.idc import ListIdc, AddIdc, EditIdc, DeleIdc
 from devop.views.hosts import ListHost, AddHost, DeleHost, EditHost
@@ -44,10 +44,10 @@ urlpatterns = [
     url(r'^user/delete/(?P<ID>\d+)/$', DeleteUser, name='deleteuserurl'),
 
     # 用户组管理
-    url(r'^role/add/$', AddGroup, name='addroleurl'),
-    url(r'^role/list/$', ListGroup, name='listroleurl'),
-    url(r'^role/edit/(?P<ID>\d+)/$', EditGroup, name='editroleurl'),
-    url(r'^role/delete/(?P<ID>\d+)/$', ListGroup, name='deleteroleurl'),
+    url(r'^role/add/$', AddRole, name='addroleurl'),
+    url(r'^role/list/$', ListRole, name='listroleurl'),
+    url(r'^role/edit/(?P<ID>\d+)/$', EditRole, name='editroleurl'),
+    url(r'^role/delete/(?P<ID>\d+)/$', DeleteRole, name='deleteroleurl'),
 
     # 密码管理
     url(r'^password-change/$', password_change, name='password_change'),

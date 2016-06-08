@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block title %}
+    部门列表
+{% endblock %}
+
+{% block content %}
+    <div>
+        <div class="btn-group">
+            {% url "addroleurl" as theaddroleurl %}
+            <a class="btn btn-default {%if request.path == theaddroleurl%} active {%endif%}" href={{ theaddroleurl }}><span class="glyphicon glyphicon-edit"></span>新建部门</a>
+            {% url "listroleurl" as thelistroleurl %}
+            <a class="btn btn-default {%if request.path == thelistroleurl%} active {%endif%}" href={{ thelistroleurl }}><span class="glyphicon glyphicon-list"></span>部门列表</a>
+        </div>
+    </div>
+
+    <hr/>
+
+    <table class="result-tab" width="100%">
+        <tr>
+            <th>部门名称</th>
+            <th>操作</th>
+        </tr>
+
+        {% for i in lpage %}
+            <tr style="font-size: 13px;">
+                <td>{{ i.name }} </td>
+
+                <td>
+                    <a href={% url "editroleurl" i.id %} onclick="return confirm('确认编辑部门吗？？')"><span class="glyphicon glyphicon-edit btn-xs"></span></a>
+                    <a href={% url "deleteroleurl" i.id %} onclick="return confirm('确认删除部门吗？？')"><span class="glyphicon glyphicon-trash btn-xs"></span></a>
+                </td>
+            </tr>
+        {% endfor %}
+
+    </table>
+
+    {% include "paginator.html" %}
+{% endblock %}
