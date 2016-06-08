@@ -26,8 +26,6 @@
         <tr>
             <th>权限名称</th>
             <th>URL</th>
-            <th>所属组</th>
-            <th>所属人</th>
             <th>操作</th>
         </tr>
 
@@ -35,9 +33,6 @@
             <tr style="font-size: 13px;">
                 <td>{{ i.name }}</td>
                 <td>{{ i.url }}</td>
-                <td>{{ i.groupname }}</td>
-                <td>{{ i.username }}</td>
-
                 <td>
                     <a href={% url "editpermissionurl" i.id %} onclick="return confirm('确认编辑权限吗？？')"><span
                         class="glyphicon glyphicon-edit btn-xs"></span></a>

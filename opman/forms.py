@@ -44,8 +44,6 @@ class PermissionListForm(forms.ModelForm):
         widgets = {
             'name': forms.TextInput(attrs={'class': 'form-control'}),
             'url': forms.TextInput(attrs={'class': 'form-control'}),
-            'username': forms.TextInput(attrs={'class': 'form-control'}),
-            'groupname': forms.TextInput(attrs={'class': 'form-control'})
         }
 
     def __init__(self, *args, **kwargs):
@@ -54,10 +52,6 @@ class PermissionListForm(forms.ModelForm):
         self.fields['name'].error_messages = {'required': u'请输入名称'}
         self.fields['url'].label = u'URL'
         self.fields['url'].error_messages = {'required': u'请输入URL'}
-        self.fields['username'].label = u'用户名'
-        self.fields['username'].error_messages = {'required': u'请输入用户名'}
-        self.fields['groupname'].label = u'组名'
-        self.fields['groupname'].error_messages = {'required': u'请输入组名'}
 
 
 # 用户组
