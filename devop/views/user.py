@@ -1,13 +1,10 @@
 #!/usr/bin/python
 # coding = utf-8
 from django.core.urlresolvers import reverse
-from django.contrib import auth
-from django.contrib.auth import get_user_model
-from django.contrib.auth.models import User, Group
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render_to_response, RequestContext
 from django.http import HttpResponse, HttpResponseRedirect
-
+from opman.models import MyUser as User
 from devop.views.permission import PermissionVerify, SelfPaginator
 from opman.forms import EditUserForm
 

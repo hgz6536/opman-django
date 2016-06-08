@@ -1,5 +1,5 @@
 from django import forms
-from django.contrib.auth.models import User
+from opman.models import MyUser as User
 from opman.models import PermissonList, RoleList
 from opman.models import IdcList, HostList
 
@@ -16,7 +16,7 @@ class UserRegistrationForm(forms.ModelForm):
 
     class Meta:
         model = User
-        fields = ('username', 'first_name', 'last_name', 'email')
+        fields = ('username', 'first_name', 'last_name', 'birthday', 'email', 'sex', 'role')
 
     def clean_password2(self):
         cd = self.cleaned_data

@@ -8,7 +8,8 @@ from django.contrib.auth.decorators import login_required
 
 from opman.forms import PermissionListForm
 from opman.models import RoleList, PermissonList
-from django.contrib.auth.models import User, Group
+from django.contrib.auth.models import Group
+from opman.models import MyUser as User
 from opman.views import SelfPaginator
 
 
