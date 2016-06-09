@@ -62,7 +62,6 @@ def Nopermisson(request):
     kwvars = {
         'request': request,
     }
-
     return render_to_response('UserManage/permission.no.html', kwvars)
 
 
@@ -75,12 +74,10 @@ def AddPermission(request):
         return HttpResponseRedirect(reverse('listpermissionurl'))
     else:
         form = PermissionListForm()
-
     kwvars = {
         'form': form,
         'request': request,
     }
-
     return render_to_response('UserManage/permission.add.html', kwvars, RequestContext(request))
 
 
@@ -88,15 +85,11 @@ def AddPermission(request):
 @PermissionVerify()
 def ListPermission(request):
     mList = PermissonList.objects.all()
-
-    # 分页展示
     lst = SelfPaginator(request, mList, 20)
-
     kwvars = {
         'lpage': lst,
         'request': request,
     }
-
     return render_to_response('UserManage/permission.list.html', kwvars)
 
 
@@ -104,7 +97,6 @@ def ListPermission(request):
 @PermissionVerify()
 def EditPermission(request, ID):
     iPermission = PermissonList.objects.get(id=ID)
-
     if request.method == "POST":
         form = PermissionListForm(request.POST, instance=iPermission)
         if form.is_valid():
@@ -112,7 +104,6 @@ def EditPermission(request, ID):
             return HttpResponseRedirect(reverse("listpermissionurl"))
     else:
         form = PermissionListForm(instance=iPermission)
-
     kwvars = {
         'ID': ID,
         'form': form,
@@ -125,5 +116,4 @@ def EditPermission(request, ID):
 @PermissionVerify()
 def DelePermission(request, ID):
     PermissonList.objects.filter(id=ID).delete()
-
     return HttpResponseRedirect(reverse('listpermissionurl'))

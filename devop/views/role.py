@@ -13,7 +13,6 @@ from opman.models import RoleList
 def ListRole(request):
     rList = RoleList.objects.all()
     lst = SelfPaginator(request, rList, 20)
-
     kwvars = {
         'lpage': lst,
         'request': request,
@@ -31,12 +30,10 @@ def AddRole(request):
             return HttpResponseRedirect(reverse('listroleurl'))
     else:
         form = RoleListForm()
-
     kwvars = {
         'form': form,
         'request': request,
     }
-
     return render_to_response('UserManage/role.add.html', kwvars, RequestContext(request))
 
 
@@ -44,7 +41,6 @@ def AddRole(request):
 @PermissionVerify()
 def EditRole(request, ID):
     iRole = RoleList.objects.get(id=ID)
-
     if request.method == "POST":
         form = RoleListForm(request.POST, instance=iRole)
         if form.is_valid():
@@ -52,13 +48,11 @@ def EditRole(request, ID):
             return HttpResponseRedirect(reverse('listroleurl'))
     else:
         form = RoleListForm(instance=iRole)
-
     kwvars = {
         'ID': ID,
         'form': form,
         'request': request,
     }
-
     return render_to_response('UserManage/role.edit.html', kwvars, RequestContext(request))
 
 

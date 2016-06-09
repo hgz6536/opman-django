@@ -69,8 +69,8 @@ class PermissonList(models.Model):
 
 
 class RoleList(models.Model):
-    name = models.CharField(max_length=64,verbose_name=u'部门名称')
-    permission = models.ManyToManyField(PermissonList, blank=True,verbose_name=u'权限')
+    name = models.CharField(max_length=64, verbose_name=u'部门名称')
+    permission = models.ManyToManyField(PermissonList, blank=True, verbose_name=u'权限')
 
     def __str__(self):
         return self.name

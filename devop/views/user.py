@@ -26,7 +26,6 @@ def ListUser(request):
 def EditUser(request, ID):
     print(ID)
     user = User.objects.get(id=ID)
-
     if request.method == 'POST':
         form = EditUserForm(request.POST, instance=user)
         if form.is_valid():
@@ -34,13 +33,11 @@ def EditUser(request, ID):
             return HttpResponseRedirect(reverse('listuserurl'))
     else:
         form = EditUserForm(instance=user)
-
     kwvars = {
         'ID': ID,
         'form': form,
         'request': request,
     }
-
     return render_to_response('UserManage/user.edit.html', kwvars, RequestContext(request))
 
 
@@ -51,5 +48,4 @@ def DeleteUser(request, ID):
         return HttpResponse(u'超级管理员不允许删除!!!')
     else:
         User.objects.filter(id=ID).delete()
-
     return HttpResponseRedirect(reverse('listuserurl'))
