@@ -25,9 +25,11 @@
         {% for item in form %}
             <div class="form-group">
                 <label class="control-label col-md-1">{{ item.label }}</label>
-                <div class="col-md-11">
-                    {{ item }}
-                </div>
+                {% if item.label == "权限" %}
+                    <div class="col-md-11">{{ item }}</div>
+                {% else %}
+                    <div class="col-md-2">{{ item }}</div>
+                {% endif %}
                 <div class="col-md-offset-1 col-md-10">
                     {{ item.errors }}
                 </div>

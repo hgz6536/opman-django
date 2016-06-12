@@ -11,12 +11,32 @@ class LoginForm(forms.Form):
 
 
 class UserRegistrationForm(forms.ModelForm):
-    password = forms.CharField(label=u'密码', widget=forms.PasswordInput)
-    password2 = forms.CharField(label=u'重复密码', widget=forms.PasswordInput)
+    password = forms.CharField(label=u'密码', widget=forms.PasswordInput(attrs={'class': 'form-control'}))
+    password2 = forms.CharField(label=u'重复密码', widget=forms.PasswordInput(attrs={'class': 'form-control'}))
+    SEX_CHOICES = (
+        ('男', '男'),
+        ('女', '女'),
+    )
+    sex = forms.CharField(
+        widget=forms.Select(choices=SEX_CHOICES)
+    )
 
     class Meta:
         model = User
         fields = ('username', 'last_name', 'first_name', 'birthday', 'email', 'sex', 'role')
+        widgets = {
+            'username': forms.TextInput(attrs={'class': 'form-control'}),
+            'last_name': forms.TextInput(attrs={'class': 'form-control'}),
+            'first_name': forms.TextInput(attrs={'class': 'form-control'}),
+            'email': forms.EmailInput(attrs={'class': 'form-control'}),
+            'birthday': forms.DateInput(attrs={'class': 'form-control'}),
+        }
+
+    def __init__(self, *args, **kwargs):
+        super(UserRegistrationForm, self).__init__(*args, **kwargs)
+        self.fields['birthday'].label = u'生日'
+        self.fields['email'].label = u'邮箱'
+        self.fields['sex'].label = u'性别'
 
     def clean_password2(self):
         cd = self.cleaned_data
@@ -33,17 +53,19 @@ class UserAddForm(forms.ModelForm):
         ('女', '女'),
     )
     sex = forms.CharField(
-        widget=forms.Select(choices=SEX_CHOICES)
+        widget=forms.Select(choices=SEX_CHOICES, attrs={'class': 'form-control'})
     )
+
     class Meta:
         model = User
-        fields = ('username', 'last_name', 'first_name', 'birthday', 'email', 'sex', 'role')
+        fields = ('username', 'last_name', 'first_name', 'birthday', 'email', 'sex', 'role', 'permission')
         widgets = {
             'username': forms.TextInput(attrs={'class': 'form-control'}),
             'last_name': forms.TextInput(attrs={'class': 'form-control'}),
             'first_name': forms.TextInput(attrs={'class': 'form-control'}),
             'email': forms.EmailInput(attrs={'class': 'form-control'}),
             'birthday': forms.DateInput(attrs={'class': 'form-control'}),
+            'permission': forms.SelectMultiple(attrs={'class': 'form-control', 'size': '10', 'multiple': 'multiple'}),
         }
 
     def __init__(self, *args, **kwargs):
@@ -51,6 +73,8 @@ class UserAddForm(forms.ModelForm):
         self.fields['birthday'].label = u'生日'
         self.fields['email'].label = u'邮箱'
         self.fields['sex'].label = u'性别'
+        self.fields['permission'].label = u'权限'
+
     def clean_password2(self):
         cd = self.cleaned_data
         if cd['password'] != cd['password2']:
@@ -61,13 +85,19 @@ class UserAddForm(forms.ModelForm):
 class EditUserForm(forms.ModelForm):
     class Meta:
         model = User
-        fields = ('username', 'email', 'is_active', 'first_name', 'last_name')
+        fields = ('username', 'email', 'is_active', 'last_name', 'first_name', 'permission')
         widgets = {
             'username': forms.TextInput(attrs={'class': 'form-control'}),
-            # 'password': forms.HiddenInput,
             'email': forms.TextInput(attrs={'class': 'form-control'}),
             'is_active': forms.Select(choices=((True, u'启用'), (False, u'禁用')), attrs={'class': 'form-control'}),
+            'last_name': forms.TextInput(attrs={'class': 'form-control'}),
+            'first_name': forms.TextInput(attrs={'class': 'form-control'}),
+            'permission': forms.SelectMultiple(attrs={'class': 'form-control', 'size': '10', 'multiple': 'multiple'}),
         }
+
+    def __init__(self, *args, **kwargs):
+        super(EditUserForm, self).__init__(*args, **kwargs)
+        self.fields['permission'].label = u'权限'
 
 
 class PermissionListForm(forms.ModelForm):
@@ -101,7 +131,7 @@ class RoleListForm(forms.ModelForm):
         super(RoleListForm, self).__init__(*args, **kwargs)
         self.fields['name'].label = u'名称'
         self.fields['name'].error_messages = {'required': u'请输入名称'}
-        self.fields['permission'].label = u'URL'
+        self.fields['permission'].label = u'权限'
         self.fields['permission'].required = False
 
 

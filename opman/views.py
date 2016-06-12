@@ -24,19 +24,19 @@ def SelfPaginator(request, List, Limit):
 '''
 用户登录
 '''
-from .forms import UserAddForm
+from .forms import UserAddForm, UserRegistrationForm
 
 
 def register(request):
     if request.method == 'POST':
-        form = UserAddForm(request.POST)
+        form = UserRegistrationForm(request.POST)
         if form.is_valid():
             new_user = form.save(commit=False)
             new_user.set_password(form.cleaned_data['password'])
             new_user.save()
             return render(request, 'account/register_done.html', {'new_user': new_user})
     else:
-        form = UserAddForm()
+        form = UserRegistrationForm()
     return render(request, 'account/register.html', {'form': form})
 
 
