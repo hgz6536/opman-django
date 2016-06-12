@@ -78,6 +78,7 @@ class RoleList(models.Model):
 
 class MyUser(AbstractUser):
     nickname = models.CharField(max_length=64, null=True, verbose_name=u'昵称')
-    birthday = models.DateTimeField(null=True, blank=True, default=None, verbose_name=u'生日')
+    birthday = models.DateField(null=True, blank=True, default=None, verbose_name=u'生日')
     sex = models.CharField(max_length=2, null=True, verbose_name=u'性别')
     role = models.ForeignKey(RoleList, null=True, blank=True, verbose_name=u'部门')
+    permission = models.ManyToManyField(PermissonList, blank=True, verbose_name=u'权限')

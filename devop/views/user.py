@@ -6,7 +6,7 @@ from django.shortcuts import render_to_response, RequestContext
 from django.http import HttpResponse, HttpResponseRedirect
 from opman.models import MyUser as User
 from devop.views.permission import PermissionVerify, SelfPaginator
-from opman.forms import EditUserForm
+from opman.forms import EditUserForm, UserAddForm
 
 
 @login_required
@@ -19,12 +19,25 @@ def ListUser(request):
         'request': request,
     }
     return render_to_response('UserManage/user.list.html', kwvars)
+@login_required
+@PermissionVerify()
+def AddUser(request):
+    form = UserAddForm(request.POST)
+    if form.is_valid():
+        form.save()
+        return HttpResponseRedirect(reverse('listuserurl'))
+    else:
+        form = UserAddForm()
+    kwvars = {
+        'form': form,
+        'request': request,
+    }
+    return render_to_response('UserManage/user.add.html', kwvars, RequestContext(request))
 
 
 @login_required
 @PermissionVerify()
 def EditUser(request, ID):
-    print(ID)
     user = User.objects.get(id=ID)
     if request.method == 'POST':
         form = EditUserForm(request.POST, instance=user)

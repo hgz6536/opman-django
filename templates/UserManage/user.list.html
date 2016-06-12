@@ -7,7 +7,7 @@
 {% block content %}
     <div>
         <div class="btn-group">
-            {% url "register" as theadduserurl %}
+            {% url "adduserurl" as theadduserurl %}
             <a class="btn btn-default {%if request.path == theadduserurl%} active {%endif%}" href={{ theadduserurl }}><span class="glyphicon glyphicon-edit"></span>新建用户</a>
             {% url "listuserurl" as thelistuserurl %}
             <a class="btn btn-default {%if request.path == thelistuserurl%} active {%endif%}" href={{ thelistuserurl }}><span class="glyphicon glyphicon-list"></span>用户列表</a>

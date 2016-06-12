@@ -16,8 +16,41 @@ class UserRegistrationForm(forms.ModelForm):
 
     class Meta:
         model = User
-        fields = ('username', 'first_name', 'last_name', 'birthday', 'email', 'sex', 'role')
+        fields = ('username', 'last_name', 'first_name', 'birthday', 'email', 'sex', 'role')
 
+    def clean_password2(self):
+        cd = self.cleaned_data
+        if cd['password'] != cd['password2']:
+            raise forms.ValidationError(u'两次输入的密码不一样')
+        return cd['password2']
+
+
+class UserAddForm(forms.ModelForm):
+    password = forms.CharField(label=u'密码', widget=forms.PasswordInput(attrs={'class': 'form-control'}))
+    password2 = forms.CharField(label=u'重复密码', widget=forms.PasswordInput(attrs={'class': 'form-control'}))
+    SEX_CHOICES = (
+        ('男', '男'),
+        ('女', '女'),
+    )
+    sex = forms.CharField(
+        widget=forms.Select(choices=SEX_CHOICES)
+    )
+    class Meta:
+        model = User
+        fields = ('username', 'last_name', 'first_name', 'birthday', 'email', 'sex', 'role')
+        widgets = {
+            'username': forms.TextInput(attrs={'class': 'form-control'}),
+            'last_name': forms.TextInput(attrs={'class': 'form-control'}),
+            'first_name': forms.TextInput(attrs={'class': 'form-control'}),
+            'email': forms.EmailInput(attrs={'class': 'form-control'}),
+            'birthday': forms.DateInput(attrs={'class': 'form-control'}),
+        }
+
+    def __init__(self, *args, **kwargs):
+        super(UserAddForm, self).__init__(*args, **kwargs)
+        self.fields['birthday'].label = u'生日'
+        self.fields['email'].label = u'邮箱'
+        self.fields['sex'].label = u'性别'
     def clean_password2(self):
         cd = self.cleaned_data
         if cd['password'] != cd['password2']:

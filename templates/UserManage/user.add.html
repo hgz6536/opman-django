@@ -1,10 +1,14 @@
 {% extends "base.html" %}
 
-{% block title %}新用户注册{% endblock %}
+{% block title %}
+    添加用户
+{% endblock %}
 
 {% block content %}
-    <h1>注册新帐号 加入奔流</h1>
-    <form action="{% url "register" %}" method="post">
+    <h1>添加新帐号</h1>
+    <hr/>
+
+    <form class="form-horizontal" role="form" action={% url "adduserurl" %} method="post">
     {% csrf_token %}
 
         {% for item in form %}
@@ -22,7 +26,7 @@
 
         <div class="form-group">
             <div class="col-md-offset-1 col-md-10">
-                <button type="submit" class="btn btn-success btn-sm">点击注册</button>
+                <button type="submit" class="btn btn-success btn-sm">新增</button>
             </div>
         </div>
     </form>

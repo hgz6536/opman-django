@@ -20,7 +20,7 @@ from django.contrib.auth.views import login, logout, logout_then_login, password
     password_reset, password_reset_done, password_reset_confirm, password_reset_complete
 from devop.views.permission import *
 from devop.views.role import *
-from devop.views.user import ListUser, EditUser, DeleteUser
+from devop.views.user import ListUser, EditUser, AddUser, DeleteUser
 from devop.views.idc import ListIdc, AddIdc, EditIdc, DeleIdc
 from devop.views.hosts import ListHost, AddHost, DeleHost, EditHost
 
@@ -40,6 +40,7 @@ urlpatterns = [
 
     # 用户信息
     url(r'^user/list/$', ListUser, name='listuserurl'),
+    url(r'^user/add/$', AddUser, name='adduserurl'),
     url(r'^user/edit/(?P<ID>\d+)/$', EditUser, name='edituserurl'),
     url(r'^user/delete/(?P<ID>\d+)/$', DeleteUser, name='deleteuserurl'),
 
