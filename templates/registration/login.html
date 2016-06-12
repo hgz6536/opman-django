@@ -3,10 +3,7 @@
 {% block title %}登录{% endblock %}
 
 {% block content %}
-    {% if form.errors %}
-        <p>用户名或者密码不匹配</p>
-    {% else %}
-    {% endif %}
+
 
     <div class="login-form">
         <form style="margin: 0 auto; width: 200px;" action="{% url "login" %}" method="post">
@@ -14,7 +11,11 @@
             {% csrf_token %}
             <input type="hidden" name="next" value="{{ next }}"/>
             <a href="{% url "password_reset" %}">忘记密码？</a> <a href="{% url "register" %}">注册新帐号</a>
-            <p><input type="submit" value="登录"></p>
+            <p><input type="submit"  value="登录"></p>
+            {% if form.errors %}
+                <p>用户名或者密码不匹配</p>
+            {% else %}
+            {% endif %}
         </form>
     </div>
 {% endblock %}

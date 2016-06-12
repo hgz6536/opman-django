@@ -6,8 +6,8 @@ from opman.models import IdcList, HostList
 
 # 用户登录,注册,编辑,权限
 class LoginForm(forms.Form):
-    username = forms.CharField()
-    password = forms.CharField(widget=forms.PasswordInput)
+    username = forms.CharField(label=u'账号', widget=forms.TextInput(attrs={'class': 'form-control'}))
+    password = forms.CharField(label=u'密码', widget=forms.PasswordInput(attrs={'class': 'form-control'}))
 
 
 class UserRegistrationForm(forms.ModelForm):
@@ -18,7 +18,7 @@ class UserRegistrationForm(forms.ModelForm):
         ('女', '女'),
     )
     sex = forms.CharField(
-        widget=forms.Select(choices=SEX_CHOICES)
+        widget=forms.Select(choices=SEX_CHOICES, attrs={'class': 'form-control'})
     )
 
     class Meta:
@@ -30,6 +30,7 @@ class UserRegistrationForm(forms.ModelForm):
             'first_name': forms.TextInput(attrs={'class': 'form-control'}),
             'email': forms.EmailInput(attrs={'class': 'form-control'}),
             'birthday': forms.DateInput(attrs={'class': 'form-control'}),
+            'role': forms.Select(attrs={'class': 'form-control'})
         }
 
     def __init__(self, *args, **kwargs):
