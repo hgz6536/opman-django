@@ -83,7 +83,14 @@ ANONYMOUS_USER_ID = -1
 
 WSGI_APPLICATION = 'devop.wsgi.application'
 
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+#EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_HOST = 'smtp.163.com'
+#EMAIL_PORT = 25
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'xxx@163.com'
+EMAIL_HOST_PASSWORD = 'lxxx'
+EMAIL_SUBJECT_PREFIX = u'[管理员]'
+DEFAULT_FROM_EMAIL = 'admin <xxx@163.com>'
 # Database
 # https://docs.djangoproject.com/en/1.8/ref/settings/#databases
 

@@ -23,37 +23,34 @@ def PermissionVerify():
     def decorator(view_func):
         def _wrapped_view(request, *args, **kwargs):
             iUser = User.objects.get(username=request.user)
-            iGroup = Group.objects.filter(user=request.user)
-            # uid = iUser.id
-            glst = []
-            for g in iGroup.all():
-                glst.append(str(g))
             if not iUser.is_superuser:
-                if 'sa' not in glst:
-                    if not PermissonList.objects.filter(username=iUser.username):
-                        return HttpResponseRedirect(reverse('permissiondenyurl'))
+                if not iUser.role:
+                    return HttpResponseRedirect(reverse('permissiondenyurl'))
+                role_permission = RoleList.objects.get(name=iUser.role)
+                role_permission_list = role_permission.permission.all()
+                matchUrl = []
+                for x in role_permission_list:
+                    if request.path == x.url or request.path.rstrip('/') == x.url:
+                        matchUrl.append(x.url)
+                    elif request.path.startswith(x.url):
+                        matchUrl.append(x.url)
                     else:
-                        role_permisson = PermissonList.objects.filter(username=request.user)
-                        role_permisson = role_permisson.all()
-                        matchurl = []
-                        for x in role_permisson:
-                            if request.path == x.url or request.path.rstrip('/') == x.url:
-                                matchurl.append(x.url)
-                            elif request.path.startswith(x.url):
-                                matchurl.append(x.url)
-                            else:
-                                pass
-                        print('%s---->matchUrl:%s' % (request.user, str(matchurl)))
-                        if len(matchurl) == 0:
-                            return HttpResponseRedirect(reverse('permissiondenyurl'))
-                else:
-                    pass
+                        pass
+                user_permission = iUser.permission.all()
+                for u in user_permission:
+                    if request.path == u.url or request.path.rstrip('/') == u.url:
+                        matchUrl.append(u.url)
+                    elif request.path.startswith(u.url):
+                        matchUrl.append(u.url)
+                    else:
+                        pass
+                print('%s---------->matchUrl:%s' %(request.user, str(matchUrl)))
+                if len(matchUrl) == 0:
+                    return HttpResponseRedirect(reverse('permissiondenyurl'))
             else:
                 pass
             return view_func(request, *args, **kwargs)
-
         return _wrapped_view
-
     return decorator
 
 
