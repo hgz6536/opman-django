@@ -12,8 +12,12 @@
 
 ## 当前功能 ##
 
-目前还在完善用户权限相关的东西，思路是根据URL判断当前登录的账号是不是有访问该URL的权限。权限表中分配给不同角色[**部门**]，或者单个用户的权限[**可访问的URL**]
+用户权限管理已经完成,released v1.0
 
-## 进度展示 ##
-
-![](https://github.com/hgz6536/hgz6536.github.io/blob/master/images/opman-show.png)
+## 结果展示 ##
+###编辑用户###
+![](https://github.com/hgz6536/hgz6536.github.io/blob/master/images/EditPermission.png)
+###当用户访问/user/add时就会出现以下界面###
+![](https://github.com/hgz6536/hgz6536.github.io/blob/master/images/DenyUrl.png)
+###实现了组【部门或者角色】的权限管理###
+不展示图片了,和上面的用户类似的页面,当用户没有/user/add 权限时,如果其所在的组有这个url的权限也是可以访问的,用户权限只是让权限粒度更小，从而更灵活.
