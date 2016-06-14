@@ -22,7 +22,7 @@ def PermissionVerify():
 
     def decorator(view_func):
         def _wrapped_view(request, *args, **kwargs):
-            iUser = User.objects.get(username=request.user)
+            iUser = request.user
             if not iUser.is_superuser:
                 if not iUser.role:
                     return HttpResponseRedirect(reverse('permissiondenyurl'))
