@@ -48,7 +48,7 @@ def GetWorkTime(filename, username, workedate):
         print(u'正常打卡')
         on_worke_time = jilu[0]
         off_worker_time = jilu[1]
-        print('上班时间：%s，下班时间：%s' % (on_worke_time[0], off_worker_time[0]))
+        print('上班时间：%s，下班时间：%s' % (on_worke_time, off_worker_time))
     if len(jilu) == 1:
         print(u'忘记打卡一次')
         on_worke_time = jilu[0]
