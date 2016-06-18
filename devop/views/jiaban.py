@@ -10,7 +10,7 @@
 
 from datetime import datetime, timedelta
 import heapq
-from devop.views.kaoqin import GetWorkTime
+from devop.views.kaoqin import getworktime
 
 
 class Analystor(object):
@@ -21,10 +21,10 @@ class Analystor(object):
         self.mydate = mydate
         self.filename = filename
         self.username = username
-        self.args = GetWorkTime(self.filename, self.username, self.mydate)
+        self.args = getworktime(self.filename, self.username, self.mydate)
         self.myweek = datetime.strptime(self.mydate, '%Y-%m-%d').weekday()
 
-    def is_WorkDay(self):
+    def is_workday(self):
         if self.myweek in [5, 6]:
             # print('星期天')
             return False
@@ -32,8 +32,8 @@ class Analystor(object):
             # print('工作日')
             return True
 
-    def GetHours(self):
-        if Analystor.is_WorkDay(self):
+    def gethours(self):
+        if Analystor.is_workday(self):
             print('torday is workday')
             if len(self.args) == 0:
                 print(self.mydate + ':' + '全天请假')
@@ -42,7 +42,7 @@ class Analystor(object):
                 # 判断第二天凌晨是不是有打卡
                 nextday = datetime.strptime(
                     self.mydate, '%Y-%m-%d').date() + timedelta(days=1)
-                lst = GetWorkTime(self.filename, self.username, nextday)
+                lst = getworktime(self.filename, self.username, nextday)
                 flag0 = datetime.strptime(
                     str(nextday) + ' 08:00:00', '%Y-%m-%d %H:%M:%S')
                 if heapq.nsmallest(1, lst)[0] < flag0:
@@ -66,19 +66,19 @@ class Analystor(object):
                     if flag1 < self.args[0] < flag2:
                         print('9点到9点半之间来的哦')
                         overtime = heapq.nsmallest(1, lst)[
-                            0] - datetime.strptime(str(self.mydate) + ' 19:00:00', '%Y-%m-%d %H:%M:%S')
+                                       0] - datetime.strptime(str(self.mydate) + ' 19:00:00', '%Y-%m-%d %H:%M:%S')
                         print(overtime)
                     if flag2 < self.args[0] < flag3:
                         print('9点半到10点之间来的哦')
                         overtime = heapq.nsmallest(1, lst)[
-                            0] - datetime.strptime(str(self.mydate) + ' 19:30:00', '%Y-%m-%d %H:%M:%S')
+                                       0] - datetime.strptime(str(self.mydate) + ' 19:30:00', '%Y-%m-%d %H:%M:%S')
 
                     if self.args[0] > flag3:
                         print('迟到了哦，开始计算迟到的时间')
                         print('开始查找下班时间')
                         pass
                         smtime = self.args[
-                            0] - datetime.strptime(str(self.mydate) + ' 10:00:00', '%Y-%m-%d %H:%M:%S')
+                                     0] - datetime.strptime(str(self.mydate) + ' 10:00:00', '%Y-%m-%d %H:%M:%S')
                         print(smtime)
 
                 else:

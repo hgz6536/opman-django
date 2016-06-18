@@ -11,7 +11,7 @@ from openpyxl import load_workbook
 from datetime import datetime
 
 
-def GetWorkTime(filename, username, workedate):
+def getworktime(filename, username, workedate):
     workedate = datetime.strptime(str(workedate), '%Y-%m-%d').date()
     wb = load_workbook(filename=filename)
     ws = wb.get_sheet_by_name('Sheet 1')
