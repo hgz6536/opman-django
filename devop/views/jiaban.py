@@ -10,7 +10,7 @@
 
 from datetime import datetime, timedelta
 import heapq
-from .kaoqin import GetWorkTime, twoandmore
+from .kaoqin import getworktime, twoandmore
 
 
 class Analystor(object):
@@ -23,8 +23,8 @@ class Analystor(object):
         self.username = username
         self.nextday = datetime.strptime(
             self.mydate, '%Y-%m-%d').date() + timedelta(days=1)
-        self.lst = GetWorkTime(self.filename, self.username, self.nextday)
-        self.args = GetWorkTime(self.filename, self.username, self.mydate)
+        self.lst = getworktime(self.filename, self.username, self.nextday)
+        self.args = getworktime(self.filename, self.username, self.mydate)
         self.myweek = datetime.strptime(self.mydate, '%Y-%m-%d').weekday()
         self.flag0 = datetime.strptime(
             str(self.nextday) + ' 08:00:00', '%Y-%m-%d %H:%M:%S')
