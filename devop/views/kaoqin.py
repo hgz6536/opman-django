@@ -9,6 +9,53 @@
 ##################################################
 from openpyxl import load_workbook
 from datetime import datetime
+import calendar
+
+
+def getalldate(year, month):
+    lst = []
+    pre = calendar.monthrange(year, month)[1]
+    for i in range(1, pre + 1):
+        lst.append(str(year) + '-' + str(month) + '-' + str(i))
+    return lst
+
+
+def getalldata(filename):
+    wb = load_workbook(filename=filename)
+    ws = wb.get_sheet_by_name('Sheet 1')
+    rows = ws.rows
+    alldata = []
+    for row in rows:
+        line = [col.value for col in row]
+        alldata.append(line)
+    return(alldata)
+
+
+def GetWorkTime0(username, workedate, *args):
+    workedate = datetime.strptime(str(workedate), '%Y-%m-%d').date()
+    person_daka = []
+    for line in args:
+        if line[1] == username:
+            print(line[3])
+            try:
+                daka_date = datetime.strptime(
+                    str(line[3]), '%Y-%m-%d %H:%M:%S.%f').date()
+            except ValueError:
+                daka_date = datetime.strptime(
+                    str(line[3]), '%Y-%m-%d %H:%M:%S').date()
+            else:
+                daka_date = datetime.strptime(
+                    str(line[3]), '%Y-%m-%d %H:%M:%S.%f').date()
+            if daka_date == workedate:
+                person_daka.append(line)
+            else:
+                pass
+        else:
+            pass
+    jilu = []
+    for i in person_daka:
+        jilu.append(i[3])
+    return jilu
 
 
 def getworktime(filename, username, workedate):

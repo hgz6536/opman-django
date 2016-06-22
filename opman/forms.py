@@ -23,11 +23,10 @@ class UserRegistrationForm(forms.ModelForm):
 
     class Meta:
         model = User
-        fields = ('username', 'last_name', 'first_name', 'birthday', 'email', 'sex', 'role')
+        fields = ('username', 'birthday', 'email', 'sex', 'role', 'fullname')
         widgets = {
             'username': forms.TextInput(attrs={'class': 'form-control'}),
-            'last_name': forms.TextInput(attrs={'class': 'form-control'}),
-            'first_name': forms.TextInput(attrs={'class': 'form-control'}),
+            'fullname': forms.TextInput(attrs={'class': 'form-control'}),
             'email': forms.EmailInput(attrs={'class': 'form-control'}),
             'birthday': forms.DateInput(attrs={'class': 'form-control'}),
             'role': forms.Select(attrs={'class': 'form-control'})
@@ -59,14 +58,13 @@ class UserAddForm(forms.ModelForm):
 
     class Meta:
         model = User
-        fields = ('username', 'last_name', 'first_name', 'birthday', 'email', 'sex', 'role', 'permission')
+        fields = ('username', 'birthday', 'email', 'sex', 'role', 'permission', 'fullname')
         widgets = {
             'username': forms.TextInput(attrs={'class': 'form-control'}),
-            'last_name': forms.TextInput(attrs={'class': 'form-control'}),
-            'first_name': forms.TextInput(attrs={'class': 'form-control'}),
             'email': forms.EmailInput(attrs={'class': 'form-control'}),
             'birthday': forms.DateInput(attrs={'class': 'form-control'}),
             'permission': forms.SelectMultiple(attrs={'class': 'form-control', 'size': '10', 'multiple': 'multiple'}),
+            'fullname': forms.TextInput(attrs={'class': 'form-control'}),
         }
 
     def __init__(self, *args, **kwargs):
@@ -86,14 +84,13 @@ class UserAddForm(forms.ModelForm):
 class EditUserForm(forms.ModelForm):
     class Meta:
         model = User
-        fields = ('username', 'email', 'is_active', 'last_name', 'first_name', 'permission')
+        fields = ('username', 'email', 'is_active', 'permission', 'fullname')
         widgets = {
             'username': forms.TextInput(attrs={'class': 'form-control'}),
             'email': forms.TextInput(attrs={'class': 'form-control'}),
             'is_active': forms.Select(choices=((True, u'启用'), (False, u'禁用')), attrs={'class': 'form-control'}),
-            'last_name': forms.TextInput(attrs={'class': 'form-control'}),
-            'first_name': forms.TextInput(attrs={'class': 'form-control'}),
             'permission': forms.SelectMultiple(attrs={'class': 'form-control', 'size': '10', 'multiple': 'multiple'}),
+            'fullname': forms.TextInput(attrs={'class': 'form-control'}),
         }
 
     def __init__(self, *args, **kwargs):

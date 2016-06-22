@@ -10,7 +10,7 @@
 {% endblock %}
 
 {% block content %}
-    <div class="btn-toolbar">
+    <div >
         <div class="btn-group">
             {% url "addroleurl" as theaddroleurl %}
             <a class="btn btn-default {%if request.path == theaddroleurl%} active {%endif%}" href={{ theaddroleurl }}><span class="glyphicon glyphicon-edit"></span>新建部门</a>

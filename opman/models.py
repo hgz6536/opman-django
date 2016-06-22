@@ -77,8 +77,18 @@ class RoleList(models.Model):
 
 
 class MyUser(AbstractUser):
-    nickname = models.CharField(max_length=64, null=True, verbose_name=u'昵称')
+    fullname = models.CharField(max_length=64, null=False, default=None, verbose_name=u'姓名')
     birthday = models.DateField(null=True, blank=True, default=None, verbose_name=u'生日')
     sex = models.CharField(max_length=2, null=True, verbose_name=u'性别')
-    role = models.ForeignKey(RoleList, null=True, blank=True, verbose_name=u'部门',default=2)
+    role = models.ForeignKey(RoleList, null=True, blank=True, verbose_name=u'部门', default=2)
     permission = models.ManyToManyField(PermissonList, blank=True, verbose_name=u'权限')
+
+
+class KaoQin(models.Model):
+    fullname = models.ForeignKey(MyUser, null=False, blank=False, verbose_name=u'姓名')
+    on = models.DateTimeField(null=True, blank=True, verbose_name=u'上班时间')
+    off = models.DateTimeField(null=True, blank=True, verbose_name=u'下班时间')
+    plus = models.TimeField(null=True, blank=True, verbose_name=u'加班时间')
+    late = models.TimeField(null=True, blank=True, verbose_name=u'迟到时间')
+    leave = models.TimeField(null=True, blank=True, verbose_name=u'请假时间')
+    content = models.CharField(max_length=100, null=True, verbose_name=u'情况分析')

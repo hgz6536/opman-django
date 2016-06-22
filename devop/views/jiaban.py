@@ -55,7 +55,7 @@ class Analystor(object):
             # print('工作日')
             return True
 
-    def GetHours(self):
+    def gethours(self):
 
         if Analystor.is_WorkDay(self):
             print('torday is workday')
