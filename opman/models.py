@@ -92,3 +92,11 @@ class KaoQin(models.Model):
     late = models.TimeField(null=True, blank=True, verbose_name=u'迟到时间')
     leave = models.TimeField(null=True, blank=True, verbose_name=u'请假时间')
     content = models.CharField(max_length=100, null=True, verbose_name=u'情况分析')
+
+
+class Xlsx(models.Model):
+    date = models.DateField(null=False, blank=False, verbose_name=u'日期')
+    filename = models.FileField(upload_to='./upload/xlsx/',verbose_name=u'选择文件')
+
+    def __str__(self):
+        return self.filename

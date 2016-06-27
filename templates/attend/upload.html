@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block title %}
+    xlsx 文件上传
+{% endblock %}
+
+{% block content %}
+    <div>
+    <form method="post"  enctype="multipart/form-data" action={% url "uploadxlsxurl" %}>
+        {% csrf_token %}
+        {{ uf.as_p }}
+        <input type="submit" value="ok"/>
+    </form>
+    </div>
+    <hr/>
+    <table class="result-tab" width="100%">
+        <tr>
+            <th class="tc" width="5%"></th>
+            <th>ID</th>
+            <th>日期</th>
+            <th>文件</th>
+            <th>操作</th>
+        </tr>
+    </table>
+{% endblock %}

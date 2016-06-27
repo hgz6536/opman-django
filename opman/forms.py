@@ -4,6 +4,11 @@ from opman.models import PermissonList, RoleList
 from opman.models import IdcList, HostList
 
 
+class XlsxUpload(forms.Form):
+    date = forms.DateField(label=u'日期', widget=forms.DateInput())
+    filename = forms.FileField(label=u'文件上传')
+
+
 # 用户登录,注册,编辑,权限
 class LoginForm(forms.Form):
     username = forms.CharField(label=u'账号', widget=forms.TextInput(attrs={'class': 'form-control'}))
