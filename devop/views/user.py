@@ -19,6 +19,8 @@ def ListUser(request):
         'request': request,
     }
     return render_to_response('UserManage/user.list.html', kwvars)
+
+
 @login_required
 @PermissionVerify()
 def AddUser(request):
