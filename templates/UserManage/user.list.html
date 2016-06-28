@@ -23,6 +23,7 @@
             <th>账号</th>
             <th>邮箱</th>
             <th>姓名</th>
+            <th>部门[组]</th>
             <th>状态</th>
             <th>上次登录</th>
             <th>操作</th>
@@ -37,6 +38,7 @@
             <td>{{ foo.username }}</td>
             <td>{{ foo.email }}</td>
             <td>{{ foo.fullname }}</td>
+            <td>{{ foo.role_id }}</td>
             <td>
                 {% if foo.is_active %}
                     <span class="label label-success">启用</span>

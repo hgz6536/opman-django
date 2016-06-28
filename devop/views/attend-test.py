@@ -20,5 +20,5 @@ for user in userlist:
         # print(date + user)
         jilu = getworktime(user, date, alldata)
         jilu1 = getworktime(user, nextday, alldata)
-        a = gethours(user, date, '/root/kq.xlsx', jilu1, jilu)
+        a = gethours(user, date, jilu1, jilu)
         print(a)
