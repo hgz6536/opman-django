@@ -6,21 +6,23 @@
     <link href="{% static "css/base.css" %}" rel="stylesheet">
     <link href="{% static "css/main.css" %}" rel="stylesheet">
     <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link href="/static/css/datePicker.css" rel="stylesheet">
     <script src="http://cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
     <script src="http://cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
     <script src="/static/js/jquery.bootstrap-duallistbox.js"></script>
-    <script src="/static/js/bootstrap.file-input.js"></script>
+    <!--script src="/static/js/bootstrap.file-input.js"></script-->
+    <script src="/static/js/jquery.date_input.pack.js"></script>
     <link rel="stylesheet" type="text/css" href="/static/css/bootstrap-duallistbox.css">
-    <link href="/static/css/bootstrap.file-input.css" rel="stylesheet">
+    <!--link href="/static/css/bootstrap.file-input.css" rel="stylesheet"-->
 </head>
 <body>
     <div id="header">
         <span class="logo">Niubilety</span>
         {% if request.user.is_authenticated %}
         <ul class="menu">
-            <li {% if section == "dashboard" %}class="selected"{% endif %}><a href="{% url "dashboard" %}">My dashboard</a></li>
-            <li {% if section == "images" %}class="selected"{% endif %}><a href="#">Images</a></li>
-            <li {% if section == "people" %}class="selected"{% endif %}><a href="#">People</a></li>
+            <li {% if section == "dashboard" %}class="selected"{% endif %}><a href="{% url "dashboard" %}">主页</a></li>
+            <li {% if section == "images" %}class="selected"{% endif %}><a href="#">任务</a></li>
+            <li {% if section == "people" %}class="selected"{% endif %}><a href="#">消息</a></li>
         </ul>
         {% endif %}
         

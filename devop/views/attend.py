@@ -18,7 +18,6 @@ from openpyxl import load_workbook
 def ListData(request):
     cUser = request.user
     fullname = cUser.id
-    print(fullname)
     if cUser.is_superuser or cUser.role.name == '人事行政':
         KList = KaoQin.objects.all()
     else:
@@ -43,7 +42,7 @@ def UploadXlsx(request):
             xlsx.date = date
             xlsx.filename = filename
             xlsx.save()
-            return HttpResponse('upload ok!')
+            return HttpResponseRedirect(reverse('uploadxlsxurl'))
     else:
         uf = XlsxUpload()
     xlist = Xlsx.objects.all()
@@ -110,3 +109,9 @@ def WriteData(request, ID):
 def DeleteXlsx(request, ID):
     Xlsx.objects.filter(id=ID).delete()
     return HttpResponseRedirect(reverse('uploadxlsxurl'))
+
+
+@login_required
+@PermissionVerify()
+def searchdata(request):
+    pass

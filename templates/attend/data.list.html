@@ -5,8 +5,32 @@
 {% endblock %}
 
 {% block content %}
-
-    <hr/>
+    <div class="search-wrap" xmlns="http://www.w3.org/1999/html">
+            <div class="search-content">
+                <form action="#" method="post">
+                    <table class="search-tab">
+                        <tr>
+                            <th width="70">姓名:</th>
+                            <td><input class="common-text" placeholder="韩光祖" name="fullname" value="" id="" type="text"></td>
+                            <th width="100">选择日期:</th>
+                            <td>
+                                    <input type="text" id="datePicker" class="input-sm form-control" name="start" />
+                            </td>
+                            <td>
+                                    <input type="text" id="datePicker2" class="input-sm form-control" name="end" />
+                            </td>
+                            <script type="text/javascript">
+                                        $(function () {
+                                            $('#datePicker').date_input();
+                                            $('#datePicker2').date_input();
+                                        });
+                            </script>
+                            <td><input class="btn btn-primary btn2" name="sub" value="查询" type="submit"></td>
+                        </tr>
+                    </table>
+                </form>
+            </div>
+        </div>
 
     <table class="result-tab" width="100%">
         <tr>
