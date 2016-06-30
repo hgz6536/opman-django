@@ -5,19 +5,20 @@
 {% endblock %}
 
 {% block content %}
+
     <hr/>
 
     <table class="result-tab" width="100%">
         <tr>
             <th class="tc" width="5%"></th>
-            <th>ID</th>
             <th>姓名</th>
             <th>日期</th>
+            <th>星期</th>
             <th>上班</th>
             <th>下班</th>
-            <th>加班</th>
-            <th>迟到</th>
-            <th>请假</th>
+            <th>加班[时]</th>
+            <th>迟到[时]</th>
+            <th>请假[时]</th>
             <th>描述信息</th>
         </tr>
 
@@ -26,14 +27,34 @@
             <td class="tc">
                 <input type="checkbox" value="" name="id[]">
             </td>
-            <td>{{ foo.id }}</td>
             <td>{{ foo.fullname.fullname }}</td>
             <td>{{ foo.date }}</td>
-            <td>{{ foo.on }}</td>
-            <td>{{ foo.off }}</td>
-            <td>{{ foo.plus }}</td>
-            <td>{{ foo.late }}</td>
-            <td>{{ foo.leave }}</td>
+            <td>{{ foo.week }}</td>
+            {% if foo.on == None %}
+                <td></td>
+            {% else %}
+                <td>{{ foo.on }}</td>
+            {% endif %}
+            {% if foo.off == None %}
+                <td></td>
+            {% else %}
+                <td>{{ foo.off }}</td>
+            {% endif %}
+            {% if foo.plus == None %}
+                <td></td>
+            {% else %}
+                <td>{{ foo.plus }}</td>
+            {% endif %}
+            {% if foo.late == None %}
+                <td></td>
+            {% else %}
+                <td>{{ foo.late }}</td>
+            {% endif %}
+            {% if foo.leave == None %}
+                <td></td>
+            {% else %}
+                <td>{{ foo.leave }}</td>
+            {% endif %}
             <td>{{ foo.content }}</td>
         </tr>
         {% endfor %}

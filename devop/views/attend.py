@@ -16,8 +16,14 @@ from openpyxl import load_workbook
 @login_required
 @PermissionVerify()
 def ListData(request):
-    KList = KaoQin.objects.all()
-    lst = SelfPaginator(request, KList, 20)
+    cUser = request.user
+    fullname = cUser.id
+    print(fullname)
+    if cUser.is_superuser or cUser.role.name == '人事行政':
+        KList = KaoQin.objects.all()
+    else:
+        KList = KaoQin.objects.filter(fullname_id=fullname)
+    lst = SelfPaginator(request, KList, 31)
     kwvars = {
         'lpage': lst,
         'request': request,
@@ -87,6 +93,7 @@ def WriteData(request, ID):
                     uid = user.get(fullname=fullname).id
                     kq = KaoQin()
                     kq.date = a['date']
+                    kq.week = a['myweek']
                     kq.on = a['on']
                     kq.off = a['off']
                     kq.plus = a['plus']
