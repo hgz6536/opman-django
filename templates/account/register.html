@@ -5,24 +5,23 @@
 {% block content %}
     <h1>注册新帐号 加入奔流</h1>
     <form action="{% url "register" %}" method="post">
-    {% csrf_token %}
-
-        {% for item in form %}
-            <div class="form-group">
-                <label class="control-label col-md-1">{{ item.label }}</label>
-                <div class="col-md-2">
-                    {{ item }}
-                </div>
-                <div class="col-md-offset-1 col-md-10">
-                    {{ item.errors }}
-                </div>
-            </div>
-
-        {% endfor %}
-
+        {% csrf_token %}
+        <style>
+            table {
+                border-collapse: separate;
+                border-spacing: 10px;
+            }
+        </style>
+        <script type="text/javascript">
+            $(function () {
+                $('#id_birthday').date_input();
+            });
+        </script>
+        <table> {{ form.as_table }} </table>
         <div class="form-group">
             <div class="col-md-offset-1 col-md-10">
                 <button type="submit" class="btn btn-success btn-sm">点击注册</button>
+                <a class="btn btn-success btn-sm" href={% url "login" %}>登录</a>
             </div>
         </div>
     </form>

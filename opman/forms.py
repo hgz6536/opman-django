@@ -5,7 +5,7 @@ from opman.models import IdcList, HostList
 
 
 class XlsxUpload(forms.Form):
-    date = forms.DateField(label=u'日期', widget=forms.DateInput())
+    date = forms.DateField(label=u'日期', widget=forms.TextInput(attrs={'class': 'form-control',"placeholder": "1992-10-03"}))
     filename = forms.FileField(label=u'文件上传')
 
 
@@ -33,7 +33,7 @@ class UserRegistrationForm(forms.ModelForm):
             'username': forms.TextInput(attrs={'class': 'form-control'}),
             'fullname': forms.TextInput(attrs={'class': 'form-control'}),
             'email': forms.EmailInput(attrs={'class': 'form-control'}),
-            'birthday': forms.DateInput(attrs={'class': 'form-control',"placeholder": "1992-10-03"}),
+            'birthday': forms.TextInput(attrs={'class': 'form-control',"placeholder": "1992-10-03"}),
             'role': forms.Select(attrs={'class': 'form-control'})
         }
 

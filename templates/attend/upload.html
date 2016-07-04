@@ -5,11 +5,22 @@
 
 {% block content %}
     <div>
-    <form method="post"  enctype="multipart/form-data" action={% url "uploadxlsxurl" %}>
-        {% csrf_token %}
-        {{ uf.as_p }}
-        <button type="submit" class="btn btn-success btn-sm">上传</button>
-    </form>
+        <form method="post" enctype="multipart/form-data" action={% url "uploadxlsxurl" %}>
+            {% csrf_token %}
+            <style>
+                table {
+                    border-collapse: separate;
+                    border-spacing: 10px;
+                }
+            </style>
+            <script type="text/javascript">
+                $(function () {
+                    $('#id_date').date_input();
+                });
+            </script>
+            <table> {{ uf.as_table }} </table>
+            <button type="submit" class="btn btn-success btn-sm">上传</button>
+        </form>
     </div>
     <hr/>
     <table class="result-tab" width="100%">
@@ -20,17 +31,17 @@
             <th>操作</th>
         </tr>
         {% for foo in lpage %}
-        <tr>
-            <td class="tc">
-                <input type="checkbox" value="" name="id[]">
-            </td>
-            <td>{{ foo.date }}</td>
-            <td>{{ foo.filename }}</td>
-            <td class="host_buttom">
-                <a class="btn btn-warning btn-xs" href={% url "writedataurl" foo.id %} onclick="return confirm('是否确认导入数据库？')">导入</a>
-                <a class="btn btn-danger btn-xs" href={% url "delxlsxurl" foo.id %} onclick="return confirm('是否确认删除？')">删除</a>
-            </td>
-        </tr>
+            <tr>
+                <td class="tc">
+                    <input type="checkbox" value="" name="id[]">
+                </td>
+                <td>{{ foo.date }}</td>
+                <td>{{ foo.filename }}</td>
+                <td class="host_buttom">
+                    <a class="btn btn-warning btn-xs" href={% url "writedataurl" foo.id %} onclick="return confirm('是否确认导入数据库？')">导入</a>
+                    <a class="btn btn-danger btn-xs" href={% url "delxlsxurl" foo.id %} onclick="return confirm('是否确认删除？')">删除</a>
+                </td>
+            </tr>
         {% endfor %}
     </table>
     {% include "paginator.html" %}
