@@ -7,11 +7,16 @@
 {% block content %}
     <div class="search-wrap" xmlns="http://www.w3.org/1999/html">
             <div class="search-content">
-                <form action="#" method="post">
+                <form action="{% url  "searchdataurl"  %}" method="get">
                     <table class="search-tab">
                         <tr>
+                            {% if nameinput == "disabled" %}
                             <th width="70">姓名:</th>
-                            <td><input class="common-text" placeholder="韩光祖" name="fullname" value="" id="" type="text"></td>
+                                <td><input class="common-text" placeholder="韩光祖" name="username" value="" id="" type="text" disabled="disabled"></td>
+                            {% else %}
+                                <th width="70">姓名:</th>
+                                <td><input class="common-text" placeholder="韩光祖" name="username" value="" id="" type="text"></td>
+                            {% endif %}
                             <th width="100">选择日期:</th>
                             <td>
                                     <input type="text" id="datePicker" class="input-sm form-control" name="start" />
@@ -30,10 +35,10 @@
                     </table>
                 </form>
             </div>
-        </div>
+    </div>
 
     <table class="result-tab" width="100%">
-        <tr class="result-tab" width="100%" style="position: fixed">
+        <tr>
             <th class="tc" width="5%"></th>
             <th style="border: 5px;">姓名</th>
             <th class="result-tab">日期</th>
@@ -44,18 +49,6 @@
             <th class="result-tab">迟到[时]</th>
             <th class="result-tab">请假[时]</th>
             <th class="result-tab">描述信息</th>
-        </tr>
-        <tr>
-            <th class="tc" width="5%"></th>
-            <th>姓名</th>
-            <th>日期</th>
-            <th>星期</th>
-            <th>上班</th>
-            <th>下班</th>
-            <th>加班[时]</th>
-            <th>迟到[时]</th>
-            <th>请假[时]</th>
-            <th>描述信息</th>
         </tr>
         {% for foo in lpage %}
         <tr>

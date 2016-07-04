@@ -20,10 +20,13 @@ def ListData(request):
     fullname = cUser.id
     if cUser.is_superuser or cUser.role.name == '人事行政':
         KList = KaoQin.objects.all()
+        nameinput = 'able'
     else:
         KList = KaoQin.objects.filter(fullname_id=fullname)
+        nameinput = 'disabled'
     lst = SelfPaginator(request, KList, 31)
     kwvars = {
+        'nameinput': nameinput,
         'lpage': lst,
         'request': request,
     }
@@ -114,4 +117,33 @@ def DeleteXlsx(request, ID):
 @login_required
 @PermissionVerify()
 def searchdata(request):
-    pass
+    cUser = request.user
+    cid = cUser.id
+    user = User.objects.all()
+    start = request.GET["start"]
+    end = request.GET["end"]
+    if cUser.is_superuser or cUser.role.name == '人事行政':
+        nameinput = 'able'
+        fullname = request.GET["username"]
+        id = user.get(fullname=fullname).id
+        if not fullname:
+            KList = KaoQin.objects.filter(date__range=[start, end])
+        if not start and not end:
+            KList = KaoQin.objects.filter(fullname_id=id)
+        if start and end:
+            KList = KaoQin.objects.filter(fullname_id=id).filter(date__range=[start, end])
+        if not fullname and not start and not end:
+            pass
+    else:
+        nameinput = 'disabled'
+        if not start or not end:
+            pass
+        if start and end:
+            KList = KaoQin.objects.filter(fullname_id = cid).filter(date__range=[start, end])
+    lst = SelfPaginator(request, KList, 31)
+    kwvars = {
+        'nameinput': nameinput,
+        'lpage': lst,
+        'request': request,
+    }
+    return render_to_response('attend/data.list.html', kwvars, RequestContext(request))

@@ -23,7 +23,7 @@ from devop.views.role import *
 from devop.views.user import ListUser, EditUser, AddUser, DeleteUser
 from devop.views.idc import ListIdc, AddIdc, EditIdc, DeleIdc
 from devop.views.hosts import ListHost, AddHost, DeleHost, EditHost
-from devop.views.attend import UploadXlsx, WriteData, DeleteXlsx, ListData
+from devop.views.attend import UploadXlsx, WriteData, DeleteXlsx, ListData, searchdata
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
@@ -84,4 +84,5 @@ urlpatterns = [
     url(r'^write/data/(?P<ID>\d+)/$', WriteData, name='writedataurl'),
     url(r'^delete/xlsx/(?P<ID>\d+)/$', DeleteXlsx, name='delxlsxurl'),
     url(r'^list/data/$', ListData, name='listdataurl'),
+    url(r'^seach/data/$', searchdata, name='searchdataurl'),
 ]
