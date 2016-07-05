@@ -31,7 +31,7 @@ class UserRegistrationForm(forms.ModelForm):
         fields = ('username', 'birthday', 'email', 'sex', 'role', 'fullname')
         widgets = {
             'username': forms.TextInput(attrs={'class': 'form-control'}),
-            'fullname': forms.TextInput(attrs={'class': 'form-control'}),
+            'fullname': forms.TextInput(attrs={'class': 'form-control',"placeholder": "考勤必填"}),
             'email': forms.EmailInput(attrs={'class': 'form-control'}),
             'birthday': forms.TextInput(attrs={'class': 'form-control',"placeholder": "1992-10-03"}),
             'role': forms.Select(attrs={'class': 'form-control'})

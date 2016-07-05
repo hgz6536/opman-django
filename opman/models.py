@@ -77,7 +77,7 @@ class RoleList(models.Model):
 
 
 class MyUser(AbstractUser):
-    fullname = models.CharField(max_length=64, null=False,unique=True, default=None, verbose_name=u'姓名')
+    fullname = models.CharField(max_length=64, null=True,unique=True, default=None, verbose_name=u'姓名')
     birthday = models.DateField(null=True, blank=True, default=None, verbose_name=u'生日')
     sex = models.CharField(max_length=2, null=True, verbose_name=u'性别')
     role = models.ForeignKey(RoleList, null=True, blank=True, verbose_name=u'部门', default=2)
