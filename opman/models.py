@@ -102,3 +102,7 @@ class Xlsx(models.Model):
 
     def __str__(self):
         return self.filename
+
+
+class GitSetting(models.Model):
+    pass
