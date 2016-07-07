@@ -24,7 +24,7 @@ def SelfPaginator(request, List, Limit):
 '''
 用户登录
 '''
-from .forms import UserAddForm, UserRegistrationForm
+from .forms import UserRegistrationForm
 
 
 def register(request):
