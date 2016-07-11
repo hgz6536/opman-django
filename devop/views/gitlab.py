@@ -47,18 +47,21 @@ def all_projects(host, path, rootoken):
 def user_all_projects(host, path, usertoken):
     url = 'http://' + host + path + 'projects?private_token=' + usertoken
     r = requests.get(url)
-    r.encoding = 'utf-8'
-    data = json.loads(r.text)
-    pro_list = []
-    pro_dic = {}
-    for l in data:
-        for m in l:
-            namespace = l['name_with_namespace'].split('/')
-            owner = namespace[0]
-            name = namespace[1]
-            created_at = l['created_at']
-            url = l['http_url_to_repo']
-            pro_dic = {'pro_owner': owner, 'pro_create_time': created_at,
-                       'pro_name': name, 'pro_url': url}
-        pro_list.append(pro_dic)
-    return pro_list
+    if r.status_code == 401:
+        return "401 Unauthorized"
+    else:
+        r.encoding = 'utf-8'
+        data = json.loads(r.text)
+        pro_list = []
+        pro_dic = {}
+        for l in data:
+            for m in l:
+                namespace = l['name_with_namespace'].split('/')
+                owner = namespace[0]
+                name = namespace[1]
+                created_at = l['created_at']
+                url = l['http_url_to_repo']
+                pro_dic = {'pro_owner': owner, 'pro_create_time': created_at,
+                           'pro_name': name, 'pro_url': url}
+            pro_list.append(pro_dic)
+        return pro_list
