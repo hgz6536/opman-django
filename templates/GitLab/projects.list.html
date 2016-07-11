@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+
+{% block title %}
+    项目列表
+{% endblock %}
+
+{% block content %}
+    <div class="search-wrap" xmlns="http://www.w3.org/1999/html">
+            <div class="search-content">
+                <form action="{% url  "searchdataurl"  %}" method="get">
+                    <table class="search-tab">
+                        <tr>
+                            {% if nameinput == "disabled" %}
+                            <th width="70">姓名:</th>
+                                <td><input class="common-text" placeholder="韩光祖" name="username" value="" id="" type="text" disabled="disabled"></td>
+                            {% else %}
+                                <th width="70">姓名:</th>
+                                <td><input class="common-text" placeholder="韩光祖" name="username" value="" id="" type="text"></td>
+                            {% endif %}
+                            <th width="100">选择日期:</th>
+                            <td>
+                                    <input type="text" id="datePicker" class="input-sm form-control" name="start" />
+                            </td>
+                            <td>
+                                    <input type="text" id="datePicker2" class="input-sm form-control" name="end" />
+                            </td>
+                            <script type="text/javascript">
+                                        $(function () {
+                                            $('#datePicker').date_input();
+                                            $('#datePicker2').date_input();
+                                        });
+                            </script>
+                            <td><input class="btn btn-primary btn2" name="sub" value="查询" type="submit"></td>
+                        </tr>
+                    </table>
+                </form>
+            </div>
+    </div>
+
+    <table class="result-tab" width="100%">
+        <tr>
+            <th class="tc" width="5%"></th>
+            <th>名称</th>
+            <th>所有者</th>
+            <th>Clone URL</th>
+            <th>创建时间</th>
+            <th>操作</th>
+        </tr>
+        {% for foo in lpage %}
+        <tr>
+            <td class="tc">
+                <input type="checkbox" value="" name="id[]">
+            </td>
+            <td>{{ foo.pro_name }}</td>
+            <td>{{ foo.pro_owner }}</td>
+            <td>{{ foo.pro_url }}</td>
+            <td>{{ foo.pro_create_time }}</td>
+            <td class="host_buttom">
+                <a class="btn btn-warning btn-xs" href=# onclick="return confirm('是否确认编辑？')">编辑</a>
+                <a class="btn btn-danger btn-xs" href=# onclick="return confirm('是否确认删除？')">删除</a>
+            </td>
+        </tr>
+        {% endfor %}
+
+    </table>
+    {% include "paginator.html" %}
+{% endblock %}

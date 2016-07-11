@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block title %}Git 系统设置{% endblock %}
+
+{% block content %}
+    <h1>基本配置</h1>
+    <form action="{% url "gitsettingurl" %}" method="post">
+        {% csrf_token %}
+        <style>
+            table {
+                border-collapse: separate;
+                border-spacing: 10px;
+            }
+        </style>
+        <script type="text/javascript">
+            $(function () {
+                $('#id_birthday').date_input();
+            });
+        </script>
+        <table> {{ form.as_table }} </table>
+        <div class="form-group">
+            <div class="col-md-offset-1 col-md-10">
+                <button type="submit" class="btn btn-success btn-sm">保存</button>
+            </div>
+        </div>
+    </form>
+{% endblock %}

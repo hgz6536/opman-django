@@ -2,13 +2,36 @@ from django import forms
 from opman.models import MyUser as User
 from opman.models import PermissonList, RoleList
 from opman.models import IdcList, HostList
+from opman.models import GitSetting, GitToken
 
 
+#考勤xlsx上传
 class XlsxUpload(forms.Form):
     date = forms.DateField(label=u'日期', widget=forms.TextInput(attrs={'class': 'form-control',"placeholder": "1992-10-03"}))
     filename = forms.FileField(label=u'文件上传')
 
 
+#Git 系统配置
+class GitSettingForm(forms.ModelForm):
+    hostname = forms.CharField(label=u'域名', widget=forms.TextInput(attrs={'class': 'form-control',"placeholder": "gitlab.niubilety.com"}))
+    rootoken = forms.CharField(label=u'管理员token',widget=forms.TextInput(attrs={'class': 'form-control'}))
+    class Meta:
+        model = GitSetting
+        fields ='__all__'
+    def __init__(self, *args, **kwargs):
+        super(GitSettingForm, self).__init__(*args, **kwargs)
+        self.fields['hostname'].label = u'域名'
+        self.fields['rootoken'].label = u'管理员token'
+
+
+class TokenForm(forms.ModelForm):
+    usertoken = forms.CharField(label=u'Token',widget=forms.TextInput(attrs={'class': 'form-control'}))
+    class Meta:
+        model = GitToken
+        fields = ('usertoken',)
+    def __init__(self, *args, **kwargs):
+        super(TokenForm, self).__init__(*args, **kwargs)
+        self.fields['usertoken'].label = u'Token'
 # 用户登录,注册,编辑,权限
 class LoginForm(forms.Form):
     username = forms.CharField(label=u'账号', widget=forms.TextInput(attrs={'class': 'form-control'}))

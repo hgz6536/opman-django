@@ -46,15 +46,16 @@
 
             <ul class="sidebar-list">
                 <li>
-                    <a href="{% url "listdataurl" %}">
+                    <a href="{% url "listallprojectsurl" %}">
                         <i class="icon-font">&#xe006</i>
                         代码管理
                     </a>
                     <ul class="sub-menu">
-                        <li><a href="{% url "uploadxlsxurl" %}"><i class="icon-font">&#xe009</i>创建项目</a> </li>
+
+                        <li><a href="{% url "gitsettingurl" %}"><i class="icon-font">&#xe018</i>系统设置</a> </li>
                     </ul>
                     <ul class="sub-menu">
-                        <li><a href="{% url "listhosturl" %}"><i class="icon-font">&#xe018</i>配置管理</a> </li>
+                        <li><a href="{% url "uploadxlsxurl" %}"><i class="icon-font">&#xe009</i>创建项目</a> </li>
                     </ul>
                 </li>
             </ul>

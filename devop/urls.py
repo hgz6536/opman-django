@@ -24,7 +24,7 @@ from devop.views.user import ListUser, EditUser, AddUser, DeleteUser
 from devop.views.idc import ListIdc, AddIdc, EditIdc, DeleIdc
 from devop.views.hosts import ListHost, AddHost, DeleHost, EditHost
 from devop.views.attend import UploadXlsx, WriteData, DeleteXlsx, ListData, searchdata
-
+from devop.views.gitman import Setting, ListProjects, AddToken
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
 
@@ -85,4 +85,9 @@ urlpatterns = [
     url(r'^delete/xlsx/(?P<ID>\d+)/$', DeleteXlsx, name='delxlsxurl'),
     url(r'^list/data/$', ListData, name='listdataurl'),
     url(r'^seach/data/$', searchdata, name='searchdataurl'),
+
+    #Git管理
+    url(r'^git/setting/$', Setting, name='gitsettingurl'),
+    url(r'^list/all/projects/$', ListProjects, name='listallprojectsurl'),
+url(r'^add/token/$', AddToken, name='tokenaddurl'),
 ]

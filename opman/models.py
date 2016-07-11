@@ -105,4 +105,9 @@ class Xlsx(models.Model):
 
 
 class GitSetting(models.Model):
-    pass
+    hostname = models.CharField(max_length=100, null=True,unique=True, default=None, verbose_name=u'GitLab域名')
+    rootoken = models.CharField(max_length=30, null=True,unique=True, default=None, verbose_name=u'管理员token')
+
+class GitToken(models.Model):
+    usertoken = models.CharField(max_length=30, null=True,unique=True, default=None, verbose_name=u'用户token')
+    fullname = models.ForeignKey(MyUser, null=False, blank=False, verbose_name=u'姓名')
