@@ -50,7 +50,7 @@ def AddToken(request):
         form.save(commit=False)
         usertoken = form.cleaned_data['usertoken']
         i.usertoken=usertoken
-        i.fullname = request.user.id
+        i.fullname = request.user
         i.save()
         return HttpResponseRedirect(reverse('listallprojectsurl'))
     else:

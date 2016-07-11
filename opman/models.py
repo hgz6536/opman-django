@@ -110,4 +110,4 @@ class GitSetting(models.Model):
 
 class GitToken(models.Model):
     usertoken = models.CharField(max_length=30, null=True,unique=True, default=None, verbose_name=u'用户token')
-    fullname = models.ForeignKey(MyUser, null=False, blank=False, verbose_name=u'姓名')
+    fullname = models.ForeignKey(MyUser, null=False, blank=False,unique=True, verbose_name=u'姓名')
