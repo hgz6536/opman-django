@@ -8,6 +8,8 @@ from devop.views.permission import PermissionVerify, SelfPaginator
 from .gitlab import all_projects, user_all_projects
 from opman.forms import GitSettingForm, TokenForm
 from opman.models import GitSetting, GitToken
+from git import Repo, cmd
+import os
 
 
 @login_required
@@ -49,7 +51,7 @@ def AddToken(request):
         i = GitToken()
         form.save(commit=False)
         usertoken = form.cleaned_data['usertoken']
-        i.usertoken=usertoken
+        i.usertoken = usertoken
         i.fullname = request.user
         i.save()
         return HttpResponseRedirect(reverse('listallprojectsurl'))
@@ -92,4 +94,28 @@ def ListProjects(request):
     return render_to_response('GitLab/projects.list.html', kwvars)
 
 
+@login_required
+def UploadProject(request, Url):
+    codepath = Url.split('/')[-1].split('.')[0]
+    sourcepath = GitSetting.objects.get(id=1).sourcepath
+    sourcepath = sourcepath.rstrip('/')
+    if not os.path.exists(sourcepath):
+        os.mkdir(sourcepath)
+    if not os.path.exists(sourcepath + '/' + codepath):
+        Repo.clone_from(Url, sourcepath + '/' + codepath)
+    else:
+        os.chdir(sourcepath)
+        g = cmd.Git(codepath)
+        g.pull()
+    return HttpResponseRedirect(reverse('listallprojectsurl'))
 
+
+@login_required
+def Reset(request, Url):
+    codepath = Url.split('/')[-1].split('.')[0]
+    sourcepath = GitSetting.objects.get(id=1).sourcepath
+    sourcepath = sourcepath.rstrip('/')
+    os.chdir(sourcepath)
+    repo = Repo(codepath)
+    repo.head.reset('HEAD~1', working_tree=1)
+    return HttpResponseRedirect(reverse('listallprojectsurl'))

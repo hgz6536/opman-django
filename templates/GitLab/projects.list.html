@@ -39,25 +39,22 @@
 
     <table class="result-tab" width="100%">
         <tr>
-            <th class="tc" width="5%"></th>
             <th>名称</th>
             <th>所有者</th>
-            <th>Clone URL</th>
+            <th>克隆 URL</th>
             <th>创建时间</th>
             <th>操作</th>
         </tr>
         {% for foo in lpage %}
         <tr>
-            <td class="tc">
-                <input type="checkbox" value="" name="id[]">
-            </td>
             <td>{{ foo.pro_name }}</td>
             <td>{{ foo.pro_owner }}</td>
             <td>{{ foo.pro_url }}</td>
             <td>{{ foo.pro_create_time }}</td>
             <td class="host_buttom">
-                <a class="btn btn-warning btn-xs" href=# onclick="return confirm('是否确认编辑？')">编辑</a>
-                <a class="btn btn-danger btn-xs" href=# onclick="return confirm('是否确认删除？')">删除</a>
+                <a class="btn btn-danger btn-xs" href={% url "uploadprojecturl" foo.pro_url %} onclick="return confirm('是否确认删除？')">删除</a>
+                <a class="btn btn-warning btn-xs" href={% url "resetprojecturl" foo.pro_url %} onclick="return confirm('是否确认回滚？')">回滚</a>
+                <a class="btn btn-info btn-xs" href={% url "uploadprojecturl" foo.pro_url %} onclick="return confirm('是否确认上线？')">上线</a>
             </td>
         </tr>
         {% endfor %}

@@ -14,14 +14,15 @@ class XlsxUpload(forms.Form):
 #Git 系统配置
 class GitSettingForm(forms.ModelForm):
     hostname = forms.CharField(label=u'域名', widget=forms.TextInput(attrs={'class': 'form-control',"placeholder": "gitlab.niubilety.com"}))
-    rootoken = forms.CharField(label=u'管理员token',widget=forms.TextInput(attrs={'class': 'form-control'}))
+    rootoken = forms.CharField(label=u'管理员Token',widget=forms.TextInput(attrs={'class': 'form-control'}))
+    sourcepath = forms.CharField(label=u'源目录',widget=forms.TextInput(attrs={'class': 'form-control',"placeholder": "/var/htdocs"}))
     class Meta:
         model = GitSetting
         fields ='__all__'
     def __init__(self, *args, **kwargs):
         super(GitSettingForm, self).__init__(*args, **kwargs)
         self.fields['hostname'].label = u'域名'
-        self.fields['rootoken'].label = u'管理员token'
+        self.fields['rootoken'].label = u'管理员Token'
 
 
 class TokenForm(forms.ModelForm):
@@ -32,6 +33,8 @@ class TokenForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(TokenForm, self).__init__(*args, **kwargs)
         self.fields['usertoken'].label = u'Token'
+
+
 # 用户登录,注册,编辑,权限
 class LoginForm(forms.Form):
     username = forms.CharField(label=u'账号', widget=forms.TextInput(attrs={'class': 'form-control'}))

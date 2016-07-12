@@ -24,7 +24,7 @@ from devop.views.user import ListUser, EditUser, AddUser, DeleteUser
 from devop.views.idc import ListIdc, AddIdc, EditIdc, DeleIdc
 from devop.views.hosts import ListHost, AddHost, DeleHost, EditHost
 from devop.views.attend import UploadXlsx, WriteData, DeleteXlsx, ListData, searchdata
-from devop.views.gitman import Setting, ListProjects, AddToken
+from devop.views.gitman import Setting, ListProjects, AddToken, UploadProject, Reset
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
 
@@ -89,5 +89,7 @@ urlpatterns = [
     #Git管理
     url(r'^git/setting/$', Setting, name='gitsettingurl'),
     url(r'^list/all/projects/$', ListProjects, name='listallprojectsurl'),
-url(r'^add/token/$', AddToken, name='tokenaddurl'),
+    url(r'^add/token/$', AddToken, name='tokenaddurl'),
+    url(r'^upload/online/(?P<Url>.+)/$', UploadProject, name='uploadprojecturl'),
+    url(r'^reset/online/(?P<Url>.+)/$', Reset, name='resetprojecturl'),
 ]
