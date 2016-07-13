@@ -8,7 +8,7 @@ from devop.views.permission import PermissionVerify, SelfPaginator
 from .gitlab import all_projects, user_all_projects
 from opman.forms import GitSettingForm, TokenForm
 from opman.models import GitSetting, GitToken
-from git import Repo, cmd
+from git import Repo, cmd, Git
 import os
 
 
@@ -119,3 +119,13 @@ def Reset(request, Url):
     repo = Repo(codepath)
     repo.head.reset('HEAD~1', working_tree=1)
     return HttpResponseRedirect(reverse('listallprojectsurl'))
+
+
+@login_required
+def GitLog(request, Url):
+    codepath = Url.split('/')[-1].split('.')[0]
+    sourcepath = GitSetting.objects.get(id=1).sourcepath
+    sourcepath = sourcepath.rstrip('/')
+    os.chdir(sourcepath)
+    g = Git(codepath)
+    loginfo = g.log()
