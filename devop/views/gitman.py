@@ -127,5 +127,12 @@ def GitLog(request, Url):
     sourcepath = GitSetting.objects.get(id=1).sourcepath
     sourcepath = sourcepath.rstrip('/')
     os.chdir(sourcepath)
-    g = Git(codepath)
-    loginfo = g.log()
+    repo = Repo(codepath)
+    commit = repo.iter_commits('master',max_count=100)
+    print(commit)
+    '''
+    master = repo.head
+    log = master.log()
+    print(log)
+    '''
+    return HttpResponseRedirect(reverse('listallprojectsurl'))
