@@ -10,6 +10,7 @@ from opman.forms import GitSettingForm, TokenForm
 from opman.models import GitSetting, GitToken
 from git import Repo, cmd, Git
 import os
+from datetime import datetime
 
 
 @login_required
@@ -128,11 +129,18 @@ def GitLog(request, Url):
     sourcepath = sourcepath.rstrip('/')
     os.chdir(sourcepath)
     repo = Repo(codepath)
-    commit = repo.iter_commits('master',max_count=100)
-    print(commit)
-    '''
-    master = repo.head
-    log = master.log()
-    print(log)
-    '''
+    ver = repo.iter_commits('master', max_count=50)
+    commlist = []
+    for i in ver:
+        commdic = {}
+        message = repo.commit(i).message.rstrip('\n')
+        date = repo.commit(i).committed_date
+        commdate = datetime.utcfromtimestamp(
+            date).strftime("%Y-%m-%d %H:%M:%S")
+        name = repo.commit(i).author
+        commdic['message'] = message
+        commdic['commdate'] = commdate
+        commdic['name'] = str(name)
+        commdic['id'] = str(i)
+        commlist.append(commdic)
     return HttpResponseRedirect(reverse('listallprojectsurl'))
