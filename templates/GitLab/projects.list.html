@@ -53,7 +53,7 @@
             <td>{{ foo.pro_create_time }}</td>
             <td class="host_buttom">
                 <a class="btn btn-danger btn-xs" href={% url "uploadprojecturl" foo.pro_url %} onclick="return confirm('是否确认删除？')">删除</a>
-                <a class="btn btn-warning btn-xs" href={% url "rlistlogurl" foo.pro_url %} onclick="return confirm('是否确认回滚？')">回滚</a>
+                <a class="btn btn-warning btn-xs" href={% url "rlistlogurl" foo.pro_url %} data-toggle="modal" data-target="#myModal" >回滚</a>
                 <a class="btn btn-info btn-xs" href={% url "uploadprojecturl" foo.pro_url %} onclick="return confirm('是否确认上线？')">上线</a>
             </td>
         </tr>
@@ -61,4 +61,21 @@
 
     </table>
     {% include "paginator.html" %}
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+                </div>
+                <div class="modal-body">
+                    ...
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}
