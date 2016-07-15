@@ -38,8 +38,9 @@ def all_projects(host, path, rootoken):
         name = namespace[1]
         created_at = l['created_at']
         url = l['http_url_to_repo']
+        id = l['id']
         pro_dic = {'pro_owner': owner, 'pro_create_time': created_at,
-                   'pro_name': name, 'pro_url': url}
+                   'pro_name': name, 'pro_url': url, 'pro_id': id}
         pro_list.append(pro_dic)
     return pro_list
 
@@ -60,10 +61,20 @@ def user_all_projects(host, path, usertoken):
             name = namespace[1]
             created_at = l['created_at']
             url = l['http_url_to_repo']
+            id = l['id']
             pro_dic = {'pro_owner': owner, 'pro_create_time': created_at,
-                       'pro_name': name, 'pro_url': url}
+                       'pro_name': name, 'pro_url': url, 'pro_id': id}
             pro_list.append(pro_dic)
         return pro_list
+
+
+def gitlab_log(host, rootoken, proid):
+    path = '/api/v3/projects/' + proid + '/repository/commits'
+    url = 'http://' + host + path + '?private_token=' + rootoken
+    r = requests.get(url)
+    r.encoding = 'utf-8'
+    data = json.loads(r.text)
+    return data
 
 
 def git_log(repopath):

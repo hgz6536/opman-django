@@ -41,6 +41,7 @@
 
     <table class="result-tab" width="100%">
         <tr>
+            <th>项目ID</th>
             <th>名称</th>
             <th>所有者</th>
             <th>克隆 URL</th>
@@ -49,6 +50,7 @@
         </tr>
         {% for foo in lpage %}
             <tr>
+                <td>{{ foo.pro_id }}</td>
                 <td>{{ foo.pro_name }}</td>
                 <td>{{ foo.pro_owner }}</td>
                 <td>{{ foo.pro_url }}</td>
@@ -56,7 +58,7 @@
                 <td class="host_buttom">
                     <a class="btn btn-danger btn-xs" href={% url "uploadprojecturl" foo.pro_url %} onclick="return
                        confirm('是否确认删除？')">删除</a>
-                    <a class="btn btn-warning btn-xs" onclick="rollback('{{ foo.pro_url  }}')" data-toggle="modal"
+                    <a class="btn btn-warning btn-xs" onclick="rollback('{{ foo.pro_url }}')" data-toggle="modal"
                        data-target="#myModal">回滚</a>
                     <a class="btn btn-info btn-xs" href={% url "uploadprojecturl" foo.pro_url %} onclick="return
                        confirm('是否确认上线？')">上线</a>
@@ -70,6 +72,7 @@
             </script>
         {% endfor %}
     </table>
+    {% include "paginator.html" %}
     <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -79,16 +82,9 @@
                     <h4 class="modal-title" id="myModalLabel">历史版本</h4>
                 </div>
                 <div class="modal-body">
-                    <table>
-                        {% for i in log %}
-                            <tr>
-                                <td>{{ i.id }}</td>
-                                <td>{{ i.name }}</td>
-                                <td>{{ i.commdate }}</td>
-                                <td>{{ i.message }}</td>
-                            </tr>
-                        {% endfor %}
-                    </table>
+                    <iframe id="display_iframe" src="http://127.0.0.1:8000/list/log/http://gitlab.riverrun.cn/hgz/opman-django.git/" style="width: 100%;height: 100%;">
+
+                    </iframe>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
@@ -97,6 +93,4 @@
             </div>
         </div>
     </div>
-
-    {% include "paginator.html" %}
 {% endblock %}

@@ -5,7 +5,7 @@ from django.core.urlresolvers import reverse
 from django.shortcuts import render_to_response, RequestContext
 from django.contrib.auth.decorators import login_required
 from devop.views.permission import PermissionVerify, SelfPaginator
-from .gitlab import all_projects, user_all_projects, git_log
+from .gitlab import all_projects, user_all_projects, gitlab_log
 from opman.forms import GitSettingForm, TokenForm
 from opman.models import GitSetting, GitToken
 from git import Repo, cmd, Git
@@ -123,7 +123,7 @@ def Reset(request, Url):
 
 
 @login_required
-def GitLog(request, Url):
+def GitLog(request, ID):
     codepath = Url.split('/')[-1].split('.')[0]
     sourcepath = GitSetting.objects.get(id=1).sourcepath
     sourcepath = sourcepath.rstrip('/')
