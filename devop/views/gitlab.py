@@ -3,7 +3,8 @@
 # -*-coding:UTF-8 -*-
 import requests
 import json
-
+from git import Repo, cmd, Git
+from datetime import datetime
 
 def search_user(host, path, token, userinfo):
     url = 'http://' + host + path + 'users?private_token=' + \
@@ -63,3 +64,22 @@ def user_all_projects(host, path, usertoken):
                        'pro_name': name, 'pro_url': url}
             pro_list.append(pro_dic)
         return pro_list
+
+
+def git_log(repopath):
+    repo = Repo(repopath)
+    ver = repo.iter_commits('master', max_count=50)
+    commlist = []
+    for i in ver:
+        commdic = {}
+        message = repo.commit(i).message.rstrip('\n')
+        date = repo.commit(i).committed_date
+        commdate = datetime.utcfromtimestamp(
+            date).strftime("%Y-%m-%d %H:%M:%S")
+        name = repo.commit(i).author
+        commdic['message'] = message
+        commdic['commdate'] = commdate
+        commdic['name'] = str(name)
+        commdic['id'] = str(i)
+        commlist.append(commdic)
+    return commlist

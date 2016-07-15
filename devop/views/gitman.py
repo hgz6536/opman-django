@@ -5,7 +5,7 @@ from django.core.urlresolvers import reverse
 from django.shortcuts import render_to_response, RequestContext
 from django.contrib.auth.decorators import login_required
 from devop.views.permission import PermissionVerify, SelfPaginator
-from .gitlab import all_projects, user_all_projects
+from .gitlab import all_projects, user_all_projects, git_log
 from opman.forms import GitSettingForm, TokenForm
 from opman.models import GitSetting, GitToken
 from git import Repo, cmd, Git
@@ -128,19 +128,9 @@ def GitLog(request, Url):
     sourcepath = GitSetting.objects.get(id=1).sourcepath
     sourcepath = sourcepath.rstrip('/')
     os.chdir(sourcepath)
-    repo = Repo(codepath)
-    ver = repo.iter_commits('master', max_count=50)
-    commlist = []
-    for i in ver:
-        commdic = {}
-        message = repo.commit(i).message.rstrip('\n')
-        date = repo.commit(i).committed_date
-        commdate = datetime.utcfromtimestamp(
-            date).strftime("%Y-%m-%d %H:%M:%S")
-        name = repo.commit(i).author
-        commdic['message'] = message
-        commdic['commdate'] = commdate
-        commdic['name'] = str(name)
-        commdic['id'] = str(i)
-        commlist.append(commdic)
-    return HttpResponseRedirect(reverse('listallprojectsurl'))
+    log = git_log(codepath)
+    kwvars = {
+        'log': log,
+        'request': request,
+    }
+    return render_to_response('GitLab/log.list.html', kwvars)

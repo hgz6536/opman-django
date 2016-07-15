@@ -1,0 +1,10 @@
+<table>
+    {% for i in log %}
+        <tr>
+            <td>{{ i.id }}</td>
+            <td>{{ i.name }}</td>
+            <td>{{ i.commdate }}</td>
+            <td>{{ i.message }}</td>
+        </tr>
+    {% endfor %}
+</table>

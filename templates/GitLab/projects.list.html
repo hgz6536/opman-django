@@ -6,35 +6,37 @@
 
 {% block content %}
     <div class="search-wrap" xmlns="http://www.w3.org/1999/html">
-            <div class="search-content">
-                <form action="{% url  "searchdataurl"  %}" method="get">
-                    <table class="search-tab">
-                        <tr>
-                            {% if nameinput == "disabled" %}
+        <div class="search-content">
+            <form action="{% url  "searchdataurl" %}" method="get">
+                <table class="search-tab">
+                    <tr>
+                        {% if nameinput == "disabled" %}
                             <th width="70">姓名:</th>
-                                <td><input class="common-text" placeholder="韩光祖" name="username" value="" id="" type="text" disabled="disabled"></td>
-                            {% else %}
-                                <th width="70">姓名:</th>
-                                <td><input class="common-text" placeholder="韩光祖" name="username" value="" id="" type="text"></td>
-                            {% endif %}
-                            <th width="100">选择日期:</th>
-                            <td>
-                                    <input type="text" id="datePicker" class="input-sm form-control" name="start" />
+                            <td><input class="common-text" placeholder="韩光祖" name="username" value="" id="" type="text"
+                                       disabled="disabled"></td>
+                        {% else %}
+                            <th width="70">姓名:</th>
+                            <td><input class="common-text" placeholder="韩光祖" name="username" value="" id="" type="text">
                             </td>
-                            <td>
-                                    <input type="text" id="datePicker2" class="input-sm form-control" name="end" />
-                            </td>
-                            <script type="text/javascript">
-                                        $(function () {
-                                            $('#datePicker').date_input();
-                                            $('#datePicker2').date_input();
-                                        });
-                            </script>
-                            <td><input class="btn btn-primary btn2" name="sub" value="查询" type="submit"></td>
-                        </tr>
-                    </table>
-                </form>
-            </div>
+                        {% endif %}
+                        <th width="100">选择日期:</th>
+                        <td>
+                            <input type="text" id="datePicker" class="input-sm form-control" name="start"/>
+                        </td>
+                        <td>
+                            <input type="text" id="datePicker2" class="input-sm form-control" name="end"/>
+                        </td>
+                        <script type="text/javascript">
+                            $(function () {
+                                $('#datePicker').date_input();
+                                $('#datePicker2').date_input();
+                            });
+                        </script>
+                        <td><input class="btn btn-primary btn2" name="sub" value="查询" type="submit"></td>
+                    </tr>
+                </table>
+            </form>
+        </div>
     </div>
 
     <table class="result-tab" width="100%">
@@ -46,36 +48,55 @@
             <th>操作</th>
         </tr>
         {% for foo in lpage %}
-        <tr>
-            <td>{{ foo.pro_name }}</td>
-            <td>{{ foo.pro_owner }}</td>
-            <td>{{ foo.pro_url }}</td>
-            <td>{{ foo.pro_create_time }}</td>
-            <td class="host_buttom">
-                <a class="btn btn-danger btn-xs" href={% url "uploadprojecturl" foo.pro_url %} onclick="return confirm('是否确认删除？')">删除</a>
-                <a class="btn btn-warning btn-xs" href={% url "rlistlogurl" foo.pro_url %} data-toggle="modal" data-target="#myModal" >回滚</a>
-                <a class="btn btn-info btn-xs" href={% url "uploadprojecturl" foo.pro_url %} onclick="return confirm('是否确认上线？')">上线</a>
-            </td>
-        </tr>
+            <tr>
+                <td>{{ foo.pro_name }}</td>
+                <td>{{ foo.pro_owner }}</td>
+                <td>{{ foo.pro_url }}</td>
+                <td>{{ foo.pro_create_time }}</td>
+                <td class="host_buttom">
+                    <a class="btn btn-danger btn-xs" href={% url "uploadprojecturl" foo.pro_url %} onclick="return
+                       confirm('是否确认删除？')">删除</a>
+                    <a class="btn btn-warning btn-xs" onclick="rollback('{{ foo.pro_url  }}')" data-toggle="modal"
+                       data-target="#myModal">回滚</a>
+                    <a class="btn btn-info btn-xs" href={% url "uploadprojecturl" foo.pro_url %} onclick="return
+                       confirm('是否确认上线？')">上线</a>
+                </td>
+            </tr>
+            <script language="javascript">
+                function rollback(url) {
+                    $('#roll_back').attr('href', '/list/log/' + url);
+                    $("#myModal").modal('show');
+                }
+            </script>
         {% endfor %}
-
     </table>
-    {% include "paginator.html" %}
     <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">历史版本</h4>
                 </div>
                 <div class="modal-body">
-                    ...
+                    <table>
+                        {% for i in log %}
+                            <tr>
+                                <td>{{ i.id }}</td>
+                                <td>{{ i.name }}</td>
+                                <td>{{ i.commdate }}</td>
+                                <td>{{ i.message }}</td>
+                            </tr>
+                        {% endfor %}
+                    </table>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-primary">确定</button>
                 </div>
             </div>
         </div>
     </div>
+
+    {% include "paginator.html" %}
 {% endblock %}
