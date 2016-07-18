@@ -124,13 +124,12 @@ def Reset(request, Url):
 
 @login_required
 def GitLog(request, ID):
-    codepath = Url.split('/')[-1].split('.')[0]
-    sourcepath = GitSetting.objects.get(id=1).sourcepath
-    sourcepath = sourcepath.rstrip('/')
-    os.chdir(sourcepath)
-    log = git_log(codepath)
+    cGitSetting = GitSetting.objects.get(id=1)
+    host = cGitSetting.hostname
+    rootoken = cGitSetting.rootoken
+    pro_Log = gitlab_log(host, rootoken, ID, '30')
     kwvars = {
-        'log': log,
+        'log': pro_Log,
         'request': request,
     }
     return render_to_response('GitLab/log.list.html', kwvars)

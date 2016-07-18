@@ -4,17 +4,30 @@
 import requests
 import json
 from git import Repo, cmd, Git
-from datetime import datetime
+from datetime import datetime, timedelta
+
 
 def search_user(host, path, token, userinfo):
     url = 'http://' + host + path + 'users?private_token=' + \
-        token + '&search=' + userinfo
+          token + '&search=' + userinfo
     r = requests.get(url)
     r.encoding = 'utf-8'
     data = json.loads(r.text)
     for i in data[0]:
         if i == 'id':
             return data[0][i]
+
+
+def gitlab_log(host, rootoken, proid, day):
+    cdate = datetime.now() - timedelta(days=int(day))
+    mydate = cdate.strftime("%Y-%m-%dT%H:%M:%SZ")
+    path = '/api/v3/projects/' + str(proid) + '/repository/commits'
+    url = 'http://' + host + path + \
+        '?since=' + mydate + '&private_token=' + rootoken
+    r = requests.get(url)
+    r.encoding = 'utf-8'
+    data = json.loads(r.text)
+    return data
 
 
 def all_user(host, path, token):
@@ -39,8 +52,9 @@ def all_projects(host, path, rootoken):
         created_at = l['created_at']
         url = l['http_url_to_repo']
         id = l['id']
+        log = gitlab_log(host, rootoken, id, '30')
         pro_dic = {'pro_owner': owner, 'pro_create_time': created_at,
-                   'pro_name': name, 'pro_url': url, 'pro_id': id}
+                   'pro_name': name, 'pro_url': url, 'pro_id': id, 'pro_log':log}
         pro_list.append(pro_dic)
     return pro_list
 
@@ -62,19 +76,11 @@ def user_all_projects(host, path, usertoken):
             created_at = l['created_at']
             url = l['http_url_to_repo']
             id = l['id']
+            log = gitlab_log(host, usertoken, id, '30')
             pro_dic = {'pro_owner': owner, 'pro_create_time': created_at,
-                       'pro_name': name, 'pro_url': url, 'pro_id': id}
+                       'pro_name': name, 'pro_url': url, 'pro_id': id, 'pro_log':log}
             pro_list.append(pro_dic)
         return pro_list
-
-
-def gitlab_log(host, rootoken, proid):
-    path = '/api/v3/projects/' + proid + '/repository/commits'
-    url = 'http://' + host + path + '?private_token=' + rootoken
-    r = requests.get(url)
-    r.encoding = 'utf-8'
-    data = json.loads(r.text)
-    return data
 
 
 def git_log(repopath):

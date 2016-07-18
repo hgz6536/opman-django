@@ -58,21 +58,14 @@
                 <td class="host_buttom">
                     <a class="btn btn-danger btn-xs" href={% url "uploadprojecturl" foo.pro_url %} onclick="return
                        confirm('是否确认删除？')">删除</a>
-                    <a class="btn btn-warning btn-xs" onclick="rollback('{{ foo.pro_url }}')" data-toggle="modal"
-                       data-target="#myModal">回滚</a>
+                    <button type="button" class="btn btn-warning btn-lg" onclick="rollback({{ foo.pro_log }})">回滚
+                    </button>
                     <a class="btn btn-info btn-xs" href={% url "uploadprojecturl" foo.pro_url %} onclick="return
                        confirm('是否确认上线？')">上线</a>
                 </td>
             </tr>
-            <script language="javascript">
-                function rollback(url) {
-                    $('#roll_back').attr('href', '/list/log/' + url);
-                    $("#myModal").modal('show');
-                }
-            </script>
         {% endfor %}
     </table>
-    {% include "paginator.html" %}
     <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -82,9 +75,22 @@
                     <h4 class="modal-title" id="myModalLabel">历史版本</h4>
                 </div>
                 <div class="modal-body">
-                    <iframe id="display_iframe" src="http://127.0.0.1:8000/list/log/http://gitlab.riverrun.cn/hgz/opman-django.git/" style="width: 100%;height: 100%;">
-
-                    </iframe>
+                    <table class="result-tab" width="100%">
+                        <tr>
+                            <th>提交ID</th>
+                            <th>提交人</th>
+                            <th>提交时间</th>
+                            <th>提交信息</th>
+                        </tr>
+                        {% for i in pro_log %}
+                            <tr>
+                                <td>{{ i.short_id }}</td>
+                                <td>{{ i.author_name }}</td>
+                                <td>{{ i.created_at }}</td>
+                                <td>{{ i.message }}</td>
+                            </tr>
+                        {% endfor %}
+                    </table>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
@@ -93,4 +99,11 @@
             </div>
         </div>
     </div>
+    {% include "paginator.html" %}
+    <script>
+        function rollback(obj) {
+            var pro_log=JSON.parse(obj);
+            alter(pro_log);
+        }
+    </script>
 {% endblock %}

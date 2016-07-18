@@ -92,5 +92,5 @@ urlpatterns = [
     url(r'^add/token/$', AddToken, name='tokenaddurl'),
     url(r'^upload/online/(?P<Url>.+)/$', UploadProject, name='uploadprojecturl'),
     url(r'^reset/online/(?P<Url>.+)/$', Reset, name='resetprojecturl'),
-    url(r'^list/log/(?P<Url>.+)/$', GitLog, name='listlogurl'),
+    url(r'^list/log/(?P<ID>\d+)/$', GitLog, name='listlogurl'),
 ]

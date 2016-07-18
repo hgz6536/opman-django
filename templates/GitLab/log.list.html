@@ -11,12 +11,18 @@
                     <h4 class="modal-title" id="myModalLabel">历史版本</h4>
                 </div>
                 <div class="modal-body">
-                    <table>
+                    <table class="result-tab" width="100%">
+                        <tr>
+                            <th>提交ID</th>
+                            <th>提交人</th>
+                            <th>提交时间</th>
+                            <th>提交信息</th>
+                        </tr>
                         {% for i in log %}
                             <tr>
-                                <td>{{ i.id }}</td>
-                                <td>{{ i.name }}</td>
-                                <td>{{ i.commdate }}</td>
+                                <td>{{ i.short_id }}</td>
+                                <td>{{ i.author_name }}</td>
+                                <td>{{ i.created_at }}</td>
                                 <td>{{ i.message }}</td>
                             </tr>
                         {% endfor %}
