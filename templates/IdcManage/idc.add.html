@@ -16,7 +16,7 @@
             <a class="btn btn-default {% if request.path == thelistidcurl %}
             active
             {% endif %}"
-               href={{ thelistidcurl }}><span class="glyphicon glyphicon-list"></span>主机列表</a>
+               href={{ thelistidcurl }}><span class="glyphicon glyphicon-list"></span>IDC列表</a>
         </div>
     </div>
     <hr/>
@@ -39,7 +39,8 @@
 
         <div class="form-group">
             <div class="col-md-offset-1 col-md-10">
-                <button type="submit" class="btn btn-danger btn-sm">新增</button>
+                <button type="submit" class="btn btn-success btn-sm">新增</button>
+                <a class="btn btn-info btn-sm" href={% url "listidcurl" %}>返回</a>
             </div>
         </div>
     </form>

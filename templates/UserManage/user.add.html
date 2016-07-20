@@ -10,7 +10,6 @@
 
     <form class="form-horizontal" role="form" action={% url "adduserurl" %} method="post">
         {% csrf_token %}
-
         {% for item in form %}
             <div class="form-group">
                 <label class="control-label col-md-1">{{ item.label }}</label>
@@ -24,12 +23,11 @@
                     {{ item.errors }}
                 </div>
             </div>
-
         {% endfor %}
-
         <div class="form-group">
             <div class="col-md-offset-1 col-md-10">
                 <button type="submit" class="btn btn-success btn-sm">新增</button>
+                <a class="btn btn-info btn-sm" href={% url "listuserurl" %}>返回</a>
             </div>
         </div>
     </form>

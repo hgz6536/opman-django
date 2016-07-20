@@ -5,7 +5,6 @@
 {% endblock %}
 
 {% block content %}
-    <div>
         <div class="btn-group">
             {% url "addpermissonurl" as theaddpermissionurl %}
             <a class="btn btn-default {% if request.path == theaddpermissonurl %}
@@ -18,7 +17,6 @@
             {% endif %}"
                href={{ thelistpermissiononurl }}><span class="glyphicon glyphicon-list"></span>权限列表</a>
         </div>
-    </div>
     <hr/>
 
     <form class="form-horizontal" role="form" action={% url "addpermissonurl" %} method="post">
@@ -39,7 +37,8 @@
 
         <div class="form-group">
             <div class="col-md-offset-1 col-md-10">
-                <button type="submit" class="btn btn-danger btn-sm">新增</button>
+                <button type="submit" class="btn btn-success btn-sm">新增</button>
+                <a class="btn btn-info btn-sm" href={% url "listpermissionurl" %}>返回</a>
             </div>
         </div>
     </form>

@@ -6,7 +6,6 @@
 
 
 {% block content %}
-    <div>
         <div class="btn-group">
             {% url "addroleurl" as theaddroleurl %}
             <a class="btn btn-default {% if request.path == theaddroleurl %} active {% endif %}"
@@ -15,8 +14,6 @@
             <a class="btn btn-default {% if request.path == thelistroleurl %} active {% endif %}"
                href={{ thelistroleurl }}><span class="glyphicon glyphicon-list"></span>部门列表</a>
         </div>
-    </div>
-
     <hr/>
 
     <form class="form-horizontal" role="form" action={% url "addroleurl" %} method="POST">
@@ -39,6 +36,7 @@
         <div class="form-group">
             <div class="col-md-offset-1 col-md-10">
                 <button type="submit" class="btn btn-success btn-sm">新 建</button>
+                <a class="btn btn-info btn-sm" href={% url "listroleurl" %}>返回</a>
             </div>
         </div>
 
