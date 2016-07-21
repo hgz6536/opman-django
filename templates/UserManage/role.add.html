@@ -20,7 +20,7 @@
         {% csrf_token %}
 
         {% for item in form %}
-            <div class="form-group">
+            <div class="form-group" style="margin-right: 0">
                 <label class="control-label col-md-1">{{ item.label }}</label>
                 {% if item.label == "权限" %}
                     <div class="col-md-11">{{ item }}</div>
@@ -33,7 +33,7 @@
             </div>
         {% endfor %}
 
-        <div class="form-group">
+        <div class="form-group" style="margin-right: 0">
             <div class="col-md-offset-1 col-md-10">
                 <button type="submit" class="btn btn-success btn-sm">新 建</button>
                 <a class="btn btn-info btn-sm" href={% url "listroleurl" %}>返回</a>

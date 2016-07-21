@@ -77,11 +77,16 @@ class RoleList(models.Model):
 
 
 class MyUser(AbstractUser):
-    fullname = models.CharField(max_length=64, null=True,unique=True, default=None, verbose_name=u'姓名')
+    fullname = models.CharField(max_length=64, null=True, unique=True, default=None, verbose_name=u'姓名')
     birthday = models.DateField(null=True, blank=True, default=None, verbose_name=u'生日')
     sex = models.CharField(max_length=2, null=True, verbose_name=u'性别')
     role = models.ForeignKey(RoleList, null=True, blank=True, verbose_name=u'部门', default=2)
     permission = models.ManyToManyField(PermissonList, blank=True, verbose_name=u'权限')
+
+
+'''
+考勤相关
+'''
 
 
 class KaoQin(models.Model):
@@ -104,12 +109,25 @@ class Xlsx(models.Model):
         return self.filename
 
 
+'''
+Git相关
+'''
+
+
 class GitSetting(models.Model):
-    hostname = models.CharField(max_length=100, null=True,unique=True, default=None, verbose_name=u'GitLab域名')
-    rootoken = models.CharField(max_length=30, null=True,unique=True, default=None, verbose_name=u'管理员token')
-    sourcepath = models.CharField(max_length=50, null=True,unique=True, default=None, verbose_name=u'源目录')
+    hostname = models.CharField(max_length=100, null=True, unique=True, default=None, verbose_name=u'GitLab域名')
+    rootoken = models.CharField(max_length=30, null=True, unique=True, default=None, verbose_name=u'管理员token')
+    sourcepath = models.CharField(max_length=50, null=True, unique=True, default=None, verbose_name=u'上线源目录')
+    ngxpath = models.CharField(max_length=50, null=True, unique=True, default=None, verbose_name=u'nginx目录')
+
+class ProjectSetting(models.Model):
+    url = models.URLField(null=False, unique=True, verbose_name=u'项目URL')
+    devpath = models.CharField(max_length=50, null=True, unique=True, default=None, verbose_name=u'开发目录')
+    testpath = models.CharField(max_length=50, null=True, unique=True, default=None, verbose_name=u'测试目录')
+    devhostname = models.CharField(max_length=50, null=True, unique=True, default=None, verbose_name=u'开发域名')
+    testhostname = models.CharField(max_length=50, null=True, unique=True, default=None, verbose_name=u'测试域名')
 
 
 class GitToken(models.Model):
-    usertoken = models.CharField(max_length=30, null=True,unique=True, default=None, verbose_name=u'用户token')
+    usertoken = models.CharField(max_length=30, null=True, unique=True, default=None, verbose_name=u'用户token')
     fullname = models.ForeignKey(MyUser, null=False, blank=False, primary_key=True, verbose_name=u'姓名')

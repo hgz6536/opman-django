@@ -1,16 +1,50 @@
 #!/usr/bin/python
 # coding = utf-8
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.core.urlresolvers import reverse
 from django.shortcuts import render_to_response, RequestContext
 from django.contrib.auth.decorators import login_required
 from devop.views.permission import PermissionVerify, SelfPaginator
 from .gitlab import all_projects, user_all_projects, gitlab_log
-from opman.forms import GitSettingForm, TokenForm
-from opman.models import GitSetting, GitToken
+from opman.forms import GitSettingForm, TokenForm, ProSettingForm
+from opman.models import GitSetting, GitToken, ProjectSetting
 from git import Repo, cmd, Git
 import os
 from datetime import datetime
+
+
+@login_required
+def ProSetting(request, Url):
+    try:
+        cProSetting = ProjectSetting.objects.get(url=Url)
+    except Exception as e:
+        print(e)
+        form = ProSettingForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(reverse('listallprojectsurl'))
+        else:
+            form = ProSettingForm()
+        kwvars = {
+            'url': Url,
+            'form': form,
+            'request': request,
+        }
+        return render_to_response('GitLab/pro.setting.html', kwvars, RequestContext(request))
+    else:
+        iProSetting = ProjectSetting.objects.get(url=Url)
+        form = ProSettingForm(request.POST, instance=iProSetting)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(reverse('listallprojectsurl'))
+        else:
+            form = ProSettingForm(instance=iProSetting)
+        kwvars = {
+            'url': Url,
+            'form': form,
+            'request': request,
+        }
+        return render_to_response('GitLab/pro.setting.html', kwvars, RequestContext(request))
 
 
 @login_required

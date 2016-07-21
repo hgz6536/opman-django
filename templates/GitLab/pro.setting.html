@@ -1,10 +1,10 @@
 {% extends "base.html" %}
 
-{% block title %}Git 系统设置{% endblock %}
+{% block title %}项目设置{% endblock %}
 
 {% block content %}
     <h1>基本配置</h1>
-    <form action="{% url "gitsettingurl" %}" method="post">
+    <form action="{% url "prosettingurl" url %}" method="post">
         {% csrf_token %}
         <style>
             table {

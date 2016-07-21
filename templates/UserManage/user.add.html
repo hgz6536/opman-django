@@ -5,13 +5,19 @@
 {% endblock %}
 
 {% block content %}
-    <h1>添加新帐号</h1>
+        <div class="btn-group">
+            {% url "adduserurl" as theadduserurl %}
+            <a class="btn btn-default {% if request.path == theadduserurl %} active {% endif %}"
+               href={{ theadduserurl }}><span class="glyphicon glyphicon-edit"></span>添加用户</a>
+            {% url "listuserurl" as thelistuserurl %}
+            <a class="btn btn-default {% if request.path == thelistuserurl %} active {% endif %}"
+               href={{ thelistuserurl }}><span class="glyphicon glyphicon-list"></span>用户列表</a>
+        </div>
     <hr/>
-
     <form class="form-horizontal" role="form" action={% url "adduserurl" %} method="post">
         {% csrf_token %}
         {% for item in form %}
-            <div class="form-group">
+            <div class="form-group" style="margin-right: 0">
                 <label class="control-label col-md-1">{{ item.label }}</label>
                 {% if item.label == "权限" %}
                     <div class="col-md-11">{{ item }}</div>
@@ -24,7 +30,7 @@
                 </div>
             </div>
         {% endfor %}
-        <div class="form-group">
+        <div class="form-group" style="margin-right: 0">
             <div class="col-md-offset-1 col-md-10">
                 <button type="submit" class="btn btn-success btn-sm">新增</button>
                 <a class="btn btn-info btn-sm" href={% url "listuserurl" %}>返回</a>

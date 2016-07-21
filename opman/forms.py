@@ -2,7 +2,7 @@ from django import forms
 from opman.models import MyUser as User
 from opman.models import PermissonList, RoleList
 from opman.models import IdcList, HostList
-from opman.models import GitSetting, GitToken
+from opman.models import GitSetting, GitToken, ProjectSetting
 
 
 #考勤xlsx上传
@@ -12,10 +12,22 @@ class XlsxUpload(forms.Form):
 
 
 #Git 系统配置
+class ProSettingForm(forms.ModelForm):
+    url = forms.URLField(label=u'项目URL', widget=forms.TextInput(attrs={'class': 'form-control',"placeholder": "gitlab.niubilety.com"}))
+    devpath = forms.CharField(label=u'开发目录',widget=forms.TextInput(attrs={'class': 'form-control',"placeholder": "/var/dev/htdocs"}))
+    testpath = forms.CharField(label=u'测试目录',widget=forms.TextInput(attrs={'class': 'form-control',"placeholder": "/var/test/htdocs/"}))
+    devhostname = forms.CharField(label=u'开发域名',widget=forms.TextInput(attrs={'class': 'form-control',"placeholder": "dev-fengmi.rvierrun.cn"}))
+    testhostname = forms.CharField(label=u'测试域名',widget=forms.TextInput(attrs={'class': 'form-control',"placeholder": "test-fengmi.rvierrun.cn"}))
+    class Meta:
+        model = ProjectSetting
+        fields ='__all__'
+
+
 class GitSettingForm(forms.ModelForm):
-    hostname = forms.CharField(label=u'域名', widget=forms.TextInput(attrs={'class': 'form-control',"placeholder": "gitlab.niubilety.com"}))
+    hostname = forms.CharField(label=u'GitLab域名', widget=forms.TextInput(attrs={'class': 'form-control',"placeholder": "gitlab.niubilety.com"}))
     rootoken = forms.CharField(label=u'管理员Token',widget=forms.TextInput(attrs={'class': 'form-control'}))
-    sourcepath = forms.CharField(label=u'源目录',widget=forms.TextInput(attrs={'class': 'form-control',"placeholder": "/var/htdocs"}))
+    sourcepath = forms.CharField(label=u'上线源目录',widget=forms.TextInput(attrs={'class': 'form-control',"placeholder": "/var/htdocs"}))
+    ngxpath = forms.CharField(label=u'nginx目录',widget=forms.TextInput(attrs={'class': 'form-control',"placeholder": "/usr/local/nginx1.8.0"}))
     class Meta:
         model = GitSetting
         fields ='__all__'
