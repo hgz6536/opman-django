@@ -1,6 +1,6 @@
 #!/usr/bin/python
 # coding = utf-8
-from django.http import HttpResponse, HttpResponseRedirect, Http404
+from django.http import HttpResponse, HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from django.shortcuts import render_to_response, RequestContext
 from django.contrib.auth.decorators import login_required
@@ -30,7 +30,7 @@ def ProSetting(request, Url):
             'form': form,
             'request': request,
         }
-        return render_to_response('GitLab/pro.setting.html', kwvars, RequestContext(request))
+        return render_to_response('GitLab/project.setting.html', kwvars, RequestContext(request))
     else:
         iProSetting = ProjectSetting.objects.get(url=Url)
         form = ProSettingForm(request.POST, instance=iProSetting)
@@ -44,7 +44,7 @@ def ProSetting(request, Url):
             'form': form,
             'request': request,
         }
-        return render_to_response('GitLab/pro.setting.html', kwvars, RequestContext(request))
+        return render_to_response('GitLab/project.setting.html', kwvars, RequestContext(request))
 
 
 @login_required
@@ -143,6 +143,11 @@ def UploadProject(request, Url):
         g = cmd.Git(codepath)
         g.pull()
     return HttpResponseRedirect(reverse('listallprojectsurl'))
+
+
+@login_required
+def UploadApply(request, ID):
+    pass
 
 
 @login_required

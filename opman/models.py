@@ -120,12 +120,21 @@ class GitSetting(models.Model):
     sourcepath = models.CharField(max_length=50, null=True, unique=True, default=None, verbose_name=u'上线源目录')
     ngxpath = models.CharField(max_length=50, null=True, unique=True, default=None, verbose_name=u'nginx目录')
 
+
 class ProjectSetting(models.Model):
     url = models.URLField(null=False, unique=True, verbose_name=u'项目URL')
     devpath = models.CharField(max_length=50, null=True, unique=True, default=None, verbose_name=u'开发目录')
     testpath = models.CharField(max_length=50, null=True, unique=True, default=None, verbose_name=u'测试目录')
     devhostname = models.CharField(max_length=50, null=True, unique=True, default=None, verbose_name=u'开发域名')
     testhostname = models.CharField(max_length=50, null=True, unique=True, default=None, verbose_name=u'测试域名')
+
+
+class ProjectApply(models.Model):
+    title = models.CharField(max_length=30, null=False, default=None, verbose_name=u'上线名称')
+    projectname = models.CharField(max_length=30, null=False, default=None, verbose_name=u'项目名称')
+    applytime = models.DateTimeField(auto_now_add=True)
+    commitid = models.CharField(max_length=10, null=False, default=None, verbose_name=u'上线版本号')
+    status = models.IntegerField(default=None, verbose_name=u'是否上线')
 
 
 class GitToken(models.Model):
