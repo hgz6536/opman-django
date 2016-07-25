@@ -146,7 +146,7 @@ def UploadProject(request, Url):
 
 
 @login_required
-def UploadApply(request, ID):
+def UploadApply(request, ID, Url):
     pass
 
 

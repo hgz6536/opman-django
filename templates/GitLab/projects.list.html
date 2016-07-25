@@ -59,7 +59,7 @@
                     <a class="btn btn-success btn-xs" href={% url "prosettingurl" foo.pro_url %}>设置</a>
                     <a class="btn btn-danger btn-xs" href={% url "uploadprojecturl" foo.pro_url %} onclick="return
                        confirm('是否确认删除？')">删除</a>
-                    <button type="button" class="btn btn-warning btn-lg">申请上线</button>
+                    <a type="button" class="btn btn-warning btn-lg" href={% url "uploadapplyurl" foo.pro_id foo.pro_url %}>申请上线</a>
                     <button type="button" class="btn btn-info btn-lg">发布测试</button>
                 </td>
             </tr>

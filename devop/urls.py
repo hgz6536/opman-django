@@ -91,8 +91,8 @@ urlpatterns = [
     url(r'^pro/setting/(?P<Url>.+)/$', ProSetting, name='prosettingurl'),
     url(r'^list/all/projects/$', ListProjects, name='listallprojectsurl'),
     url(r'^add/token/$', AddToken, name='tokenaddurl'),
-    url(r'^upload/apply/(?P<ID>\d+)/$', UploadApply, name='uploadapplyurl'),
-    url(r'^upload/online/(?P<Url>.+)/$', UploadProject, name='uploadprojecturl'),
-    url(r'^reset/online/(?P<Url>.+)/$', Reset, name='resetprojecturl'),
+    url(r'^upload/apply/(?P<ID>\d+)/(?P<Url>.+)$', UploadApply, name='uploadapplyurl'),
+    url(r'^upload/online/(?P<Url>.+)$', UploadProject, name='uploadprojecturl'),
+    url(r'^reset/online/(?P<Url>.+)$', Reset, name='resetprojecturl'),
     url(r'^list/log/(?P<ID>\d+)/$', GitLog, name='listlogurl'),
 ]
