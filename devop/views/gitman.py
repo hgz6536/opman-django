@@ -148,7 +148,12 @@ def UploadProject(request, Url):
 @login_required
 def UploadApply(request, ID, Url):
     pass
-
+    kwvars = {
+        'ID': ID,
+        'Url':Url,
+        'request': request,
+    }
+    return render_to_response('GitLab/project.apply.upload.html', kwvars)
 
 @login_required
 def Reset(request, Url):

@@ -1,10 +1,2 @@
 *.pyc
 .idea
-将删除 .idea/dataSources.ids
-将删除 .idea/dataSources.local.xml
-将删除 .idea/workspace.xml
-将删除 devop/__pycache__/
-将删除 devop/views/__pycache__/
-将删除 opman/__pycache__/
-将删除 opman/migrations/
-将删除 upload/
