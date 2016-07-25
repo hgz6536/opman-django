@@ -1,4 +1,4 @@
-setuptools==24.3.0
+setuptools==25.0.0
 Django==1.9.6
 PyMySQL==0.7.5
 openpyxl==2.3.5
