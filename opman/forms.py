@@ -2,7 +2,7 @@ from django import forms
 from opman.models import MyUser as User
 from opman.models import PermissonList, RoleList
 from opman.models import IdcList, HostList
-from opman.models import GitSetting, GitToken, ProjectSetting
+from opman.models import GitSetting, GitToken, ProjectSetting, ProjectApply
 
 
 #考勤xlsx上传
@@ -25,9 +25,9 @@ class ProSettingForm(forms.ModelForm):
 
 class GitSettingForm(forms.ModelForm):
     hostname = forms.CharField(label=u'GitLab域名', widget=forms.TextInput(attrs={'class': 'form-control',"placeholder": "gitlab.niubilety.com"}))
-    rootoken = forms.CharField(label=u'管理员Token',widget=forms.TextInput(attrs={'class': 'form-control'}))
-    sourcepath = forms.CharField(label=u'上线源目录',widget=forms.TextInput(attrs={'class': 'form-control',"placeholder": "/var/htdocs"}))
-    ngxpath = forms.CharField(label=u'nginx目录',widget=forms.TextInput(attrs={'class': 'form-control',"placeholder": "/usr/local/nginx1.8.0"}))
+    rootoken = forms.CharField(label=u'管理员Token', widget=forms.TextInput(attrs={'class': 'form-control'}))
+    sourcepath = forms.CharField(label=u'上线源目录', widget=forms.TextInput(attrs={'class': 'form-control',"placeholder": "/var/htdocs"}))
+    ngxpath = forms.CharField(label=u'nginx目录', widget=forms.TextInput(attrs={'class': 'form-control',"placeholder": "/usr/local/nginx1.8.0"}))
     class Meta:
         model = GitSetting
         fields ='__all__'
@@ -45,6 +45,15 @@ class TokenForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(TokenForm, self).__init__(*args, **kwargs)
         self.fields['usertoken'].label = u'Token'
+
+
+class ApplyUploadForm(forms.ModelForm):
+    title = forms.CharField(label=u'任务名称', widget=forms.TextInput(attrs={'class': 'form-control'}))
+    projectbranch = forms.CharField(label=u'项目分支', widget=forms.TextInput(attrs={'class': 'form-control'}))
+    commitid = forms.CharField(label=u'上线版本号', widget=forms.TextInput(attrs={'class': 'form-control'}))
+    class Meta:
+        model = ProjectApply
+        fields = ('title', 'projectbranch', 'commitid')
 
 
 # 用户登录,注册,编辑,权限

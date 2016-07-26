@@ -132,9 +132,12 @@ class ProjectSetting(models.Model):
 class ProjectApply(models.Model):
     title = models.CharField(max_length=30, null=False, default=None, verbose_name=u'上线名称')
     projectname = models.CharField(max_length=30, null=False, default=None, verbose_name=u'项目名称')
-    applytime = models.DateTimeField(auto_now_add=True)
+    projectid = models.IntegerField(null=False, default=None, verbose_name=u'项目ID')
+    projecturl = models.CharField(max_length=100, null=False, default=None, verbose_name=u'项目URL')
+    projectbranch = models.CharField(max_length=30, null=False, default=None, verbose_name=u'项目分支')
     commitid = models.CharField(max_length=10, null=False, default=None, verbose_name=u'上线版本号')
-    status = models.IntegerField(default=None, verbose_name=u'是否上线')
+    applytime = models.DateTimeField(auto_now_add=True)
+    status = models.IntegerField(default=0, verbose_name=u'当前状态')
 
 
 class GitToken(models.Model):

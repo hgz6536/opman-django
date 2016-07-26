@@ -6,8 +6,8 @@ from django.shortcuts import render_to_response, RequestContext
 from django.contrib.auth.decorators import login_required
 from devop.views.permission import PermissionVerify, SelfPaginator
 from .gitlab import all_projects, user_all_projects, gitlab_log
-from opman.forms import GitSettingForm, TokenForm, ProSettingForm
-from opman.models import GitSetting, GitToken, ProjectSetting
+from opman.forms import GitSettingForm, TokenForm, ProSettingForm, ApplyUploadForm
+from opman.models import GitSetting, GitToken, ProjectSetting, ProjectApply
 from git import Repo, cmd, Git
 import os
 from datetime import datetime
@@ -146,14 +146,32 @@ def UploadProject(request, Url):
 
 
 @login_required
-def UploadApply(request, ID, Url):
-    pass
+def UploadApply(request, ID, Pname, Url):
+    form = ApplyUploadForm(request.POST)
+    if form.is_valid():
+        i = ProjectApply()
+        form.save(commit=False)
+        title = form.cleaned_data['title']
+        branch = form.cleaned_data['projectbranch']
+        commitid = form.cleaned_data['commitid']
+        i.title = title
+        i.projectbranch = branch
+        i.commitid = commitid
+        i.projectname = Pname
+        i.projectid = ID
+        i.projecturl = Url
+        i.save()
+        return HttpResponseRedirect(reverse('listallprojectsurl'))
+    else:
+        form = ApplyUploadForm()
     kwvars = {
         'ID': ID,
+        'Pname': Pname,
         'Url':Url,
+        'form': form,
         'request': request,
     }
-    return render_to_response('GitLab/project.apply.upload.html', kwvars)
+    return render_to_response('GitLab/project.apply.upload.html', kwvars, RequestContext(request))
 
 @login_required
 def Reset(request, Url):

@@ -1,10 +1,23 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends "base.html" %}
 
-</body>
-</html>
+{% block title %}
+    {{ Pname }} 申请上线
+{% endblock %}
+
+{% block content %}
+    <form class="form-horizontal" action="{% url "uploadapplyurl" ID Pname Url%}" method="post">
+        {% csrf_token %}
+        <style>
+            table {
+                border-collapse: separate;
+                border-spacing: 10px;
+            }
+        </style>
+        <table> {{ form.as_table }} </table>
+        <div class="form-group" style="margin-right: 0">
+            <div class="col-md-offset-1 col-md-10">
+                <button type="submit" class="btn btn-danger btn-sm">申请</button>
+            </div>
+        </div>
+    </form>
+{% endblock %}

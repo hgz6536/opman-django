@@ -48,8 +48,8 @@
             </td>
             <td>{{ foo.last_login }}</td>
             <td class="host_buttom">
-                <a class="btn btn-warning btn-xs" href={% url "edituserurl" foo.id %} onclick="return confirm('是否确认编辑？')">编辑</a>
-                <a class="btn btn-danger btn-xs" href={% url "deleteuserurl" foo.id %} onclick="return confirm('是否确认删除？')">删除</a>
+                <a class="btn btn-warning btn-xs" href="{% url "edituserurl" foo.id %}" onclick="return confirm('是否确认编辑？')">编辑</a>
+                <a class="btn btn-danger btn-xs" href="{% url "deleteuserurl" foo.id %}" onclick="return confirm('是否确认删除？')">删除</a>
             </td>
         </tr>
         {% endfor %}

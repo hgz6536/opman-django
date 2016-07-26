@@ -5,7 +5,7 @@
 {% endblock %}
 
 {% block content %}
-    <form class="form-horizontal" role="form" action={% url "tokenaddurl" %} method="post">
+    <form class="form-horizontal" role="form" action="{% url "tokenaddurl" %}" method="post">
     {% csrf_token %}
         {% for item in form %}
             <div class="form-group" style="margin-right: 0">

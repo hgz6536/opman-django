@@ -14,7 +14,7 @@
                href={{ thelistuserurl }}><span class="glyphicon glyphicon-list"></span>用户列表</a>
         </div>
     <hr/>
-    <form class="form-horizontal" role="form" action={% url "adduserurl" %} method="post">
+    <form class="form-horizontal" role="form" action="{% url "adduserurl" %}" method="post">
         {% csrf_token %}
         {% for item in form %}
             <div class="form-group" style="margin-right: 0">

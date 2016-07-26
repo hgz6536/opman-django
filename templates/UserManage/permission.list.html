@@ -34,9 +34,9 @@
                 <td>{{ i.name }}</td>
                 <td>{{ i.url }}</td>
                 <td>
-                    <a href={% url "editpermissionurl" i.id %} onclick="return confirm('确认编辑权限吗？？')"><span
+                    <a href="{% url "editpermissionurl" i.id %}" onclick="return confirm('确认编辑权限吗？？')"><span
                         class="glyphicon glyphicon-edit btn-xs"></span></a>
-                    <a href={% url "deletepermissionurl" i.id %} onclick="return confirm('确认删除权限吗？？')"><span
+                    <a href="{% url "deletepermissionurl" i.id %}" onclick="return confirm('确认删除权限吗？？')"><span
                         class="glyphicon glyphicon-trash btn-xs"></span></a>
                 </td>
             </tr>

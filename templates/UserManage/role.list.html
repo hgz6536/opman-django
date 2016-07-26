@@ -27,8 +27,8 @@
                 <td>{{ i.name }} </td>
 
                 <td>
-                    <a href={% url "editroleurl" i.id %} onclick="return confirm('确认编辑部门吗？？')"><span class="glyphicon glyphicon-edit btn-xs"></span></a>
-                    <a href={% url "deleteroleurl" i.id %} onclick="return confirm('确认删除部门吗？？')"><span class="glyphicon glyphicon-trash btn-xs"></span></a>
+                    <a href="{% url "editroleurl" i.id %}" onclick="return confirm('确认编辑部门吗？？')"><span class="glyphicon glyphicon-edit btn-xs"></span></a>
+                    <a href="{% url "deleteroleurl" i.id %}" onclick="return confirm('确认删除部门吗？？')"><span class="glyphicon glyphicon-trash btn-xs"></span></a>
                 </td>
             </tr>
         {% endfor %}

@@ -21,7 +21,7 @@
 
     <hr/>
 
-    <form class="form-horizontal" role="form" action={% url "editroleurl" ID %} method="POST" >
+    <form class="form-horizontal" role="form" action="{% url "editroleurl" ID %}" method="POST" >
     {% csrf_token %}
 
         {% for item in form %}

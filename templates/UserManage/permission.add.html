@@ -19,7 +19,7 @@
         </div>
     <hr/>
 
-    <form class="form-horizontal" role="form" action={% url "addpermissonurl" %} method="post">
+    <form class="form-horizontal" role="form" action="{% url "addpermissonurl" %}" method="post">
     {% csrf_token %}
 
         {% for item in form %}

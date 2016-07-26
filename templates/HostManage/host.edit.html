@@ -12,7 +12,7 @@
             <a class="btn btn-default {%if request.path == thelisthosturl%} active {%endif%}" href={{ thelisthosturl }}><span class="glyphicon glyphicon-list"></span>主机列表</a>
         </div>
     <hr/>
-    <form class="form-horizontal" role="form" action={% url "edithosturl" ID %} method="POST" >
+    <form class="form-horizontal" role="form" action="{% url "edithosturl" ID %}" method="POST" >
     {% csrf_token %}
 
         {% for item in form %}
