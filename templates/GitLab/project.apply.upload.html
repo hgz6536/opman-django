@@ -5,7 +5,7 @@
 {% endblock %}
 
 {% block content %}
-    <form class="form-horizontal" action="{% url "uploadapplyurl" ID Pname Url%}" method="post">
+    <form action="{% url "uploadapplyurl" ID Pname Url%}" method="post">
         {% csrf_token %}
         <style>
             table {
