@@ -5,7 +5,7 @@ from django.core.urlresolvers import reverse
 from django.shortcuts import render_to_response, RequestContext
 from django.contrib.auth.decorators import login_required
 from devop.views.permission import PermissionVerify, SelfPaginator
-from .gitlab import all_projects, user_all_projects, gitlab_log
+from .gitlab import Gitlab
 from opman.forms import GitSettingForm, TokenForm, ProSettingForm, ApplyUploadForm
 from opman.models import GitSetting, GitToken, ProjectSetting, ProjectApply
 from git import Repo, cmd, Git
@@ -106,9 +106,9 @@ def ListProjects(request):
     cGitSetting = GitSetting.objects.get(id=1)
     host = cGitSetting.hostname
     rootoken = cGitSetting.rootoken
-    path = '/api/v3/'
+    gitlab = Gitlab(host, rootoken)
     if cUser.is_superuser:
-        KList = all_projects(host, path, rootoken)
+        KList = gitlab.get_all_projects()
         lst = SelfPaginator(request, KList, 20)
     else:
         fullnameid = cUser.id
@@ -119,7 +119,7 @@ def ListProjects(request):
             return HttpResponseRedirect(reverse('tokenaddurl'))
         else:
             usertoken = GitToken.objects.get(fullname_id=fullnameid).usertoken
-            KList = user_all_projects(host, path, usertoken)
+            KList = gitlab.get_user_projects(usertoken)
             lst = SelfPaginator(request, KList, 20)
 
     kwvars = {
@@ -189,7 +189,8 @@ def GitLog(request, ID):
     cGitSetting = GitSetting.objects.get(id=1)
     host = cGitSetting.hostname
     rootoken = cGitSetting.rootoken
-    pro_Log = gitlab_log(host, rootoken, ID, '30')
+    gitlab = Gitlab(host, rootoken)
+    pro_Log = gitlab.get_commit_log(ID, day='30')
     kwvars = {
         'log': pro_Log,
         'request': request,
