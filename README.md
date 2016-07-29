@@ -19,6 +19,8 @@
 
 `git clone https://github.com/hgz6536/opman-django.git`
 
+`cd opman-django && pip3 install -r requirements.txt`
+
 - 初始化项目
 
 参考：http://blog.niubilety.com/2016/06/08/554.html
@@ -79,7 +81,9 @@ server {
 `580838402`
 
 如果困惑直击QQ
-<a target="_blank" href="http://wpa.qq.com/msgrd?v=3&uin=847644968&site=qq&menu=yes"><img border="0" src="http://wpa.qq.com/pa?p=2:847644968:52" alt="点击这里给我发消息" title="点击这里给我发消息"/></a>
+<a target="_blank" href="http://wpa.qq.com/msgrd?v=3&uin=847644968&site=qq&menu=yes">
+     <img border="0" src="http://wpa.qq.com/pa?p=2:847644968:52" alt="点击这里给我发消息" title="点击这里给我发消息"/>
+</a>
 
 ## 结果展示 ##
 ### xlsx 文件上传 ###
