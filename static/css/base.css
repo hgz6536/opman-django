@@ -277,3 +277,9 @@ img.user-detail {
     font-style:italic;
     color:#ccc;
 }
+#table-top{
+    position:absolute;left:199px;top:159px;width:100%;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}

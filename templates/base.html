@@ -11,6 +11,7 @@
     <script src="http://cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
     <script src="/static/js/jquery.bootstrap-duallistbox.js"></script>
     <script src="/static/js/jquery.date_input.pack.js"></script>
+    <script src="http://cdn.bootcss.com/iScroll/5.2.0/iscroll-infinite.js"></script>
     <link rel="stylesheet" type="text/css" href="/static/css/bootstrap-duallistbox.css">
 </head>
 <body>
@@ -56,4 +57,34 @@
     </div>
 
 </body>
+<script >
+    $(document).ready(function(){
+        $("#table-top th:first-child").width($(".abc td:first-child").width()+2);
+        $("#table-top th:nth-child(2)").width($(".abc td:nth-child(2)").width()+1);
+        $("#table-top th:nth-child(3)").width($(".abc td:nth-child(3)").width());
+        $("#table-top th:nth-child(4)").width($(".abc td:nth-child(4)").width());
+        $("#table-top th:nth-child(5)").width($(".abc td:nth-child(5)").width());
+        $("#table-top th:nth-child(6)").width($(".abc td:nth-child(6)").width());
+        $("#table-top th:nth-child(7)").width($(".abc td:nth-child(7)").width());
+        $("#table-top th:nth-child(8)").width($(".abc td:nth-child(8)").width());
+        $("#table-top th:nth-child(9)").width($(".abc td:nth-child(9)").width());
+        $("#table-top th:nth-child(10)").width($(".abc td:nth-child(10)").width());
+
+
+        console.log($(".abc td:nth-child(2)").width());
+      $(window).bind("scroll",function(){
+          var sTop = $(window).scrollTop();
+          if(sTop > 159){
+              $("#table-top").css('top',0);
+              $("#table-top").css('position','fixed');
+          }
+          else{
+              $("#table-top").css('top',"159px");
+              $("#table-top").css('position','absolute');
+          }
+
+
+      })
+    });
+</script>
 </html>
