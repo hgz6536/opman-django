@@ -55,11 +55,11 @@ server {
         #error_log /data/logs/nginx/opman_error.log;
 
         location /medis {
-                alias /data/opman-django/media;
+                alias /data/webroot/opman-django/media;
         }
 
         location /static {
-                alias /data/opman-django/static;
+                alias /data/webroot/opman-django/static;
         }
 
         location / {
