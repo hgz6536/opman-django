@@ -11,7 +11,7 @@ from opman.models import MyUser as User
 from .analystor import getalldate, gethours, getworktime
 from datetime import datetime, timedelta
 from openpyxl import load_workbook
-
+import os
 
 @login_required
 @PermissionVerify()
@@ -79,7 +79,7 @@ def WriteData(request, ID):
     for i in user:
         userlist.append(i.fullname)
     for u in userlist:
-        if u == '':
+        if u == '' or u is None:
             pass
         else:
             for day in datelist:
@@ -110,7 +110,14 @@ def WriteData(request, ID):
 @login_required
 @PermissionVerify()
 def DeleteXlsx(request, ID):
+    xlsx = Xlsx.objects.get(id=ID)
+    file = xlsx.filename
+    mydate = xlsx.date
+    year = int(mydate.strftime('%Y'))
+    month = int(mydate.strftime('%m'))
+    KaoQin.objects.filter(date__month=month).delete()
     Xlsx.objects.filter(id=ID).delete()
+    os.remove(str(file))
     return HttpResponseRedirect(reverse('uploadxlsxurl'))
 
 

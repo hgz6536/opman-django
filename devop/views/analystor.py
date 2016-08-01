@@ -258,8 +258,8 @@ def gethours(username, mydate, lst, args):
                                 pass
                             print('加班%s' % overtime)
                             return {'username': username, 'date':mydate, 'myweek':week, 'on': args[0], 'off': heapq.nsmallest(1, lst), 'late': smtime.seconds/3600, 'plus': plus, 'leave': None, 'content': '次日凌晨加班时间累计到今天'}
-                else:
-                    print('次日凌晨没有打卡，判断为忘记打卡一次，有问题人工审核')
+                    else:
+                        print('次日凌晨没有打卡，判断为忘记打卡一次，有问题人工审核')
                     if args[0] < flag3:
                         print('次日凌晨没有打卡，也没发现迟到，判断为忘记打卡一次，有问题人工审核')
                         return {'username': username, 'date':mydate, 'myweek':week, 'on': args[0], 'off': None, 'late': None, 'plus': None, 'leave': None, 'content': '判断为下班忘记打卡'}

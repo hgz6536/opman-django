@@ -136,11 +136,12 @@ class UserAddForm(forms.ModelForm):
 class EditUserForm(forms.ModelForm):
     class Meta:
         model = User
-        fields = ('username', 'email', 'is_active', 'permission', 'fullname')
+        fields = ('username', 'email', 'is_active', 'role', 'permission', 'fullname')
         widgets = {
             'username': forms.TextInput(attrs={'class': 'form-control'}),
             'email': forms.TextInput(attrs={'class': 'form-control'}),
             'is_active': forms.Select(choices=((True, u'启用'), (False, u'禁用')), attrs={'class': 'form-control'}),
+            'role': forms.Select(attrs={'class': 'form-control'}),
             'permission': forms.SelectMultiple(attrs={'class': 'form-control', 'size': '10', 'multiple': 'multiple'}),
             'fullname': forms.TextInput(attrs={'class': 'form-control'}),
         }
