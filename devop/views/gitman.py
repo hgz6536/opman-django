@@ -103,10 +103,15 @@ def AddToken(request):
 @PermissionVerify()
 def ListProjects(request):
     cUser = request.user
-    cGitSetting = GitSetting.objects.get(id=1)
-    host = cGitSetting.hostname
-    rootoken = cGitSetting.rootoken
-    gitlab = Gitlab(host, rootoken)
+    try:
+        cGitSetting = GitSetting.objects.get(id=1)
+    except Exception as e:
+        print(e)
+        return HttpResponseRedirect(reverse('gitsettingurl'))
+    else:
+        host = cGitSetting.hostname
+        rootoken = cGitSetting.rootoken
+        gitlab = Gitlab(host, rootoken)
     if cUser.is_superuser:
         KList = gitlab.get_all_projects()
         lst = SelfPaginator(request, KList, 20)

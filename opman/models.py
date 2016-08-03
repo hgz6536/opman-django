@@ -119,6 +119,8 @@ class GitSetting(models.Model):
     rootoken = models.CharField(max_length=30, null=True, unique=True, default=None, verbose_name=u'管理员token')
     sourcepath = models.CharField(max_length=50, null=True, unique=True, default=None, verbose_name=u'上线源目录')
     ngxpath = models.CharField(max_length=50, null=True, unique=True, default=None, verbose_name=u'nginx目录')
+    testserver = models.GenericIPAddressField(null=False, default='127.0.0.1', verbose_name=u'测试服务器IP')
+    devserver = models.GenericIPAddressField(null=False, default='127.0.0.1', verbose_name=u'开发服务器IP')
 
 
 class ProjectSetting(models.Model):
@@ -142,4 +144,4 @@ class ProjectApply(models.Model):
 
 class GitToken(models.Model):
     usertoken = models.CharField(max_length=30, null=True, unique=True, default=None, verbose_name=u'用户token')
-    fullname = models.ForeignKey(MyUser, null=False, blank=False, primary_key=True, verbose_name=u'姓名')
+    fullname = models.ForeignKey(MyUser, null=False, blank=False, verbose_name=u'姓名')

@@ -28,6 +28,8 @@ class GitSettingForm(forms.ModelForm):
     rootoken = forms.CharField(label=u'管理员Token', widget=forms.TextInput(attrs={'class': 'form-control'}))
     sourcepath = forms.CharField(label=u'上线源目录', widget=forms.TextInput(attrs={'class': 'form-control',"placeholder": "/var/htdocs"}))
     ngxpath = forms.CharField(label=u'nginx目录', widget=forms.TextInput(attrs={'class': 'form-control',"placeholder": "/usr/local/nginx1.8.0"}))
+    testserver = forms.GenericIPAddressField(label=u'测试服务器IP', widget=forms.TextInput(attrs={'class': 'form-control',"placeholder": "默认:127.0.0.1"}))
+    devserver = forms.GenericIPAddressField(label=u'开发服务器IP', widget=forms.TextInput(attrs={'class': 'form-control',"placeholder": "默认:127.0.0.1"}))
     class Meta:
         model = GitSetting
         fields ='__all__'
