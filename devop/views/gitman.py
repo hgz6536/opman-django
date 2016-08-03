@@ -13,6 +13,41 @@ import os
 from datetime import datetime
 
 
+ngx = '''server
+    {
+        listen 80;
+        server_name big.niubilety.com ;
+        root  /data/web_data/ecshop/www;
+        index index.php;
+        location ~ .*\.(php|php5)?$
+            {
+                try_files $uri =404;
+                fastcgi_pass  127.0.0.1:9000;
+                #fastcgi_pass  unix:/tmp/php-fpm.socket;
+                fastcgi_index index.php;
+                include fastcgi.conf;
+            }
+
+        location / {
+                if (!-f $request_filename){
+                    rewrite (.*) /index.php;
+                    }
+                }
+
+        location ~ .*\.(gif|jpg|jpeg|png|bmp|swf)$
+                {
+                    expires 30d;
+                }
+
+        location ~ .*\.(js|css)?$
+                {
+                    expires 12h;
+                }
+
+        access_log  /data/web-logs/big.niubilety.ccess.log  access;
+}
+'''
+
 @login_required
 def ProSetting(request, Url):
     try:
@@ -24,7 +59,8 @@ def ProSetting(request, Url):
             form.save()
             return HttpResponseRedirect(reverse('listallprojectsurl'))
         else:
-            form = ProSettingForm()
+
+            form = ProSettingForm(initial={'ngxtestconf':ngx, 'ngxdevtconf':ngx})
         kwvars = {
             'url': Url,
             'form': form,
@@ -57,7 +93,7 @@ def Setting(request):
             form.save()
             return HttpResponseRedirect(reverse('gitsettingurl'))
         else:
-            form = GitSettingForm()
+            form = GitSettingForm(initial={'testserver':'127.0.0.1', 'devserver':'127.0.0.1'})
         kwvars = {
             'form': form,
             'request': request,

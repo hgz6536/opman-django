@@ -80,7 +80,7 @@ class MyUser(AbstractUser):
     fullname = models.CharField(max_length=64, null=True, unique=True, default=None, verbose_name=u'姓名')
     birthday = models.DateField(null=True, blank=True, default=None, verbose_name=u'生日')
     sex = models.CharField(max_length=2, null=True, verbose_name=u'性别')
-    role = models.ForeignKey(RoleList, null=True, blank=True, verbose_name=u'部门', default=2)
+    role = models.ForeignKey(RoleList, null=True, blank=True, verbose_name=u'部门')
     permission = models.ManyToManyField(PermissonList, blank=True, verbose_name=u'权限')
 
 
@@ -119,16 +119,18 @@ class GitSetting(models.Model):
     rootoken = models.CharField(max_length=30, null=True, unique=True, default=None, verbose_name=u'管理员token')
     sourcepath = models.CharField(max_length=50, null=True, unique=True, default=None, verbose_name=u'上线源目录')
     ngxpath = models.CharField(max_length=50, null=True, unique=True, default=None, verbose_name=u'nginx目录')
-    testserver = models.GenericIPAddressField(null=False, default='127.0.0.1', verbose_name=u'测试服务器IP')
-    devserver = models.GenericIPAddressField(null=False, default='127.0.0.1', verbose_name=u'开发服务器IP')
+    testserver = models.GenericIPAddressField(default='127.0.0.1', verbose_name=u'测试服务器IP')
+    devserver = models.GenericIPAddressField(default='127.0.0.1', verbose_name=u'开发服务器IP')
 
 
 class ProjectSetting(models.Model):
     url = models.URLField(null=False, unique=True, verbose_name=u'项目URL')
     devpath = models.CharField(max_length=50, null=True, unique=True, default=None, verbose_name=u'开发目录')
     testpath = models.CharField(max_length=50, null=True, unique=True, default=None, verbose_name=u'测试目录')
-    devhostname = models.CharField(max_length=50, null=True, unique=True, default=None, verbose_name=u'开发域名')
     testhostname = models.CharField(max_length=50, null=True, unique=True, default=None, verbose_name=u'测试域名')
+    devhostname = models.CharField(max_length=50, null=True, unique=True, default=None, verbose_name=u'开发域名')
+    ngxtestconf = models.TextField(verbose_name='Ngx测试', default=None)
+    ngxdevtconf = models.TextField(verbose_name='Ngx开发', default=None)
 
 
 class ProjectApply(models.Model):
