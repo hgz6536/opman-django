@@ -13,7 +13,7 @@ class XlsxUpload(forms.Form):
 
 #Git 系统配置
 class ProSettingForm(forms.ModelForm):
-    url = forms.URLField(label=u'项目URL', widget=forms.TextInput(attrs={'class': 'form-control',"placeholder": "gitlab.niubilety.com"}))
+    url = forms.URLField(label=u'项目URL', widget=forms.TextInput(attrs={'class': 'form-control',"placeholder": "http://gitlab.niubilety.com/test/test.git"}))
     devpath = forms.CharField(label=u'开发目录',widget=forms.TextInput(attrs={'class': 'form-control',"placeholder": "/var/dev/htdocs"}))
     testpath = forms.CharField(label=u'测试目录',widget=forms.TextInput(attrs={'class': 'form-control',"placeholder": "/var/test/htdocs/"}))
     devhostname = forms.CharField(label=u'开发域名',widget=forms.TextInput(attrs={'class': 'form-control',"placeholder": "dev-fengmi.rvierrun.cn"}))
@@ -21,6 +21,10 @@ class ProSettingForm(forms.ModelForm):
     class Meta:
         model = ProjectSetting
         fields ='__all__'
+        widgets = {
+            'ngxtestconf': forms.Textarea(attrs={'style':'height:200px;width:800px'}),
+            'ngxdevtconf': forms.Textarea(attrs={'style':'height:200px;width:800px'})
+        }
 
 
 class GitSettingForm(forms.ModelForm):
@@ -34,6 +38,9 @@ class GitSettingForm(forms.ModelForm):
         model = GitSetting
         fields ='__all__'
 
+        widgets = {
+            'ngxconf': forms.Textarea(attrs={'style': 'height:200px;width:800px'}),
+        }
 
 class TokenForm(forms.ModelForm):
     usertoken = forms.CharField(label=u'Token',widget=forms.TextInput(attrs={'class': 'form-control'}))

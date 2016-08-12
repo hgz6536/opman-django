@@ -121,6 +121,7 @@ class GitSetting(models.Model):
     ngxpath = models.CharField(max_length=50, null=True, unique=True, default=None, verbose_name=u'nginx目录')
     testserver = models.GenericIPAddressField(default='127.0.0.1', verbose_name=u'测试服务器IP')
     devserver = models.GenericIPAddressField(default='127.0.0.1', verbose_name=u'开发服务器IP')
+    ngxconf = models.TextField(verbose_name='Ngx配置文件', default=None)
 
 
 class ProjectSetting(models.Model):

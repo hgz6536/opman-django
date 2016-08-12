@@ -5,6 +5,13 @@
 {% endblock %}
 
 {% block content %}
+    <div class="btn-group">
+        <a class="btn btn-default"><span class="glyphicon glyphicon-upload"></span>项目上线</a>
+        {% url "listallprojectsurl" as thelistallprojectsurl %}
+        <a class="btn btn-default {% if request.path == thelistallprojectsurl %} active {% endif %}" href={{ thelistallprojectsurl }}>
+            <span class="glyphicon glyphicon-th-list"></span>项目列表</a>
+    </div>
+    <hr/>
     <form action="{% url "uploadapplyurl" ID Pname Url%}" method="post">
         {% csrf_token %}
         <style>

@@ -12,8 +12,62 @@ from git import Repo, cmd, Git
 import os
 from datetime import datetime
 
+ngx = '''user  www-data;
+worker_processes  4;
+worker_rlimit_nofile 65535 ;
+events {
+    use epoll;
+    worker_connections  65536;
+}
 
-ngx = '''server
+http {
+    include       mime.types;
+    default_type  application/octet-stream;
+
+    log_format  access  '$remote_addr - $remote_user [$time_local] '
+                        '"$request" $status $body_bytes_sent '
+                        '"$http_referer" "$http_user_agent" "$host" '
+                        '"$gzip_ratio" $request_body "$http_x_forwarded_for"';
+    #access_log  logs/access.log  access;
+    server_names_hash_bucket_size 128;
+    client_header_buffer_size 2k;
+    large_client_header_buffers 4 4k;
+    client_max_body_size 100m;
+    sendfile        on;
+    tcp_nopush     on;
+    set_real_ip_from 192.168.1.10;
+    set_real_ip_from 192.168.1.74;
+    real_ip_header X-Real-IP;
+    keepalive_timeout  0;
+    fastcgi_connect_timeout 600;
+    fastcgi_send_timeout 600;
+    fastcgi_read_timeout 600;
+    fastcgi_buffer_size 64k;
+    fastcgi_buffers 16 64k;
+    fastcgi_busy_buffers_size 128k;
+    fastcgi_temp_file_write_size 128k;
+    fastcgi_cache_valid 200 302 1h;
+    fastcgi_cache_valid 301 1d;
+    fastcgi_cache_valid any 1m;
+    fastcgi_cache_min_uses 1;
+    fastcgi_cache_use_stale error timeout invalid_header http_500;
+    open_file_cache max=204800 inactive=20s;
+    open_file_cache_min_uses 1;
+    open_file_cache_valid 30s;
+
+    tcp_nodelay on;
+    gzip  on;
+    gzip_min_length  1k;
+    gzip_buffers     4 16k;
+    gzip_http_version 1.0;
+    gzip_comp_level 2;
+    gzip_types       text/plain application/x-javascript text/css application/xml;
+    gzip_vary on;
+include vhost/*.conf;
+error_log logs/error.log error;
+}'''
+
+vhost = '''server
     {
         listen 80;
         server_name big.niubilety.com ;
@@ -60,7 +114,7 @@ def ProSetting(request, Url):
             return HttpResponseRedirect(reverse('listallprojectsurl'))
         else:
 
-            form = ProSettingForm(initial={'ngxtestconf':ngx, 'ngxdevtconf':ngx})
+            form = ProSettingForm(initial={'ngxtestconf':vhost, 'ngxdevtconf':vhost, 'url':Url})
         kwvars = {
             'url': Url,
             'form': form,
@@ -91,9 +145,10 @@ def Setting(request):
         form = GitSettingForm(request.POST)
         if form.is_valid():
             form.save()
+            print(cSetting.get(id=1).ngxpath)
             return HttpResponseRedirect(reverse('gitsettingurl'))
         else:
-            form = GitSettingForm(initial={'testserver':'127.0.0.1', 'devserver':'127.0.0.1'})
+            form = GitSettingForm(initial={'testserver':'127.0.0.1', 'devserver':'127.0.0.1', 'ngxconf':ngx})
         kwvars = {
             'form': form,
             'request': request,

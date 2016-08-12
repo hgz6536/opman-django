@@ -3,7 +3,11 @@
 {% block title %}Git 系统设置{% endblock %}
 
 {% block content %}
-    <h1>基本配置</h1>
+    <div class="btn-group">
+    <a class="btn btn-default">
+        <span class="glyphicon glyphicon-cog"></span>系统配置</a>
+    </div>
+    <hr/>
     <form action="{% url "gitsettingurl" %}" method="post">
         {% csrf_token %}
         <style>

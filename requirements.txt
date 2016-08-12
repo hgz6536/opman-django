@@ -1,6 +1,6 @@
-setuptools==25.0.0
+setuptools==25.1.4
 Django==1.9.6
-PyMySQL==0.7.5
+PyMySQL==0.7.6
 openpyxl==2.3.5
 requests==2.10.0
 GitPython==2.0.7
