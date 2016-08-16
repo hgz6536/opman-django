@@ -73,6 +73,10 @@ server {
 
 `uwsgi --ini /data/webroot/opman-django/uwsgi.ini`
 
+- 平滑重启uwsgi
+
+`uwsgi --reload /tmp/opman.pid`
+
 - 启动nginx
 
 `/etc/init.d/nginx start`
