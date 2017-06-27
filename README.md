@@ -23,7 +23,7 @@
 
 - 初始化项目
 
-参考：http://blog.niubilety.com/2016/06/08/554.html
+参考：https://niubilety.com/abstractuser-%E6%89%A9%E5%B1%95user-%E5%AD%97%E6%AE%B5/
 
 - 安装uwsgi
 
