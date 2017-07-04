@@ -1,17 +1,24 @@
-# opman
+# OpMan2.0
 
 ## 运行环境介绍 ##
 
-系统：KaLi 2016
+系统：Mac
 
-软件：Python3.5,Django1.9
+软件：Python3.6,Django1.11.3,MySQL5.7
 
-## 当前功能 ##
+## 全新UI ##
 
-1. 用户权限管理已经完成,released v1.0
-1. 考勤管理已经完成,released v1.0.1
+![](https://github.com/hgz6536/hgz6536.github.io/blob/master/images/OpMan2.0.png)
 
 ## 部署方法 ##
+
+- 安装MySQL5.7,并设置my.cnf
+
+`
+character-set-server = utf8
+character-set-client-handshake = FALSE
+sql_mode=NO_ENGINE_SUBSTITUTION,STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER
+`
 
 - 克隆代码
 
@@ -23,7 +30,11 @@
 
 - 初始化项目
 
-参考：https://niubilety.com/abstractuser-%E6%89%A9%E5%B1%95user-%E5%AD%97%E6%AE%B5/
+`
+python manage.py migrate
+python manage.py createsuperuser
+/usr/bin/python manage.py celery worker --loglevel=info -E -c 2 &
+`
 
 - 安装uwsgi
 
@@ -88,9 +99,3 @@ server {
 <a target="_blank" href="http://wpa.qq.com/msgrd?v=3&uin=847644968&site=qq&menu=yes">
      <img border="0" src="http://wpa.qq.com/pa?p=2:847644968:52" alt="点击这里给我发消息" title="点击这里给我发消息"/>
 </a>
-
-## 结果展示 ##
-### xlsx 文件上传 ###
-![](https://github.com/hgz6536/hgz6536.github.io/blob/master/images/xlsx_upload.png)
-### 考勤列表 ###
-![](https://github.com/hgz6536/hgz6536.github.io/blob/master/images/kaoqin_list.png)
