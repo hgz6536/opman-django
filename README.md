@@ -14,9 +14,9 @@
 
 - 安装MySQL5.7,并设置my.cnf
 
-`character-set-server = utf8
-character-set-client-handshake = FALSE
-sql_mode=NO_ENGINE_SUBSTITUTION,STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER`
+`character-set-server = utf8`
+`character-set-client-handshake = FALSE`
+`sql_mode=NO_ENGINE_SUBSTITUTION,STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER`
 
 - 克隆代码
 
@@ -28,9 +28,9 @@ sql_mode=NO_ENGINE_SUBSTITUTION,STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER`
 
 - 初始化项目
 
-`python manage.py migrate
-python manage.py createsuperuser
-/usr/bin/python manage.py celery worker --loglevel=info -E -c 2 &`
+`python manage.py migrate`
+`python manage.py createsuperuser`
+`/usr/bin/python manage.py celery worker --loglevel=info -E -c 2 &`
 
 - 安装uwsgi
 
