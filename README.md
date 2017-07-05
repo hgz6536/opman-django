@@ -30,6 +30,8 @@
 
 - 初始化项目
 
+`python manage.py makemigrations opman`
+
 `python manage.py migrate`
 
 `python manage.py createsuperuser`
