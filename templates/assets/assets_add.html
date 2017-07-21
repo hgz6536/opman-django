@@ -364,7 +364,7 @@
 									 		</div>
 									 		
 										</form>	
-										 </fieldset>                              
+                                    </fieldset>
                                 </div>
 
                                 <!-- /.col-lg-6 (nested) -->
@@ -482,7 +482,7 @@
 			
 		};
 		var asset_data = getFormData(document.getElementById('addHost'),'');
-//	 	alert(JSON.stringify(asset_data));  
+	 	alert(JSON.stringify(asset_data));
 		var btnObj = $(obj);
 		if (asset_data.assets.assets_type=="server"){
 			var putUrl = '/api/server/';
@@ -502,7 +502,7 @@
 				window.wxc.xcConfirm("资产添加成功", window.wxc.xcConfirm.typeEnum.success);
 			},
 	    	error:function(response){
-	    		window.wxc.xcConfirm("资产编号重复，添加资产失败~", window.wxc.xcConfirm.typeEnum.error);
+	    		window.wxc.xcConfirm("添加资产失败~", window.wxc.xcConfirm.typeEnum.error);
 	    	}
 		})	
 	}	

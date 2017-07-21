@@ -60,29 +60,33 @@ class AssetsSerializer(serializers.ModelSerializer):
     class Meta:
         model = Assets
         fields = ('id', 'assets_type', 'name', 'sn', 'buy_time', 'expire_date',
-                  'buy_user', 'management_ip', 'manufacturer', 'provider',
-                  'model', 'status', 'put_zone', 'group', 'business')
+                  'buy_user', 'management_ip', 'manufacturer', 'model', 'provider',
+                   'status', 'put_zone', 'group', 'business')
+
+
+class AssetsLogsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Log_Assets
+        fields = ('id', 'assets_id', 'assets_user', 'assets_content', 'assets_type', 'create_time')
 
 
 class ServerSerializer(serializers.ModelSerializer):
-    assets = AssetsSerializer(required=False)
-
-    #     keyfile = serializers.FileField(max_length=None, use_url=True)
-
+    assets = AssetsSerializer()
     class Meta:
         model = Server_Assets
-        fields = ('id', 'ip', 'hostname', 'username', 'port', 'passwd',
-                  'line', 'cpu', 'cpu_number', 'vcpu_number', 'keyfile',
-                  'cpu_core', 'disk_total', 'ram_total', 'kernel',
-                  'selinux', 'swap', 'raid', 'system', 'assets')
+        fields = ('id','ip','hostname','username','port','passwd',
+                  'line','cpu','cpu_number','vcpu_number','keyfile',
+                  'cpu_core','disk_total','ram_total','kernel',
+                  'selinux','swap','raid','system','assets')
+
 
     def create(self, data):
-        if (data.get('assets')):
+        if(data.get('assets')):
             assets_data = data.pop('assets')
             assets = Assets.objects.create(**assets_data)
         else:
             assets = Assets()
-        data['assets'] = assets
+        data['assets'] = assets;
         server = Server_Assets.objects.create(**data)
         return server
 

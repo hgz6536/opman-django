@@ -14,6 +14,7 @@ Including another URLconf
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
 from django.conf.urls import url
+from django.views.generic.base import RedirectView
 from devop.views.index import index, login, logout, noperm, config
 from devop.views.user import user_center, user_manage, user, register, group, permission
 from devop.views.app import apps_list, apps_model, apps_add, ansible_log
@@ -26,6 +27,7 @@ from devop.restapis import user_api, deploy_api, assets_api
 
 urlpatterns = [
     # url(r'^admin/', admin.site.urls),
+    url(r'^favicon\.ico$', RedirectView.as_view(url='/media/favicon.ico')),
     url(r'^$', index),
     url(r'^config', config),
     url(r'^noperm', noperm, name='permissiondenyurl'),
@@ -68,6 +70,8 @@ urlpatterns = [
     url(r'^api/server/(?P<id>[0-9]+)/$', assets_api.asset_server_detail),
     url(r'^api/service/$', assets_api.service_list),
     url(r'^api/service/(?P<id>[0-9]+)/$', assets_api.service_detail),
+    url(r'^api/assets/$', assets_api.asset_list),
+    url(r'^api/assets/(?P<id>[0-9]+)/$', assets_api.asset_detail),
     url(r'^api/order/(?P<username>.+)/$', deploy_api.OrderList.as_view()),
     url(r'^api/zone/$', assets_api.zone_list),
     url(r'^api/zone/(?P<id>[0-9]+)/$', assets_api.zone_detail),

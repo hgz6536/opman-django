@@ -12,6 +12,7 @@ from devop.tasks import recordAssets
 from django.contrib.auth.decorators import permission_required
 from opman.models import RoleList
 
+
 @api_view(['GET', 'POST'])
 def service_list(request, format=None):
     """
@@ -398,10 +399,6 @@ def asset_detail(request, id, format=None):
 
 @api_view(['GET', 'POST'])
 def asset_server_list(request, format=None):
-    """
-    List all order, or create a server assets order.
-    """
-
     if request.method == 'GET':
         snippets = Server_Assets.objects.all()
         serializer = ServerSerializer(snippets, many=True)
@@ -411,7 +408,10 @@ def asset_server_list(request, format=None):
             data = request.data.get('data')
         else:
             data = request.data
-        serializer = ServerSerializer(data=data)
+        serializer = ServerSerializer(data = data)
+        print(data.get('assets'))
+        print(serializer.is_valid())
+        print(serializer.errors)
         if serializer.is_valid():
             serializer.save()
             recordAssets.delay(user=str(request.user), content="添加服务器资产：{ip}".format(ip=data.get("ip")), type="server",
