@@ -100,7 +100,6 @@ def assets_view(request, aid):
 
 
 @login_required(login_url='/login')
-@permission_required('OpsManage.can_change_assets', login_url='/noperm/')
 def assets_modf(request, aid):
     try:
         assets = Assets.objects.get(id=aid)

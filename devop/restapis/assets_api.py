@@ -409,9 +409,6 @@ def asset_server_list(request, format=None):
         else:
             data = request.data
         serializer = ServerSerializer(data = data)
-        print(data.get('assets'))
-        print(serializer.is_valid())
-        print(serializer.errors)
         if serializer.is_valid():
             serializer.save()
             recordAssets.delay(user=str(request.user), content="添加服务器资产：{ip}".format(ip=data.get("ip")), type="server",
@@ -422,9 +419,6 @@ def asset_server_list(request, format=None):
 
 @api_view(['GET', 'PUT', 'DELETE'])
 def asset_server_detail(request, id, format=None):
-    """
-    Retrieve, update or delete a server assets instance.
-    """
     try:
         snippet = Server_Assets.objects.get(id=id)
     except Server_Assets.DoesNotExist:
@@ -436,6 +430,7 @@ def asset_server_detail(request, id, format=None):
 
     elif request.method == 'PUT':
         '''如果更新字段包含assets则先更新总资产表'''
+        print(request.data.get('data'))
         if (request.data.get('data')):
             data = request.data.get('data')
         else:
@@ -451,7 +446,7 @@ def asset_server_detail(request, id, format=None):
                 assets.save()
                 recordAssets.delay(user=str(request.user), content="修改服务器资产：{ip}".format(ip=snippet.ip), type="server",
                                    id=id)
-        serializer = ServerSerializer(snippet, data=data)
+        serializer = ServerSerializer(snippet,data=data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)

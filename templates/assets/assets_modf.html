@@ -250,70 +250,110 @@
 											<div class="form-group">
 												 <label class="col-sm-2 control-label">端口</label>
 												 <div class="col-sm-6">
-												 <input type="text" class="form-control" name="server_port" placeholder="Port"  class="input-xlarge" pattern="^(\d+)" value="{{ asset_body.port }}" />
+                                                     {% if asset_body.port is None %}
+                                                        <input type="text" class="form-control" name="server_port" placeholder="Port"  class="input-xlarge" pattern="^(\d+)" value="" />
+                                                     {% else %}
+												        <input type="text" class="form-control" name="server_port" placeholder="Port"  class="input-xlarge" pattern="^(\d+)" value="{{ asset_body.port }}" />
+                                                     {% endif %}
 												 </div>
 											</div>	
 											
 											<div class="form-group">
 												 <label class="col-sm-2 control-label">CPU型号</label>
 												 <div class="col-sm-6">
-												 <input type="text" class="form-control" name="server_cpu" placeholder="Cpu"  class="input-xlarge" value="{{ asset_body.cpu }}" />
+                                                     {% if asset_body.cpu is None %}
+												        <input type="text" class="form-control" name="server_cpu" placeholder="Cpu"  class="input-xlarge" value="" />
+                                                     {% else %}
+												        <input type="text" class="form-control" name="server_cpu" placeholder="Cpu"  class="input-xlarge" value="{{ asset_body.cpu }}" />
+                                                     {% endif %}
 												 </div>
 											</div>	
 											
 											<div class="form-group">
 												 <label class="col-sm-2 control-label">物理CPU</label>
 												 <div class="col-sm-6">
-												 <input type="text" class="form-control" name="server_cpu_number" placeholder="物理CPU个数"  class="input-xlarge" value="{{ asset_body.cpu_number }}" />
+                                                     {% if asset_body.cpu_number is None %}
+												        <input type="text" class="form-control" name="server_cpu_number" placeholder="物理CPU个数"  class="input-xlarge" value="" />
+                                                     {% else %}
+												        <input type="text" class="form-control" name="server_cpu_number" placeholder="物理CPU个数"  class="input-xlarge" value="{{ asset_body.cpu_number }}" />
+                                                     {% endif %}
 												 </div>
 											</div>		
 											
 											<div class="form-group">
 												 <label class="col-sm-2 control-label">逻辑CPU</label>
 												 <div class="col-sm-6">
-												 <input type="text" class="form-control" name="server_vcpu_number" placeholder="逻辑CPU个数"  class="input-xlarge" value="{{ asset_body.vcpu_number }}" />
+                                                     {% if asset_body.vcpu_number is None %}
+												        <input type="text" class="form-control" name="server_vcpu_number" placeholder="逻辑CPU个数"  class="input-xlarge" value="" />
+                                                     {% else %}
+												        <input type="text" class="form-control" name="server_vcpu_number" placeholder="逻辑CPU个数"  class="input-xlarge" value="{{ asset_body.vcpu_number }}" />
+                                                     {% endif %}
 												 </div>
 											</div>	
 											
 											<div class="form-group">
 												 <label class="col-sm-2 control-label">CPU核心数</label>
 												 <div class="col-sm-6">
-												 <input type="text" class="form-control" name="server_cpu_core" placeholder="单个CPU核心数"  class="input-xlarge" value="{{ asset_body.cpu_core }}" />
+                                                     {% if asset_body.cpu_core is None %}
+												        <input type="text" class="form-control" name="server_cpu_core" placeholder="单个CPU核心数"  class="input-xlarge" value="" />
+                                                     {% else %}
+												        <input type="text" class="form-control" name="server_cpu_core" placeholder="单个CPU核心数"  class="input-xlarge" value="{{ asset_body.cpu_core }}" />
+                                                     {% endif %}
 												 </div>
 											</div>															
 											
 											<div class="form-group">
 												 <label class="col-sm-2 control-label">内存容量</label>
 												 <div class="col-sm-6">
-												 <input type="text" class="form-control" name="server_ram_total" placeholder="Mem"  class="input-xlarge" value="{{ asset_body.ram_total  }}" />							 
+                                                     {% if asset_body.ram_total is None %}
+												        <input type="text" class="form-control" name="server_ram_total" placeholder="Mem"  class="input-xlarge" value="" />
+                                                     {% else %}
+												        <input type="text" class="form-control" name="server_ram_total" placeholder="Mem"  class="input-xlarge" value="{{ asset_body.ram_total  }}" />
+                                                     {% endif %}
 												 </div>
 											</div>	
 											
 											<div class="form-group">
 												 <label class="col-sm-2 control-label">内核版本</label>
 												 <div class="col-sm-6">
-												 <input type="text" class="form-control" name="server_kernel" placeholder="内核版本"  class="input-xlarge" value="{{ asset_body.kernel  }}" />
+                                                     {% if asset_body.kernel is None %}
+												        <input type="text" class="form-control" name="server_kernel" placeholder="内核版本"  class="input-xlarge" value="" />
+                                                     {% else %}
+												        <input type="text" class="form-control" name="server_kernel" placeholder="内核版本"  class="input-xlarge" value="{{ asset_body.kernel  }}" />
+                                                     {% endif %}
 												 </div>
 											</div>	
 											
 											<div class="form-group">
 												 <label class="col-sm-2 control-label">Selinux状态</label>
 												 <div class="col-sm-6">
-												 <input type="text" class="form-control" name="server_selinux" placeholder="selinux状态"  class="input-xlarge" value="{{ asset_body.selinux  }}" />
+                                                     {% if asset_body.selinux is None %}
+												        <input type="text" class="form-control" name="server_selinux" placeholder="selinux状态"  class="input-xlarge" value="" />
+                                                     {% else %}
+												        <input type="text" class="form-control" name="server_selinux" placeholder="selinux状态"  class="input-xlarge" value="{{ asset_body.selinux  }}" />
+                                                     {% endif %}
 												 </div>
 											</div>															
 											
 											<div class="form-group">
 												 <label class="col-sm-2 control-label">Swap分区</label>
 												 <div class="col-sm-6">
-												 <input type="text" class="form-control" name="server_swap" placeholder="swap分区容量"  class="input-xlarge" value="{{ asset_body.swap  }}" />
+                                                     {% if asset_body.swap is None %}
+												        <input type="text" class="form-control" name="server_swap" placeholder="swap分区容量"  class="input-xlarge" value="" />
+                                                     {% else %}
+												        <input type="text" class="form-control" name="server_swap" placeholder="swap分区容量"  class="input-xlarge" value="{{ asset_body.swap  }}" />
+                                                     {% endif %}
 												 </div>
 											</div>						
 											
 											<div class="form-group">
 												 <label class="col-sm-2 control-label">磁盘空间</label>
 												 <div class="col-sm-6">
-												 <input type="text" class="form-control" name="server_disk_total" placeholder="Disk"  class="input-xlarge" value="{{ asset_body.disk_total }}"/>
+                                                     {% if asset_body.disk_total is None %}
+												        <input type="text" class="form-control" name="server_disk_total" placeholder="Disk"  class="input-xlarge" value=""/>
+                                                     {% else %}
+												        <input type="text" class="form-control" name="server_disk_total" placeholder="Disk"  class="input-xlarge" value="{{ asset_body.disk_total }}"/>
+                                                     {% endif %}
 												 </div>
 											</div>	
 											
@@ -337,14 +377,17 @@
 											<div class="form-group">
 												 <label class="col-sm-2 control-label">系统版本号</label>
 												 <div class="col-sm-6">
-												 <input type="text" class="form-control" name="server_system" placeholder="System"  class="input-xlarge" value="{{ asset_body.system }}" />
+                                                     {% if asset_body.system is None %}
+												        <input type="text" class="form-control" name="server_system" placeholder="System"  class="input-xlarge" value="" />
+                                                     {% else %}
+												        <input type="text" class="form-control" name="server_system" placeholder="System"  class="input-xlarge" value="{{ asset_body.system }}" />
+                                                     {% endif %}
 												 </div>
 											</div>	
 																												
 											<div class="form-group">
 												 <label class="col-sm-2 control-label"> 机房线路</label>
 												 <div class="col-sm-6">		
-					<!-- 							 	<input type="text" class="form-control" name="server_line" placeholder="Line"  class="input-xlarge" value="{{ asset_body.line }}" /> -->
 													 <select class="form-control" name="server_line"  >
 															{% for l in assets_data.line %}
 																{% if l.line_name == asset_body.line %}
@@ -361,7 +404,7 @@
 											
 											<fieldset>
 											{% else %}
-											<div id="asset_net_chioce" style="display:;" >					
+											<div id="asset_net_chioce" style="display:none;" >
 											<legend>网络设备资产信息修改 - 可选信息</legend>
 					
 											<div class="form-group" >
@@ -451,7 +494,7 @@ function addAssetsData(obj) {
 		
 	};
 	var asset_data = getFormData(document.getElementById('addHost'),'');
-// 	alert(JSON.stringify(asset_data));  
+ 	alert(JSON.stringify(asset_data));
 	var btnObj = $(obj);
 	if ("{{ asset_type }}"=="server"){
 		var putUrl = '/api/server/{{ asset_body.id }}/';

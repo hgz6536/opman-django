@@ -71,7 +71,7 @@ class AssetsLogsSerializer(serializers.ModelSerializer):
 
 
 class ServerSerializer(serializers.ModelSerializer):
-    assets = AssetsSerializer()
+    assets = AssetsSerializer(required=False)
     class Meta:
         model = Server_Assets
         fields = ('id','ip','hostname','username','port','passwd',
@@ -86,7 +86,7 @@ class ServerSerializer(serializers.ModelSerializer):
             assets = Assets.objects.create(**assets_data)
         else:
             assets = Assets()
-        data['assets'] = assets;
+        data['assets'] = assets
         server = Server_Assets.objects.create(**data)
         return server
 

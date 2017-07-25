@@ -20,7 +20,7 @@ from devop.views.user import user_center, user_manage, user, register, group, pe
 from devop.views.app import apps_list, apps_model, apps_add, ansible_log
 from devop.views.depoy import deploy_add, deploy_list, deploy_ask, deploy_init,deploy_order,deploy_log
 from devop.views.cron import cron_log, cron_add, cron_list, cron_config
-from devop.views.assets import assets_config,assets_add,assets_list,assets_log
+from devop.views.assets import assets_config,assets_add,assets_list,assets_log,assets_modf,assets_view
 from devop.restapis import user_api, deploy_api, assets_api
 
 # from django.contrib import admin
@@ -44,6 +44,8 @@ urlpatterns = [
     url(r'^assets_add', assets_add),
     url(r'^assets_list', assets_list),
     url(r'^assets_log', assets_log),
+    url(r'^assets_mod/(?P<aid>[0-9]+)/$',assets_modf),
+    url(r'^assets_view/(?P<aid>[0-9]+)/$',assets_view),
 
     url(r'^apps/$', apps_list),
     url(r'^apps/model/$', apps_model),
@@ -77,4 +79,6 @@ urlpatterns = [
     url(r'^api/zone/(?P<id>[0-9]+)/$', assets_api.zone_detail),
     url(r'^api/raid/$', assets_api.raid_list),
     url(r'^api/raid/(?P<id>[0-9]+)/$', assets_api.raid_detail),
+    url(r'^api/line/$', assets_api.line_list),
+    url(r'^api/line/(?P<id>[0-9]+)/$', assets_api.line_detail),
 ]
