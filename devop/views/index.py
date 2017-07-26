@@ -5,12 +5,12 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect, JsonResponse
 from django.shortcuts import render
 from django.contrib import auth
-from opman.models import ProjectConfig, ProjectOrder, Assets, Log_Assets, Cron_Config, Ansible_Playbook,Global_Config,Email_Config
+from opman.models import Project_Config, Project_Order, Assets, Log_Assets, Cron_Config, Ansible_Playbook,Global_Config,Email_Config
 
 
 @login_required(login_url='/login')
 def index(request):
-    userlist = ProjectOrder.objects.raw('''SELECT id,order_user FROM opman_projectorder GROUP BY order_user;''')
+    userlist = Project_Order.objects.raw('''SELECT id,order_user FROM opman_project_order GROUP BY order_user;''')
     userlist = [u.orde_user for u in userlist]
     datelist = [base.getDaysAgo(num) for num in range(0, 7)][::-1]
     datalist = []
@@ -21,14 +21,14 @@ def index(request):
             sql = """SELECT id,IFNULL(count(0),0) as count from opman_project_order WHERE 
                     date_format(create_time,"%%Y%%m%%d") = {startTime} and order_user='{user}'""".format(
                 startTime=startTime, user=user)
-            userData = ProjectOrder.objects.raw(sql)
+            userData = Project_Order.objects.raw(sql)
             if userData[0].count == 0:
                 valuelist.append(random.randint(1, 10))
             else:
                 valuelist.append(userData[0].count)
             data[user] = valuelist
             datalist.append(data)
-    orderNotice = ProjectOrder.objects.all().order_by('-id')[0:10]
+    orderNotice = Project_Order.objects.all().order_by('-id')[0:10]
     monthList = [base.getDaysAgo(num)[0:6] for num in (0, 30, 60, 90, 120, 150, 180)][::-1]
     monthDataList = []
     for ms in monthList:
@@ -40,7 +40,7 @@ def index(request):
             sql = """SELECT id,IFNULL(count(0),0) as count from opsmanage_project_order WHERE date_format(create_time,"%%Y%%m%%d") >= {startTime} and 
                                     date_format(create_time,"%%Y%%m%%d") <= {endTime} and order_user='{user}'""".format(
                     startTime=startTime, endTime=endTime, user=user)
-            userData = ProjectOrder.objects.raw(sql)
+            userData = Project_Order.objects.raw(sql)
             if userData[0].count == 0:
                 data[user] = random.randint(1, 100)
             else:
@@ -50,7 +50,7 @@ def index(request):
     allDeployList = []
     for user in userlist:
         data = dict()
-        count = ProjectOrder.objects.filter(order_user=user).count()
+        count = Project_Order.objects.filter(order_user=user).count()
         data['user'] = user
         data['count'] = count
         allDeployList.append(data)
@@ -58,7 +58,7 @@ def index(request):
     assetsLog = Log_Assets.objects.all().order_by('-id')[0:10]
     # 获取所有项目数据
     assets = Assets.objects.all().count()
-    project = ProjectConfig.objects.all().count()
+    project = Project_Config.objects.all().count()
     cron = Cron_Config.objects.all().count()
     playbook = Ansible_Playbook.objects.all().count()
     projectTotal = {

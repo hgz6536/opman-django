@@ -24,6 +24,10 @@
 
 `https://niubilety.com/redis%E5%85%A5%E9%97%A8%E4%B8%80/`
 
+- 执行ansible如果用密码的方式需要安装sshpass 命令
+
+`yum install sshpass -y`
+
 - 克隆代码
 
 `cd /data/webroot`

@@ -97,37 +97,7 @@
                         </a>
                     </div>
                 </div>
-     </div>    
-<!--      <div class="row"> -->
-<!--          <div class="col-lg-6"> -->
-<!--               <div class="panel panel-default"> -->
-<!--                     <div class="panel-heading"> -->
-<!--                            	<i class="fa fa-github-alt"></i> 项目部署统计   -->
-<!--                      </div> -->
-<!--                         /.panel-heading -->
-<!--                      <div class="panel-body"> -->
-<!--                      <div class="flot-chart"> -->
-<!--                           <div class="flot-chart-content" id="deploy_prject"></div> -->
-<!--                           </div> -->
-<!--                      </div> -->
-<!--                         /.panel-body -->
-<!--               </div> -->
-<!--                     /.panel -->
-<!--          </div>     -->
-<!--                 <div class="col-lg-6"> -->
-<!--                     <div class="panel panel-default"> -->
-<!--                         <div class="panel-heading"> -->
-<!--                            	<i class="fa fa-group"></i> 用户部署统计 -->
-<!--                         </div> -->
-<!--                         /.panel-heading -->
-<!--                         <div class="panel-body"> -->
-<!--                             <div id="deploy_number"></div> -->
-<!--                         </div> -->
-<!--                         /.panel-body -->
-<!--                     </div> -->
-<!--                     /.panel -->
-<!--                 </div>  -->
-<!--      </div>       -->
+    </div>
     <div class="row">
          <div class="col-lg-12">
                     <div class="panel panel-default">
@@ -321,39 +291,6 @@
 		}
    }
 
-
-	//Flot Pie Chart
-// 	$(function() {
-// 	    Morris.Donut({
-// 	        element: 'deploy_prject',
-// 	        data: [
-// 	               {% for ds in deploy_project %}
-// 	               		{
-// 		         			label: "{{ds.order_project}}",
-// 	                   		value: {{ ds.dcount }}
-// 	               		},
-// 	               {% endfor %}
-// 	               ],
-// 	        resize: true
-// 	    });
-	    
-// 	});
-// 	$(function() {
-// 	    Morris.Donut({
-// 	        element: 'deploy_number',
-// 	        data: [
-// 	               {% for ds in deploy_nmuber %}
-// 	               		{
-// 		         			label: "{{ds.order_user}}",
-// 	                   		value: {{ ds.dcount }}
-// 	               		},
-// 	               {% endfor %}
-// 	               ],
-// 	        resize: true
-// 	    });
-	    
-// 	});
-	
-	
 </script>
+
 {% endblock %}

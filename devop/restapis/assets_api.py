@@ -10,7 +10,103 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from devop.tasks import recordAssets
 from django.contrib.auth.decorators import permission_required
-from opman.models import RoleList
+
+
+@api_view(['GET', 'POST'])
+def idc_list(request, format=None):
+    if request.method == 'GET':
+        snippets = Idc_Assets.objects.all()
+        serializer = IdcSerializer(snippets, many=True)
+        return Response(serializer.data)
+    elif request.method == 'POST':
+        serializer = IdcSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            recordAssets.delay(user=str(request.user),
+                               content="添加机房：{name}".format(name=request.data.get("name")),
+                               type="idc", id=serializer.data.get('id'))
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(['GET', 'PUT', 'DELETE'])
+def idc_detail(request, id, format=None):
+    try:
+        snippet = Idc_Assets.objects.get(id=id)
+    except Idc_Assets.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+
+    if request.method == 'GET':
+        serializer = IdcSerializer(snippet)
+        return Response(serializer.data)
+
+    elif request.method == 'PUT':
+        serializer = IdcSerializer(snippet, data=request.data)
+        old_name = snippet.business_name
+        if serializer.is_valid():
+            serializer.save()
+            recordAssets.delay(user=str(request.user), content="更新资产：{name}".format(name=snippet.name), type="idc",id=id)
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    elif request.method == 'DELETE' and request.user.has_perm('OpsManage.can_delete_assets'):
+        if not request.user.has_perm('OpsManage.can_delete_service_assets'):
+            return Response(status=status.HTTP_403_FORBIDDEN)
+        snippet.delete()
+        recordAssets.delay(user=str(request.user),
+                           content="删除idc：{name}".format(name=snippet.name), type="idc",id=id)
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+@api_view(['GET', 'POST'])
+def business_list(request, format=None):
+    if request.method == 'GET':
+        snippets = Business_Assets.objects.all()
+        serializer = BusinessSerializer(snippets, many=True)
+        return Response(serializer.data)
+    elif request.method == 'POST':
+        serializer = BusinessSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            recordAssets.delay(user=str(request.user),
+                               content="添加业务分组名称：{business_name}".format(business_name=request.data.get("business_name")),
+                               type="business", id=serializer.data.get('id'))
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(['GET', 'PUT', 'DELETE'])
+def business_detail(request, id, format=None):
+    try:
+        snippet = Business_Assets.objects.get(id=id)
+    except Business_Assets.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+
+    if request.method == 'GET':
+        serializer = BusinessSerializer(snippet)
+        return Response(serializer.data)
+
+    elif request.method == 'PUT':
+        serializer = BusinessSerializer(snippet, data=request.data)
+        old_name = snippet.business_name
+        if serializer.is_valid():
+            serializer.save()
+            recordAssets.delay(user=str(request.user),
+                               content="修改业务分组为：{old_name} -> {business_name}".format(old_name=old_name,
+                                                                                      business_name=request.data.get(
+                                                                                         "business_name")),
+                               type="business", id=id)
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    elif request.method == 'DELETE' and request.user.has_perm('OpsManage.can_delete_assets'):
+        if not request.user.has_perm('OpsManage.can_delete_service_assets'):
+            return Response(status=status.HTTP_403_FORBIDDEN)
+        snippet.delete()
+        recordAssets.delay(user=str(request.user),
+                           content="删除业务类型：{business_name}".format(business_name=snippet.business_name), type="business",
+                           id=id)
+        return Response(status=status.HTTP_204_NO_CONTENT)
 
 
 @api_view(['GET', 'POST'])
@@ -300,57 +396,9 @@ def raid_detail(request, id, format=None):
                            type="raid", id=id)
         return Response(status=status.HTTP_204_NO_CONTENT)
 
-        # @api_view(['GET', 'POST' ])
-
-
-# def status_list(request,format=None):
-#     """
-#     List all order, or create a server assets order.
-#     """
-#     if request.method == 'GET':
-#         snippets = Assets_Satus.objects.all()
-#         serializer = AssetStatusSerializer(snippets, many=True)
-#         return Response(serializer.data)
-#     elif request.method == 'POST':
-#         serializer = AssetStatusSerializer(data=request.data)
-#         if serializer.is_valid():
-#             serializer.save()
-#             return Response(serializer.data, status=status.HTTP_201_CREATED)
-#         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-#
-# @api_view(['GET', 'PUT', 'DELETE'])
-# def status_detail(request, id,format=None):
-#     """
-#     Retrieve, update or delete a server assets instance.
-#     """
-#     try:
-#         snippet = Assets_Satus.objects.get(id=id)
-#     except Assets_Satus.DoesNotExist:
-#         return Response(status=status.HTTP_404_NOT_FOUND)
-#
-#     if request.method == 'GET':
-#         serializer = AssetStatusSerializer(snippet)
-#         return Response(serializer.data)
-#
-#     elif request.method == 'PUT':
-#         serializer = AssetStatusSerializer(snippet, data=request.data)
-#         if serializer.is_valid():
-#             serializer.save()
-#             return Response(serializer.data)
-#         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-#
-#     elif request.method == 'DELETE':
-#         if not request.user.has_perm('OpsManage.delete_assets_status'):
-#             return Response(status=status.HTTP_403_FORBIDDEN)
-#         snippet.delete()
-#         return Response(status=status.HTTP_204_NO_CONTENT)
-
 
 @api_view(['GET', 'POST'])
 def asset_list(request, format=None):
-    """
-    List all order, or create a server assets order.
-    """
     if request.method == 'GET':
         snippets = Assets.objects.all()
         serializer = AssetsSerializer(snippets, many=True)
@@ -367,9 +415,6 @@ def asset_list(request, format=None):
 
 @api_view(['GET', 'PUT', 'DELETE'])
 def asset_detail(request, id, format=None):
-    """
-    Retrieve, update or delete a server assets instance.
-    """
     try:
         snippet = Assets.objects.get(id=id)
     except Assets.DoesNotExist:
@@ -383,8 +428,7 @@ def asset_detail(request, id, format=None):
         serializer = AssetsSerializer(snippet, data=request.data)
         if serializer.is_valid():
             serializer.save()
-            recordAssets.delay(user=str(request.user), content="更新资产：{name}".format(name=snippet.name), type="assets",
-                               id=id)
+            recordAssets.delay(user=str(request.user), content="更新资产：{name}".format(name=snippet.name), type="assets",id=id)
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 

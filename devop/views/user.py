@@ -9,7 +9,7 @@ from opman.models import MyUser as User
 from opman.models import RoleList, PermissonList
 from django.contrib.auth.decorators import permission_required
 from django.db.models import Q
-from opman.models import ProjectOrder
+from opman.models import Project_Order
 
 
 @login_required()
@@ -55,7 +55,7 @@ def register(request):
 @login_required()
 def user_center(request):
     if request.method == "GET":
-        orderList = ProjectOrder.objects.filter(Q(order_user=User.objects.get(username=request.user)) |
+        orderList = Project_Order.objects.filter(Q(order_user=User.objects.get(username=request.user)) |
                                                 Q(order_audit=User.objects.get(username=request.user))).order_by("id")[
                     0:150]
         return render(request, 'users/user_center.html', {"user": request.user, "orderList": orderList})

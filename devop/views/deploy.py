@@ -5,7 +5,7 @@ from django.http import HttpResponseRedirect, JsonResponse
 from django.shortcuts import render
 from django.template import RequestContext
 from django.contrib.auth.decorators import login_required
-from opman.models import Server_Assets, Project_Config, Project_Number, ProjectOrder, Log_Project_Config
+from opman.models import Server_Assets, Project_Config, Project_Number, Project_Order, Log_Project_Config
 from devop.utils.git import GitTools
 from devop.utils.svn import SvnTools
 from devop.utils import base
@@ -463,15 +463,15 @@ def deploy_ask(request, pid):
 @login_required()
 def deploy_order(request):
     if request.method == "GET":
-        orderList = ProjectOrder.objects.filter(Q(order_user=User.objects.get(username=request.user)) |
+        orderList = Project_Order.objects.filter(Q(order_user=User.objects.get(username=request.user)) |
                                                 Q(order_audit=User.objects.get(username=request.user))).order_by("id")[
                     0:150]
-        totalOrder = ProjectOrder.objects.all().count()
-        doneOrder = ProjectOrder.objects.filter(order_status=3).count()
-        authOrder = ProjectOrder.objects.filter(order_status=2).count()
-        rejectOrder = ProjectOrder.objects.filter(order_status=1).count()
-        deploy_nmuber = ProjectOrder.objects.values('order_user').annotate(dcount=Count('order_user'))
-        deploy_project = ProjectOrder.objects.values('order_project').annotate(dcount=Count('order_project'))
+        totalOrder = Project_Order.objects.all().count()
+        doneOrder = Project_Order.objects.filter(order_status=3).count()
+        authOrder = Project_Order.objects.filter(order_status=2).count()
+        rejectOrder = Project_Order.objects.filter(order_status=1).count()
+        deploy_nmuber = Project_Order.objects.values('order_user').annotate(dcount=Count('order_user'))
+        deploy_project = Project_Order.objects.values('order_project').annotate(dcount=Count('order_project'))
         for ds in deploy_project:
             ds['order_project'] = Project_Config.objects.get(id=ds.get('order_project')).project_name
         return render(request, 'deploy/deploy_order.html', {"user": request.user, "orderList": orderList,
@@ -483,7 +483,7 @@ def deploy_order(request):
     elif request.method == "POST" and request.user.has_perm('OpsManage.can_add_project_order'):
         if request.POST.get('model') in ['disable', 'auth', 'finish']:
             try:
-                ProjectOrder.objects.filter(id=request.POST.get('id')).update(
+                Project_Order.objects.filter(id=request.POST.get('id')).update(
                     order_status=request.POST.get('order_status'),
                     order_cancel=request.POST.get('order_cancel', None),
                 )
@@ -506,7 +506,7 @@ def deploy_order(request):
 def deploy_order_status(request, pid):
     if request.method == "GET":
         try:
-            order = ProjectOrder.objects.get(id=pid)
+            order = Project_Order.objects.get(id=pid)
             if order.order_audit == str(request.user): order.order_perm = 'pass'
         except:
             return render(request, 'deploy/deploy_ask.html', {"user": request.user,
@@ -520,7 +520,7 @@ def deploy_order_status(request, pid):
 @permission_required('OpsManage.can_add_project_order', login_url='/noperm/')
 def deploy_order_rollback(request, pid):
     if request.method == "GET":
-        order = ProjectOrder.objects.get(id=pid)
+        order = Project_Order.objects.get(id=pid)
         return render(request, 'deploy/deploy_order_rollback.html', {"user": request.user, "order": order},
                       )
 

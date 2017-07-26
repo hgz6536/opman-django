@@ -71,6 +71,6 @@ class OrderList(generics.ListAPIView):
         user = self.request.user
         username = self.kwargs['username']
         if str(user) == str(username):
-            return ProjectOrder.objects.filter(Q(order_user=user) | Q(order_audit=user), order_status__in=[0, 2]).order_by("id")
+            return Project_Order.objects.filter(Q(order_user=user) | Q(order_audit=user), order_status__in=[0, 2]).order_by("id")
         else:
             return []

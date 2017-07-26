@@ -20,7 +20,7 @@
                                     <form role="form" id="ansibleModelRun" class="main form-horizontal" >{% csrf_token %}
 										<fieldset>
 											<div class="form-group">
-												 <label class="col-sm-2 control-label">服务器选择</label>
+												 <label class="col-sm-2 control-label">服务器</label>
 												 <div class="col-sm-6">
 		                                            <select multiple class="selectpicker" data-live-search="true" name="ansible_server"  id="ansible_server" required>
 		                                            	{% for ds in serverList %}
@@ -32,7 +32,7 @@
 												 </div>
 											</div>
 											<div class="form-group" >
-													<label class="col-sm-2 control-label">模块类型</label>
+													<label class="col-sm-2 control-label">模块</label>
 													<div class="col-sm-6">
 														<select class="form-control" name="ansible_model" id="ansible_model" onchange="javascript:oBtAnsibleModel();">
 															<option value="ping" name="ansible_model">ping</option>
@@ -57,7 +57,7 @@
 											</div>
 											</fieldset>
 											<div class="form-group">
-												 <label class="col-sm-2 control-label">模块参数</label>
+												 <label class="col-sm-2 control-label">参数</label>
 												 <div class="col-sm-6">
 													<input id="ansible_args" type="text"   class="form-control" placeholder="输入模块参数" name="ansible_agrs" value="">
 												</div>
@@ -209,5 +209,5 @@ function oBtAnsibleModel() {
 	window.wxc.xcConfirm("{{errorInfo}}", window.wxc.xcConfirm.typeEnum.error);
 {% endif %}
 </script>
-
+</div>
 {% endblock %}

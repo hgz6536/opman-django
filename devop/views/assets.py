@@ -7,24 +7,23 @@ from django.contrib.auth.decorators import login_required
 from opman.models import *
 from django.db.models import Count
 from devop.utils.ansibleApi import ANSRunner
-from opman.models import RoleList
 from devop.tasks import recordAssets
 from django.contrib.auth.decorators import permission_required
 
 
 def getBaseAssets():
     try:
-        groupList = RoleList.objects.all()
+        businessList = Business_Assets.objects.all()
     except:
-        groupList = []
+        businessList = []
     try:
         serviceList = Service_Assets.objects.all()
     except:
         serviceList = []
     try:
-        zoneList = Zone_Assets.objects.all()
+        idcList = Idc_Assets.objects.all()
     except:
-        zoneList = []
+        idcList = []
     try:
         lineList = Line_Assets.objects.all()
     except:
@@ -33,7 +32,7 @@ def getBaseAssets():
         raidList = Raid_Assets.objects.all()
     except:
         raidList = []
-    return {"group": groupList, "service": serviceList, "zone": zoneList,
+    return {"business": businessList, "service": serviceList, "idc": idcList,
             "line": lineList, "raid": raidList}
 
 

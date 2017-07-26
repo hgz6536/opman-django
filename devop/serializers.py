@@ -38,10 +38,22 @@ class ServiceSerializer(serializers.ModelSerializer):
         fields = ('id', 'service_name')
 
 
+class BusinessSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Business_Assets
+        fields = ('id', 'business_name')
+
+
 class ZoneSerializer(serializers.ModelSerializer):
     class Meta:
         model = Zone_Assets
         fields = ('id', 'zone_name')
+
+
+class IdcSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Idc_Assets
+        fields = ('id', 'name','address','tel','contact','contact_phone','jigui','ip_range','bandwidth')
 
 
 class LineSerializer(serializers.ModelSerializer):
@@ -112,7 +124,7 @@ class NetworkSerializer(serializers.ModelSerializer):
 
 class DeployOrderSerializer(serializers.ModelSerializer):
     class Meta:
-        model = ProjectOrder
+        model = Project_Order
         fields = ('id', 'order_project', 'order_subject', 'order_content',
                   'order_branch', 'order_comid', 'order_tag', 'order_audit',
                   'order_status', 'order_level', 'order_cancel', 'create_time',

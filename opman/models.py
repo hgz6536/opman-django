@@ -46,7 +46,7 @@ ASSET_TYPE = (
     )
 
 
-class Idc(models.Model):
+class Idc_Assets(models.Model):
     name = models.CharField(u"机房名称", max_length=30, null=True)
     address = models.CharField(u"机房地址", max_length=100, null=True)
     tel = models.CharField(u"机房电话", max_length=30, null=True)
@@ -62,37 +62,6 @@ class Idc(models.Model):
     class Meta:
         verbose_name = u'数据中心'
         verbose_name_plural = verbose_name
-
-
-class HostGroup(models.Model):
-    name = models.CharField(u"组名", max_length=30, unique=True)
-    desc = models.CharField(u"描述", max_length=100, null=True, blank=True)
-
-    def __str__(self):
-        return self.name
-
-
-class Host(models.Model):
-    hostname = models.CharField(max_length=50, verbose_name=u"主机名", unique=True)
-    ip = models.GenericIPAddressField(u"管理IP", max_length=15)
-    other_ip = models.CharField(u"其它IP", max_length=100, null=True, blank=True)
-    group = models.ForeignKey(HostGroup, verbose_name=u"设备组", on_delete=models.SET_NULL, null=True, blank=True)
-    asset_no = models.CharField(u"资产编号", max_length=50, null=True, blank=True)
-    asset_type = models.CharField(u"设备类型", choices=ASSET_TYPE, max_length=30, null=True, blank=True)
-    status = models.CharField(u"设备状态", choices=ASSET_STATUS, max_length=30, null=True, blank=True)
-    os = models.CharField(u"操作系统", max_length=100, null=True, blank=True)
-    vendor = models.CharField(u"设备厂商", max_length=50, null=True, blank=True)
-    cpu_model = models.CharField(u"CPU型号", max_length=100, null=True, blank=True)
-    cpu_num = models.CharField(u"CPU数量", max_length=100, null=True, blank=True)
-    memory = models.CharField(u"内存大小", max_length=30, null=True, blank=True)
-    disk = models.CharField(u"硬盘信息", max_length=255, null=True, blank=True)
-    sn = models.CharField(u"SN号 码", max_length=60, blank=True)
-    idc = models.ForeignKey(Idc, verbose_name=u"所在机房", on_delete=models.SET_NULL, null=True, blank=True)
-    position = models.CharField(u"所在位置", max_length=100, null=True, blank=True)
-    memo = models.TextField(u"备注信息", max_length=200, null=True, blank=True)
-
-    def __str__(self):
-        return self.hostname
 
 
 class Assets(models.Model):
@@ -130,6 +99,10 @@ class Log_Assets(models.Model):
     assets_content = models.CharField(max_length=100, verbose_name='名称', default=None)
     assets_type = models.CharField(max_length=50, default=None)
     create_time = models.DateTimeField(auto_now_add=True, blank=True, null=True, verbose_name='执行时间')
+    class Meta:
+        db_table = 'opman_log_assets'
+        verbose_name = '项目配置操作记录表'
+        verbose_name_plural = '项目配置操作记录表'
 
 
 class Service_Assets(models.Model):
@@ -137,7 +110,7 @@ class Service_Assets(models.Model):
     service_name = models.CharField(max_length=100, unique=True)
 
     class Meta:
-        db_table = 'opsmanage_service_assets'
+        db_table = 'opman_service_assets'
         permissions = (
             ("can_read_service_assets", "读取业务资产权限"),
             ("can_change_service_assets", "更改业务资产权限"),
@@ -170,14 +143,23 @@ class Server_Assets(models.Model):
     system = models.CharField(max_length=100, blank=True, null=True)
     create_date = models.DateTimeField(auto_now_add=True)
     update_date = models.DateTimeField(auto_now_add=True)
-
+    class Meta:
+        db_table = 'opman_server_assets'
+        permissions = (
+            ("can_read_server_assets", "读取服务器资产权限"),
+            ("can_change_server_assets", "更改服务器资产权限"),
+            ("can_add_server_assets", "添加服务器资产权限"),
+            ("can_delete_server_assets", "删除服务器资产权限"),
+        )
+        verbose_name = '服务器资产表'
+        verbose_name_plural = '服务器资产表'
 
 class Zone_Assets(models.Model):
     zone_name = models.CharField(max_length=100, unique=True)
     '''自定义权限'''
 
     class Meta:
-        db_table = 'opsmanage_zone_assets'
+        db_table = 'opman_zone_assets'
         permissions = (
             ("can_read_zone_assets", "读取机房资产权限"),
             ("can_change_zone_assets", "更改机房资产权限"),
@@ -193,7 +175,7 @@ class Line_Assets(models.Model):
     '''自定义权限'''
 
     class Meta:
-        db_table = 'opsmanage_line_assets'
+        db_table = 'opman_line_assets'
         permissions = (
             ("can_read_line_assets", "读取出口线路资产权限"),
             ("can_change_line_assetss", "更改出口线路资产权限"),
@@ -209,7 +191,7 @@ class Raid_Assets(models.Model):
     '''自定义权限'''
 
     class Meta:
-        db_table = 'opsmanage_raid_assets'
+        db_table = 'opman_raid_assets'
         permissions = (
             ("can_read_raid_assets", "读取Raid资产权限"),
             ("can_change_raid_assets", "更改Raid资产权限"),
@@ -231,7 +213,7 @@ class Disk_Assets(models.Model):
     update_date = models.DateTimeField(auto_now_add=True)
 
     class Meta:
-        db_table = 'opsmanage_disk_assets'
+        db_table = 'opman_disk_assets'
         permissions = (
             ("can_read_disk_assets", "读取磁盘资产权限"),
             ("can_change_disk_assets", "更改磁盘资产权限"),
@@ -254,7 +236,7 @@ class Ram_Assets(models.Model):
     update_date = models.DateTimeField(auto_now_add=True)
 
     class Meta:
-        db_table = 'opsmanage_ram_assets'
+        db_table = 'opman_ram_assets'
         permissions = (
             ("can_read_ram_assets", "读取内存资产权限"),
             ("can_change_ram_assets", "更改内存资产权限"),
@@ -279,7 +261,7 @@ class Network_Assets(models.Model):
     update_date = models.DateTimeField(auto_now_add=True)
 
     class Meta:
-        db_table = 'opsmanage_network_assets'
+        db_table = 'opman_network_assets'
         permissions = (
             ("can_read_network_assets", "读取网络资产权限"),
             ("can_change_network_assets", "更改网络资产权限"),
@@ -288,6 +270,10 @@ class Network_Assets(models.Model):
         )
         verbose_name = '网络资产表'
         verbose_name_plural = '网络资产表'
+
+
+class Business_Assets(models.Model):
+    business_name = models.CharField(max_length=100, verbose_name=u'业务名称')
 
 
 class Cron_Config(models.Model):
@@ -304,45 +290,30 @@ class Cron_Config(models.Model):
     cron_script = models.FileField(upload_to='./upload/cron/', blank=True, null=True, verbose_name='脚本路径', default=None)
     cron_script_path = models.CharField(max_length=100, blank=True, null=True, verbose_name='脚本路径', default=None)
     cron_status = models.SmallIntegerField(verbose_name='任务状态', default=None)
-
-
-class ProjectConfig(models.Model):
-    repertory_choices = (
-        ('Git', 'git'),
-        ('SVN', 'svn')
-    )
-    deploy_model_choices = (
-        ('Branch', 'branch'),
-        ('Tag', 'tag')
-    )
-    project_env = models.CharField(max_length=50, verbose_name='项目环境', default=None)
-    project_name = models.CharField(max_length=100, verbose_name='项目名称', default=None)
-    project_local_command = models.TextField(blank=True, null=True, verbose_name='部署服务器要执行的命令', default=None)
-    project_repo_dir = models.CharField(max_length=100, verbose_name='本地仓库目录', default=None)
-    project_dir = models.CharField(max_length=100, verbose_name='代码目录', default=None)
-    project_exclude = models.TextField(blank=True, null=True, verbose_name='排除文件', default=None)
-    project_address = models.CharField(max_length=100, verbose_name='版本仓库地址', default=None)
-    project_uuid = models.CharField(max_length=50, verbose_name='唯一id')
-    project_repo_user = models.CharField(max_length=50, verbose_name='仓库用户名', blank=True, null=True)
-    project_repo_passwd = models.CharField(max_length=50, verbose_name='仓库密码', blank=True, null=True)
-    project_repertory = models.CharField(choices=repertory_choices, max_length=10, verbose_name='仓库类型', default=None)
-    project_status = models.SmallIntegerField(verbose_name='是否激活', blank=True, null=True, default=None)
-    project_remote_command = models.TextField(blank=True, null=True, verbose_name='部署之后执行的命令', default=None)
-    project_user = models.CharField(max_length=50, verbose_name='项目文件宿主', default=None)
-    project_model = models.CharField(choices=deploy_model_choices, max_length=10, verbose_name='上线类型', default=None)
-    project_audit_group = models.SmallIntegerField(verbose_name='项目授权组', blank=True, null=True, default=None)
-
     class Meta:
-        db_table = 'opsmanage_project_config'
+        db_table = 'opman_cron_config'
         permissions = (
-            ("can_read_project_config", "读取项目权限"),
-            ("can_change_project_config", "更改项目权限"),
-            ("can_add_project_config", "添加项目权限"),
-            ("can_delete_project_config", "删除项目权限"),
+            ("can_read_cron_config", "读取任务配置权限"),
+            ("can_change_cron_config", "更改任务配置权限"),
+            ("can_add_cron_config", "添加任务配置权限"),
+            ("can_delete_cron_config", "删除任务配置权限"),
         )
-        unique_together = (("project_env", "project_name"))
-        verbose_name = '项目管理表'
-        verbose_name_plural = '项目管理表'
+        verbose_name = '任务配置表'
+        verbose_name_plural = '任务配置表'
+        unique_together = (("cron_name", "cron_server","cron_user"))
+
+
+class Log_Cron_Config(models.Model):
+    cron_id = models.IntegerField(verbose_name='id', blank=True, null=True, default=None)
+    cron_user = models.CharField(max_length=50, verbose_name='操作用户', default=None)
+    cron_name = models.CharField(max_length=100, verbose_name='名称', default=None)
+    cron_content = models.CharField(max_length=100, default=None)
+    cron_server = models.CharField(max_length=100, default=None)
+    create_time = models.DateTimeField(auto_now_add=True, blank=True, null=True, verbose_name='执行时间')
+    class Meta:
+        db_table = 'opman_log_cron_config'
+        verbose_name = '任务配置操作记录表'
+        verbose_name_plural = '任务配置操作记录表'
 
 
 class Project_Config(models.Model):
@@ -371,7 +342,17 @@ class Project_Config(models.Model):
     project_user = models.CharField(max_length=50, verbose_name='项目文件宿主', default=None)
     project_model = models.CharField(choices=deploy_model_choices, max_length=10, verbose_name='上线类型', default=None)
     project_audit_group = models.SmallIntegerField(verbose_name='项目授权组', blank=True, null=True, default=None)
-
+    class Meta:
+        db_table = 'opman_project_config'
+        permissions = (
+            ("can_read_project_config", "读取项目权限"),
+            ("can_change_project_config", "更改项目权限"),
+            ("can_add_project_config", "添加项目权限"),
+            ("can_delete_project_config", "删除项目权限"),
+        )
+        unique_together = (("project_env", "project_name"))
+        verbose_name = '项目管理表'
+        verbose_name_plural = '项目管理表'
 
 class Project_Number(models.Model):
     project = models.ForeignKey('Project_Config', related_name='project_number', on_delete=models.CASCADE)
@@ -379,7 +360,7 @@ class Project_Number(models.Model):
     dir = models.CharField(max_length=100, verbose_name='项目目录', default=None)
 
     class Meta:
-        db_table = 'opsmanage_project_number'
+        db_table = 'opman_project_number'
         permissions = (
             ("can_read_project_number", "读取项目成员权限"),
             ("can_change_project_number", "更改项目成员权限"),
@@ -393,7 +374,7 @@ class Project_Number(models.Model):
     def __unicode__(self):
         return '%s' % (self.server)
 
-class ProjectOrder(models.Model):
+class Project_Order(models.Model):
     STATUS = (
         (0, '已经通过'),
         (1, '已经拒绝'),
@@ -406,7 +387,7 @@ class ProjectOrder(models.Model):
     )
 
     order_user = models.CharField(max_length=30, verbose_name='工单申请人')
-    order_project = models.ForeignKey('ProjectConfig', verbose_name='项目id')
+    order_project = models.ForeignKey('Project_Config', verbose_name='项目id')
     order_subject = models.CharField(max_length=200, verbose_name='工单申请主题')
     order_content = models.TextField(verbose_name='工单申请内容')
     order_branch = models.CharField(max_length=50, blank=True, null=True, verbose_name='分支版本')
@@ -418,7 +399,17 @@ class ProjectOrder(models.Model):
     order_cancel = models.TextField(blank=True, null=True, verbose_name='取消原因')
     create_time = models.DateTimeField(auto_now_add=True, blank=True, null=True, verbose_name='工单发布时间')
     modify_time = models.DateTimeField(auto_now=True, blank=True, verbose_name='工单最后修改时间')
-
+    class Meta:
+        db_table = 'opman_project_order'
+        permissions = (
+            ("can_read_project_order", "读取项目部署权限"),
+            ("can_change_project_order", "更改项目部署权限"),
+            ("can_add_project_order", "添加项目部署权限"),
+            ("can_delete_project_order", "删除项目部署权限"),
+        )
+        unique_together = (("order_project", "order_subject","order_user"))
+        verbose_name = '项目部署工单表'
+        verbose_name_plural = '项目部署工单表'
 
 class Ansible_Playbook(models.Model):
     playbook_name = models.CharField(max_length=50, verbose_name='剧本名称', unique=True)
@@ -428,6 +419,16 @@ class Ansible_Playbook(models.Model):
     playbook_file = models.FileField(upload_to='./upload/playbook/', verbose_name='剧本路径')
     playbook_auth_group = models.SmallIntegerField(verbose_name='授权组', blank=True, null=True)
     playbook_auth_user = models.SmallIntegerField(verbose_name='授权用户', blank=True, null=True, )
+    class Meta:
+        db_table = 'opman_ansible_playbook'
+        permissions = (
+            ("can_read_ansible_playbook", "读取Ansible剧本权限"),
+            ("can_change_ansible_playbook", "更改Ansible剧本权限"),
+            ("can_add_ansible_playbook", "添加Ansible剧本权限"),
+            ("can_delete_ansible_playbook", "删除Ansible剧本权限"),
+        )
+        verbose_name = 'Ansible剧本配置表'
+        verbose_name_plural = 'Ansible剧本配置表'
 
 
 class Log_Ansible_Playbook(models.Model):
@@ -437,7 +438,10 @@ class Log_Ansible_Playbook(models.Model):
     ans_content = models.CharField(max_length=100, default=None)
     ans_server = models.TextField(verbose_name='服务器', default=None)
     create_time = models.DateTimeField(auto_now_add=True, blank=True, null=True, verbose_name='执行时间')
-
+    class Meta:
+        db_table = 'opman_log_ansible_playbook'
+        verbose_name = 'Ansible剧本操作记录表'
+        verbose_name_plural = 'Ansible剧本操作记录表'
 
 class Log_Ansible_Model(models.Model):
     ans_user = models.CharField(max_length=50, verbose_name='使用用户', default=None)
@@ -445,6 +449,16 @@ class Log_Ansible_Model(models.Model):
     ans_args = models.CharField(max_length=500, blank=True, null=True, verbose_name='模块参数', default=None)
     ans_server = models.TextField(verbose_name='服务器', default=None)
     create_time = models.DateTimeField(auto_now_add=True, blank=True, null=True, verbose_name='执行时间')
+    class Meta:
+        db_table = 'opman_log_ansible_model'
+        permissions = (
+            ("can_read_log_ansible_model", "读取Ansible模块执行记录权限"),
+            ("can_change_log_ansible_model", "更改Ansible模块执行记录权限"),
+            ("can_add_log_ansible_model", "添加Ansible模块执行记录权限"),
+            ("can_delete_log_ansible_model", "删除Ansible模块执行记录权限"),
+        )
+        verbose_name = 'Ansible模块执行记录表'
+        verbose_name_plural = 'Ansible模块执行记录表'
 
 
 class Ansible_Playbook_Number(models.Model):
@@ -452,7 +466,7 @@ class Ansible_Playbook_Number(models.Model):
     playbook_server = models.CharField(max_length=100, verbose_name='目标服务器', blank=True, null=True)
 
     class Meta:
-        db_table = 'opsmanage_ansible_playbook_number'
+        db_table = 'opman_ansible_playbook_number'
         permissions = (
             ("can_read_ansible_playbook_number", "读取Ansible剧本成员权限"),
             ("can_change_ansible_playbook_number", "更改Ansible剧本成员权限"),
@@ -472,7 +486,10 @@ class Log_Project_Config(models.Model):
     project_content = models.CharField(max_length=100, default=None)
     project_branch = models.CharField(max_length=100, default=None, blank=True, null=True)
     create_time = models.DateTimeField(auto_now_add=True, blank=True, null=True, verbose_name='执行时间')
-
+    class Meta:
+        db_table = 'opman_log_project_config'
+        verbose_name = '项目配置操作记录表'
+        verbose_name_plural = '项目配置操作记录表'
 
 class Global_Config(models.Model):
     ansible_model = models.SmallIntegerField(verbose_name='是否开启ansible模块操作记录', blank=True, null=True)
@@ -482,7 +499,8 @@ class Global_Config(models.Model):
     assets = models.SmallIntegerField(verbose_name='是否开启资产操作记录', blank=True, null=True)
     server = models.SmallIntegerField(verbose_name='是否开启服务器命令记录', blank=True, null=True)
     email = models.SmallIntegerField(verbose_name='是否开启邮件通知', blank=True, null=True)
-
+    class Meta:
+        db_table = 'opman_global_config'
 
 class Email_Config(models.Model):
     site = models.CharField(max_length=100, verbose_name='部署站点')
@@ -492,15 +510,26 @@ class Email_Config(models.Model):
     passwd = models.CharField(max_length=100, verbose_name='发送用户密码')
     subject = models.CharField(max_length=100, verbose_name='发送邮件主题标识', default=u'[OPS]')
     cc_user = models.TextField(verbose_name='抄送用户列表', blank=True, null=True)
+    class Meta:
+        db_table = 'opman_email_config'
 
 
-class Log_Cron_Config(models.Model):
-    cron_id = models.IntegerField(verbose_name='id', blank=True, null=True, default=None)
-    cron_user = models.CharField(max_length=50, verbose_name='操作用户', default=None)
-    cron_name = models.CharField(max_length=100, verbose_name='名称', default=None)
-    cron_content = models.CharField(max_length=100, default=None)
-    cron_server = models.CharField(max_length=100, default=None)
-    create_time = models.DateTimeField(auto_now_add=True, blank=True, null=True, verbose_name='执行时间')
+class Server_Command_Record(models.Model):
+    user = models.CharField(max_length=50,verbose_name='远程用户')
+    server = models.CharField(max_length=50,verbose_name='服务器IP')
+    client = models.CharField(max_length=50,verbose_name='客户机IP',blank=True,null=True)
+    command = models.TextField(verbose_name='历史命令',blank=True,null=True)
+    etime = models.CharField(max_length=50,verbose_name='命令执行时间',unique=True)
+    class Meta:
+        db_table = 'opman_server_command_record'
+        permissions = (
+            ("can_read_server_command_record", "读取服务器操作日志权限"),
+            ("can_change_server_command_record", "更改服务器操作日志权限"),
+            ("can_add_server_command_record", "添加服务器操作日志权限"),
+            ("can_delete_server_command_record", "删除服务器操作日志权限"),
+        )
+        verbose_name = '服务器操作日志表'
+        verbose_name_plural = '服务器操作日志表'
 
 
 class Ansible_CallBack_Model_Result(models.Model):

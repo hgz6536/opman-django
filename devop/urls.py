@@ -17,8 +17,8 @@ from django.conf.urls import url
 from django.views.generic.base import RedirectView
 from devop.views.index import index, login, logout, noperm, config
 from devop.views.user import user_center, user_manage, user, register, group, permission
-from devop.views.app import apps_list, apps_model, apps_add, ansible_log,ansible_run
-from devop.views.depoy import deploy_add, deploy_list, deploy_ask, deploy_init,deploy_order,deploy_log
+from devop.views.app import apps_list, apps_model, apps_add, apps_playbook_modf,apps_playbook_file,apps_playbook_run,ansible_log,ansible_run
+from devop.views.deploy import deploy_add, deploy_list, deploy_ask, deploy_init,deploy_order,deploy_log
 from devop.views.cron import cron_log, cron_add, cron_list, cron_config
 from devop.views.assets import assets_config,assets_add,assets_list,assets_log,assets_modf,assets_view
 from devop.restapis import user_api, deploy_api, assets_api
@@ -50,10 +50,13 @@ urlpatterns = [
     url(r'^apps/$', apps_list),
     url(r'^apps/model/$', apps_model),
     url(r'^apps/playbook/add/$', apps_add),
+    url(r'^apps/playbook/modf/(?P<pid>[0-9]+)/$',apps_playbook_modf),
+    url(r'^apps/playbook/file/(?P<pid>[0-9]+)/$',apps_playbook_file),
+    url(r'^apps/playbook/run/(?P<pid>[0-9]+)/$',apps_playbook_run),
     url(r'^apps/log/$', ansible_log),
     url(r'^apps/run/$',ansible_run),
 
-    url(r'^deploy_order/$', deploy_order),
+    url(r'^deploy_order', deploy_order),
     url(r'^deploy_add', deploy_add),
     url(r'^deploy_list', deploy_list),
     url(r'^deploy_log', deploy_log),
@@ -73,6 +76,10 @@ urlpatterns = [
     url(r'^api/server/(?P<id>[0-9]+)/$', assets_api.asset_server_detail),
     url(r'^api/service/$', assets_api.service_list),
     url(r'^api/service/(?P<id>[0-9]+)/$', assets_api.service_detail),
+    url(r'^api/business/$', assets_api.business_list),
+    url(r'^api/business/(?P<id>[0-9]+)/$', assets_api.business_detail),
+    url(r'^api/idc/$', assets_api.idc_list),
+    url(r'^api/idc/(?P<id>[0-9]+)/$', assets_api.idc_detail),
     url(r'^api/assets/$', assets_api.asset_list),
     url(r'^api/assets/(?P<id>[0-9]+)/$', assets_api.asset_detail),
     url(r'^api/order/(?P<username>.+)/$', deploy_api.OrderList.as_view()),

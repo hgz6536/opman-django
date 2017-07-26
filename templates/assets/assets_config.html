@@ -12,7 +12,7 @@
                 <div class="col-lg-4">
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            	<i class="fa  fa-shopping-cart  "></i> 业务类型
+                            	<i class="fa  fa-shopping-cart  "></i> 服务类型
                         </div>
                         <!-- /.panel-heading -->
                         <div class="panel-body">
@@ -24,7 +24,7 @@
                                     <thead>
                                         <tr>
                                             <th>#</th>
-                                            <th class="right">业务名称</th>
+                                            <th class="right">服务名称</th>
                                             <th class="right">操作</th>
                                         </tr>
                                     </thead>
@@ -35,8 +35,8 @@
 	                                            <td>{{ds.id}}</td>
 	                                            <td>{{ds.service_name}}</td>
 	                                            <td class="right">
-	                                            	<button  type="button" class="btn btn-default"  onclick="modfAssetsData(this,'service',{{ds.id}})"><abbr title="编辑"><i class="glyphicon glyphicon-edit"></i></button>
-	                                            	<button  type="button" class="btn btn-default" onclick="delAssetsData(this,'service',{{ds.id}})"><abbr title="删除"><i class="glyphicon glyphicon-trash"></i></button>
+                                                    <button  type="button" class="btn btn-default"  onclick="modfAssetsData(this,'service',{{ds.id}})"><abbr title="编辑"><i class="glyphicon glyphicon-edit"></i></abbr></button>
+                                                    <button  type="button" class="btn btn-default" onclick="delAssetsData(this,'service',{{ds.id}})"><abbr title="删除"><i class="glyphicon glyphicon-trash"></i></abbr></button>
 	                                            </td>
 	                                        </tr>
                                         {% endfor %}
@@ -54,7 +54,7 @@
                 <div class="col-lg-4">
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            	<i class="fa  fa-group  "></i> 使用分组
+                            	<i class="fa  fa-group  "></i> 业务分组
                         </div>
                         <!-- /.panel-heading -->
                         <div class="panel-body">
@@ -66,18 +66,18 @@
                                     <thead>
                                         <tr>
                                             <th>#</th>
-                                            <th>使用组名称</th>
+                                            <th>组名</th>
                                             <th class="right">操作</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                    	{% for ds in baseAssets.group %}
+                                    	{% for ds in baseAssets.business %}
 	                                        <tr>
 	                                            <td>{{ds.id}}</td>
-	                                            <td>{{ds.name}}</td>
+	                                            <td>{{ds.business_name}}</td>
 	                                            <td>
-	                                            	<button  type="button" class="btn btn-default" onclick="modfAssetsData(this,'group',{{ds.id}})"><abbr title="编辑"><i class="glyphicon glyphicon-edit"></i></button>
-	                                            	<button  type="button" class="btn btn-default" onclick="delAssetsData(this,'group',{{ds.id}})"><abbr title="删除"><i class="glyphicon glyphicon-trash"></i></button>
+                                                    <button  type="button" class="btn btn-default" onclick="modfAssetsData(this,'business',{{ds.id}})"><abbr title="编辑"><i class="glyphicon glyphicon-edit"></i></abbr></button>
+                                                    <button  type="button" class="btn btn-default" onclick="delAssetsData(this,'business',{{ds.id}})"><abbr title="删除"><i class="glyphicon glyphicon-trash"></i></abbr></button>
 	                                            </td>
 	                                        </tr>
                                         {% endfor %}
@@ -100,7 +100,7 @@
                         <div class="panel-body">
                             <div class="table-responsive">
 								<div>
-	                        		<button type="button" class="btn btn-default" data-toggle="modal" data-target="#myZoneModal"><i class="glyphicon glyphicon-plus"></i></button>
+	                        		<button type="button" class="btn btn-default" data-toggle="modal" data-target="#myIdcModal"><i class="glyphicon glyphicon-plus"></i></button>
 	                        	</div>
                                 <table class="table table-striped">
                                     <thead>
@@ -111,13 +111,13 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                    	{% for ds in baseAssets.zone %}
+                                    	{% for ds in baseAssets.idc %}
 	                                        <tr>
 	                                            <td>{{ds.id}}</td>
-	                                            <td>{{ds.zone_name}}</td>
+	                                            <td>{{ds.name}}</td>
 	                                            <td>
-	                                            	<button  type="button" class="btn btn-default" onclick="modfAssetsData(this,'zone',{{ds.id}})"><abbr title="编辑"><i class="glyphicon glyphicon-edit"></i></button>
-	                                            	<button  type="button" class="btn btn-default" onclick="delAssetsData(this,'zone',{{ds.id}})"><abbr title="删除"><i class="glyphicon glyphicon-trash"></i></button>
+                                                    <button  type="button" class="btn btn-default" onclick="modfAssetsData(this,'idc',{{ds.id}})"><abbr title="编辑"><i class="glyphicon glyphicon-edit"></i></abbr></button>
+                                                    <button  type="button" class="btn btn-default" onclick="delAssetsData(this,'idc',{{ds.id}})"><abbr title="删除"><i class="glyphicon glyphicon-trash"></i></abbr></button>
 	                                            </td>
 	                                        </tr>
                                         {% endfor %}
@@ -158,8 +158,8 @@
 	                                            <td>{{ds.id}}</td>
 	                                            <td>{{ds.line_name}}</td>
 	                                            <td>
-	                                            	<button  type="button" class="btn btn-default" onclick="modfAssetsData(this,'line',{{ds.id}})"><abbr title="编辑"><i class="glyphicon glyphicon-edit"></i></button>
-	                                            	<button  type="button" class="btn btn-default" onclick="delAssetsData(this,'line',{{ds.id}})"><abbr title="删除"><i class="glyphicon glyphicon-trash"></i></button>
+                                                    <button  type="button" class="btn btn-default" onclick="modfAssetsData(this,'line',{{ds.id}})"><abbr title="编辑"><i class="glyphicon glyphicon-edit"></i></abbr></button>
+                                                    <button  type="button" class="btn btn-default" onclick="delAssetsData(this,'line',{{ds.id}})"><abbr title="删除"><i class="glyphicon glyphicon-trash"></i></abbr></button>
 	                                            </td>
 	                                        </tr>
                                         {% endfor %}
@@ -198,8 +198,8 @@
 	                                            <td>{{ds.id}}</td>
 	                                            <td>{{ds.raid_name}}</td>
 	                                            <td>
-	                                            	<button  type="button" class="btn btn-default" onclick="modfAssetsData(this,'raid',{{ds.id}})"><abbr title="编辑"><i class="glyphicon glyphicon-edit"></i></button>
-	                                            	<button  type="button" class="btn btn-default" onclick="delAssetsData(this,'raid',{{ds.id}})"><abbr title="删除"><i class="glyphicon glyphicon-trash"></i></button>
+                                                    <button  type="button" class="btn btn-default" onclick="modfAssetsData(this,'raid',{{ds.id}})"><abbr title="编辑"><i class="glyphicon glyphicon-edit"></i></abbr></button>
+                                                    <button  type="button" class="btn btn-default" onclick="delAssetsData(this,'raid',{{ds.id}})"><abbr title="删除"><i class="glyphicon glyphicon-trash"></i></abbr></button>
 	                                            </td>
 	                                        </tr>
                                         {% endfor %}
@@ -265,13 +265,13 @@
 					&times;
 				</button>
 				<h4 class="modal-title" id="myServiceModalLabel">
-					添加业务类型
+					添加服务类型
 				</h4>
 			</div>
 			<div class="modal-body">
 				<form class="form-horizontal" role="form" id="service_assets">
 					<div class="form-group">
-						<label class="col-sm-3 control-label no-padding-right" for="form-field-4"><strong>业务名称</strong></label>																												
+						<label class="col-sm-3 control-label no-padding-right" for="form-field-4"><strong>服务名称</strong></label>
 						<div class="col-sm-6">
 							<input class="form-control" type="text" name="service_name" />	
 						</div>											
@@ -297,15 +297,15 @@
 					&times;
 				</button>
 				<h4 class="modal-title" id="myGroupModalLabel">
-					添加使用组
+					添加业务线
 				</h4>
 			</div>
 			<div class="modal-body">
-				<form class="form-horizontal" role="form" id="group_assets">
+				<form class="form-horizontal" role="form" id="business_assets">
 					<div class="form-group">
-						<label class="col-sm-3 control-label no-padding-right" for="form-field-4"><strong>使用组名</strong></label>																												
+						<label class="col-sm-3 control-label no-padding-right" for="form-field-4"><strong>业务线名</strong></label>
 						<div class="col-sm-6">
-							<input class="form-control" type="text" name="name" />	
+							<input class="form-control" type="text" name="business_name" />
 						</div>											
 					</div>									
 				</form>
@@ -313,7 +313,7 @@
 			<div class="modal-footer">
 				<button type="button" class="btn btn-default" data-dismiss="modal">关闭
 				</button>
-				<button type="button" class="btn btn-primary" onclick="addAssetsData(this,'group')">
+				<button type="button" class="btn btn-primary" onclick="addAssetsData(this,'business')">
 					添加
 				</button>
 			</div>
@@ -321,25 +321,67 @@
 	</div><!-- /.modal -->
 </div>
 
-<div class="modal fade" id="myZoneModal" tabindex="-1" role="dialog" aria-labelledby="myZoneModalLabel" aria-hidden="true">
+<div class="modal fade" id="myIdcModal" tabindex="-1" role="dialog" aria-labelledby="myIdcModalLabel" aria-hidden="true">
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
 					&times;
 				</button>
-				<h4 class="modal-title" id="myZoneModalLabel">
+				<h4 class="modal-title" id="myIdcModalLabel">
 					机房信息
 				</h4>
 			</div>
 			<div class="modal-body">
-				<form class="form-horizontal" role="form" id="zone_assets">
+				<form class="form-horizontal" role="form" id="idc_assets">
 					<div class="form-group">
-						<label class="col-sm-3 control-label no-padding-right" for="form-field-4"><strong>机房名称</strong></label>																												
+						<label class="col-sm-3 control-label no-padding-right" for="form-field-4"><strong>机房名称</strong></label>
 						<div class="col-sm-6">
-							<input class="form-control" type="text" name="zone_name" />	
-						</div>											
-					</div>									
+							<input class="form-control" type="text" name="name" />
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-3 control-label no-padding-right" for="form-field-4"><strong>机房地址</strong></label>
+						<div class="col-sm-6">
+							<input class="form-control" type="text" name="address" />
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-3 control-label no-padding-right" for="form-field-4"><strong>机房电话</strong></label>
+						<div class="col-sm-6">
+							<input class="form-control" type="text" name="tel" />
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-3 control-label no-padding-right" for="form-field-4"><strong>销售经理</strong></label>
+						<div class="col-sm-6">
+							<input class="form-control" type="text" name="contact" />
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-3 control-label no-padding-right" for="form-field-4"><strong>销售电话</strong></label>
+						<div class="col-sm-6">
+							<input class="form-control" type="text" name="contact_phone" />
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-3 control-label no-padding-right" for="form-field-4"><strong>机柜信息</strong></label>
+						<div class="col-sm-6">
+							<input class="form-control" type="text" name="jigui" />
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-3 control-label no-padding-right" for="form-field-4"><strong>IP地址范围</strong></label>
+						<div class="col-sm-6">
+							<input class="form-control" type="text" name="ip_range" />
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-3 control-label no-padding-right" for="form-field-4"><strong>机房带宽</strong></label>
+						<div class="col-sm-6">
+							<input class="form-control" type="text" name="bandwidth" />
+						</div>
+					</div>
 				</form>
 			</div>
 			<div class="modal-footer">
@@ -460,6 +502,10 @@
 			var putUrl = '/api/service/';
 			var form = document.getElementById('service_assets');
 		}
+		else if (op=="business"){
+			var putUrl = '/api/business/';
+			var form = document.getElementById('business_assets');
+		}
 		else if (op=="group"){
 			var putUrl = '/api/group/';
 			var form = document.getElementById('group_assets');
@@ -467,7 +513,11 @@
 		else if (op=="zone"){
 			var putUrl = '/api/zone/';
 			var form = document.getElementById('zone_assets');
-		}		
+		}
+		else if (op=="idc"){
+			var putUrl = '/api/idc/';
+			var form = document.getElementById('idc_assets');
+		}
 		else if (op=="line"){
 			var putUrl = '/api/line/';
 			var form = document.getElementById('line_assets');
@@ -529,9 +579,9 @@
 					var putUrl = '/api/group/'+ id +'/';
 					post_data['name'] = result;
 				}
-				else if (op=="zone"){
-					var putUrl = '/api/zone/'+ id +'/';
-					post_data['zone_name'] = result;
+				else if (op=="idc"){
+					var putUrl = '/api/idc/'+ id +'/';
+					post_data['name'] = result;
 				}		
 				else if (op=="line"){
 					var putUrl = '/api/line/'+ id +'/';

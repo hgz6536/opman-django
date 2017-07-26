@@ -130,19 +130,19 @@
 											</div>		
 											
 											<div class="form-group">
-												 <label class="col-sm-2 control-label">使用组</label>
+												 <label class="col-sm-2 control-label">所属业务线</label>
 												 <div class="col-sm-6">
 												   <select class="form-control" name="asset_group"  >
 												   		<option selected="selected" value="">请选择一个类型</option>
-															{% for g in baseAssets.group %}
-																<option value="{{g.id}}" name="asset_group">{{g.name}}</option>
+															{% for g in baseAssets.business %}
+																<option value="{{g.id}}" name="asset_group">{{g.business_name}}</option>
 															{% endfor %}							   		
 													</select>
 												 </div>
 											</div>																	
 														
 											<div class="form-group">
-												 <label class="col-sm-2 control-label">业务类型</label>
+												 <label class="col-sm-2 control-label">服务类型</label>
 												 <div class="col-sm-6">
 												   <select class="form-control" name="asset_business"  >
 												   		<option selected="selected" value="">请选择一个类型</option>
