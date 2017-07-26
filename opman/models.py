@@ -503,4 +503,11 @@ class Log_Cron_Config(models.Model):
     create_time = models.DateTimeField(auto_now_add=True, blank=True, null=True, verbose_name='执行时间')
 
 
+class Ansible_CallBack_Model_Result(models.Model):
+    logId = models.ForeignKey('Log_Ansible_Model')
+    content = models.TextField(verbose_name='输出内容', blank=True, null=True)
 
+
+class Ansible_CallBack_PlayBook_Result(models.Model):
+    logId = models.ForeignKey('Log_Ansible_Playbook')
+    content = models.TextField(verbose_name='输出内容', blank=True, null=True)

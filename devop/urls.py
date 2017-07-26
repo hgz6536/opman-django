@@ -17,7 +17,7 @@ from django.conf.urls import url
 from django.views.generic.base import RedirectView
 from devop.views.index import index, login, logout, noperm, config
 from devop.views.user import user_center, user_manage, user, register, group, permission
-from devop.views.app import apps_list, apps_model, apps_add, ansible_log
+from devop.views.app import apps_list, apps_model, apps_add, ansible_log,ansible_run
 from devop.views.depoy import deploy_add, deploy_list, deploy_ask, deploy_init,deploy_order,deploy_log
 from devop.views.cron import cron_log, cron_add, cron_list, cron_config
 from devop.views.assets import assets_config,assets_add,assets_list,assets_log,assets_modf,assets_view
@@ -51,6 +51,7 @@ urlpatterns = [
     url(r'^apps/model/$', apps_model),
     url(r'^apps/playbook/add/$', apps_add),
     url(r'^apps/log/$', ansible_log),
+    url(r'^apps/run/$',ansible_run),
 
     url(r'^deploy_order/$', deploy_order),
     url(r'^deploy_add', deploy_add),

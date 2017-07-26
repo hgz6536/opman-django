@@ -82,7 +82,7 @@ def chown(user, path):
 
 def makeToken(strs):
     m = hashlib.md5()
-    m.update(strs)
+    m.update(strs.encode("utf8"))
     return m.hexdigest()
 
 

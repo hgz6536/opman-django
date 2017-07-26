@@ -14,59 +14,43 @@ from opman.models import RoleList
 from opman.models import (Ansible_Playbook, Ansible_Playbook_Number,
                           Log_Ansible_Model, Log_Ansible_Playbook)
 from devop.tasks import recordAnsibleModel, recordAnsiblePlaybook
-
+from devop.data.DsMySQL import AnsibleRecord
 
 @login_required()
 def apps_model(request):
     if request.method == "GET":
         serverList = Server_Assets.objects.all()
-        return render(request, 'apps/apps_model.html', {"user": request.user, "serverList": serverList})
-    elif request.method == "POST" and request.user.has_perm('OpsManage.can_change_ansible_playbook'):
+        return render(request,'apps/apps_model.html',{"user":request.user,"ans_uuid":uuid.uuid4(),"serverList":serverList})
+    elif  request.method == "POST" and request.user.has_perm('OpsManage.can_change_ansible_playbook'):
         resource = []
         sList = []
         serverList = request.POST.getlist('ansible_server')
         for server in serverList:
             server_assets = Server_Assets.objects.get(id=server)
             sList.append(server_assets.ip)
-            if server_assets.keyfile == 1:
-                resource.append({"hostname": server_assets.ip, "port": int(server_assets.port)})
-            else:
-                resource.append(
-                    {"hostname": server_assets.ip, "port": int(server_assets.port), "username": server_assets.username,
-                     "password": server_assets.passwd})
-        if len(request.POST.get('custom_model')) > 0:
-            model_name = request.POST.get('custom_model')
-        else:
-            model_name = request.POST.get('ansible_model', None)
-        redisKey = base.makeToken(strs=str(request.user) + "ansible_model")
+            if server_assets.keyfile == 1:resource.append({"hostname": server_assets.ip, "port": int(server_assets.port)})
+            else:resource.append({"hostname": server_assets.ip, "port": int(server_assets.port),"username": server_assets.username,"password": server_assets.passwd})
+        if len(request.POST.get('custom_model')) > 0:model_name = request.POST.get('custom_model')
+        else:model_name = request.POST.get('ansible_model',None)
+        redisKey = request.POST.get('ans_uuid')
+        #操作日志异步记录
+#         redisKey = base.makeToken(strs=str(request.user)+"ansible_model")
+        logId = AnsibleRecord.Model.insert(user=str(request.user),ans_model=model_name,ans_server=','.join(sList),ans_args=request.POST.get('ansible_agrs',None))
         DsRedis.OpsAnsibleModel.delete(redisKey)
-        DsRedis.OpsAnsibleModel.lpush(redisKey, "[Start] Ansible Model: {model}  ARGS:{args}".format(model=model_name,
-                                                                                                     args=request.POST.get(
-                                                                                                         'ansible_agrs',
-                                                                                                         "None")))
-        ANS = ANSRunner(resource, redisKey)
-        ANS.run_model(host_list=sList, module_name=model_name, module_args=request.POST.get('ansible_agrs', ""))
+        DsRedis.OpsAnsibleModel.lpush(redisKey, "[Start] Ansible Model: {model}  ARGS:{args}".format(model=model_name,args=request.POST.get('ansible_agrs',"None")))
+        ANS = ANSRunner(resource,redisKey,logId)
+        ANS.run_model(host_list=sList,module_name=model_name,module_args=request.POST.get('ansible_agrs',""))
         DsRedis.OpsAnsibleModel.lpush(redisKey, "[Done] Ansible Done.")
-        # 操作日志异步记录
-        recordAnsibleModel.delay(user=str(request.user), ans_model=model_name, ans_server=','.join(sList),
-                                 ans_args=request.POST.get('ansible_agrs', None))
-        return JsonResponse({'msg': "操作成功", "code": 200, 'data': []})
+        return JsonResponse({'msg':"操作成功","code":200,'data':[]})
 
 
 @login_required()
 def ansible_run(request):
     if request.method == "POST":
-        if request.POST.get('model') == 'model':
-            strs = str(request.user) + "ansible_model"
-            redisKey = base.makeToken(strs)
-            msg = DsRedis.OpsAnsibleModel.rpop(redisKey)
-        elif request.POST.get('model') == 'playbook':
-            redisKey = request.POST.get('playbook_uuid')
-            msg = DsRedis.OpsAnsiblePlayBook.rpop(redisKey)
-        if msg:
-            return JsonResponse({'msg': msg, "code": 200, 'data': []})
-        else:
-            return JsonResponse({'msg': None, "code": 200, 'data': []})
+        redisKey = request.POST.get('ans_uuid')
+        msg = DsRedis.OpsAnsibleModel.rpop(redisKey)
+        if msg:return JsonResponse({'msg':str(msg),"code":200,'data':[]})
+        else:return JsonResponse({'msg':None,"code":200,'data':[]})
 
 
 @login_required()

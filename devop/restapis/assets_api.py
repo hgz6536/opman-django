@@ -408,6 +408,7 @@ def asset_server_list(request, format=None):
             data = request.data.get('data')
         else:
             data = request.data
+        print(data)
         serializer = ServerSerializer(data = data)
         if serializer.is_valid():
             serializer.save()
@@ -446,6 +447,7 @@ def asset_server_detail(request, id, format=None):
                 assets.save()
                 recordAssets.delay(user=str(request.user), content="修改服务器资产：{ip}".format(ip=snippet.ip), type="server",
                                    id=id)
+        print(data)
         serializer = ServerSerializer(snippet,data=data)
         if serializer.is_valid():
             serializer.save()

@@ -62,7 +62,7 @@ class MyInventory(Inventory):
             my_host.set_variable('ansible_ssh_private_key_file', ssh_key)
 
             # set other variables
-            for key, value in host.iteritems():
+            for key, value in host.items():
                 if key not in ["hostname", "port", "username", "password"]:
                     my_host.set_variable(key, value)
                     # add to group
@@ -118,7 +118,7 @@ class ModelResultsCollectorToRedis(CallbackBase):
         for remove_key in ('changed', 'invocation'):
             if remove_key in result._result:
                 del result._result[remove_key]
-        if result._result.has_key('rc') and result._result.has_key('stdout'):
+        if 'rc' in result._result and 'stdout' in result._result:
             data = "{host} | SUCCESS | rc={rc} >> \n{stdout}".format(host=result._host.get_name(),
                                                                      rc=result._result.get('rc'),
                                                                      stdout=result._result.get('stdout'))
@@ -131,7 +131,7 @@ class ModelResultsCollectorToRedis(CallbackBase):
         for remove_key in ('changed', 'invocation'):
             if remove_key in result._result:
                 del result._result[remove_key]
-        if result._result.has_key('rc') and result._result.has_key('stdout'):
+        if 'rc' in result._result and 'stdout' in result._result:
             data = "{host} | FAILED | rc={rc} >> \n{stdout}".format(host=result._host.get_name(),
                                                                     rc=result._result.get('rc'),
                                                                     stdout=result._result.get('stdout'))

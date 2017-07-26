@@ -18,9 +18,9 @@
                                 <div class="col-lg-6">
                                 <legend><i class="fa  fa-paper-plane"></i>Ansible服务器</legend>
                                     <form role="form" id="ansibleModelRun" class="main form-horizontal" >{% csrf_token %}
-										<fieldset>															
+										<fieldset>
 											<div class="form-group">
-												 <label class="col-sm-2 control-label">服务器</label>
+												 <label class="col-sm-2 control-label">服务器选择</label>
 												 <div class="col-sm-6">
 		                                            <select multiple class="selectpicker" data-live-search="true" name="ansible_server"  id="ansible_server" required>
 		                                            	{% for ds in serverList %}
@@ -28,47 +28,48 @@
 		                                            	{% endfor %}
 		                                            </select>
 		                                            <input  type="hidden"   class="form-control"  name="model" value="model">
+		                                            <input  type="hidden"   class="form-control" id="ans_uuid" name="ans_uuid" value="{{ans_uuid}}">
 												 </div>
 											</div>
-											<div class="form-group" >			 		             
-													<label class="col-sm-2 control-label">模块</label>
+											<div class="form-group" >
+													<label class="col-sm-2 control-label">模块类型</label>
 													<div class="col-sm-6">
 														<select class="form-control" name="ansible_model" id="ansible_model" onchange="javascript:oBtAnsibleModel();">
-															<option value="ping" name="ansible_model">ping</option>	
-															<option value="raw" name="ansible_model">shell</option> 	
-															<option value="yum" name="ansible_model">yum</option> 	
-															<option value="copy" name="ansible_model">copy</option> 	
+															<option value="ping" name="ansible_model">ping</option>
+															<option value="raw" name="ansible_model">shell</option>
+															<option value="yum" name="ansible_model">yum</option>
+															<option value="copy" name="ansible_model">copy</option>
 															<option value="service" name="ansible_model">service</option>
-															<option value="file" name="ansible_model">file</option>	
-															<option value="user" name="ansible_model">user</option>	
+															<option value="file" name="ansible_model">file</option>
+															<option value="user" name="ansible_model">user</option>
 															<option value="synchronize" name="ansible_model">sync</option>
-															<option value="cron" name="ansible_model">cron</option> 	
+															<option value="cron" name="ansible_model">cron</option>
 															<option value="get_url" name="ansible_model">wget</option>
 															<option value="custom" name="ansible_model">自定义</option>
-														</select>		
-													</div>	
-											</div>			
+														</select>
+													</div>
+											</div>
 											<div id="custom_model" class="form-group" style="display:none;">
 												 <label class="col-sm-2 control-label">自定义模块</label>
-												 <div class="col-sm-6">											
+												 <div class="col-sm-6">
 													<input id="custom_model" type="text"   class="form-control" placeholder="输入模块" name="custom_model" value="">
 												</div>
-											</div> 											
-											</fieldset>																																																					
+											</div>
+											</fieldset>
 											<div class="form-group">
-												 <label class="col-sm-2 control-label">参数</label>
-												 <div class="col-sm-6">											
+												 <label class="col-sm-2 control-label">模块参数</label>
+												 <div class="col-sm-6">
 													<input id="ansible_args" type="text"   class="form-control" placeholder="输入模块参数" name="ansible_agrs" value="">
 												</div>
-											</div> 											
+											</div>
 											</fieldset>
 											<legend></legend>
 											<div class="form-group">
 												<label class="col-sm-3 control-label"></label>
 												<button type="button"  onclick="repealFromVaule(this)" class="btn btn-default" >撤销</button>
 										 		<button type="button"  class="btn btn-default" onclick="runAnsibleModel(this)" >执行</button>
-									 		</div>									 		
-										</form>                                        
+									 		</div>
+										</form>
                                 </div>
                                 <!-- /.col-lg-6 (nested) -->
                                 <div class="col-lg-6">
@@ -76,7 +77,7 @@
 									<pre>
 				                        <div id="result">
 				                        </div>
-				                    </pre>                                      
+				                    </pre>
                                 <!-- /.col-lg-6 (nested) -->
                             </div>
                             <!-- /.row (nested) -->
@@ -91,12 +92,13 @@
 
 <script type="text/javascript">
 
+
 function oBtAnsibleModel() {
-	   var obj = document.getElementById("ansible_model"); 
+	   var obj = document.getElementById("ansible_model");
 	   var index = obj.selectedIndex;
-	   var value = obj.options[index].value; 
+	   var value = obj.options[index].value;
 	   if (value=="raw"){
-		   document.getElementById("ansible_args").value="uptime";	
+		   document.getElementById("ansible_args").value="uptime";
 		   document.getElementById("custom_model").style.display = "none";
 	   }
 	   else if (value=="yum"){
@@ -110,38 +112,38 @@ function oBtAnsibleModel() {
 	   else if (value=="cron"){
 		   document.getElementById("ansible_args").value='name="sync time" minute=*/3 hour=* day=* month=* weekday=* job="/usr/sbin/ntpdate window.time.com"';
 		   document.getElementById("custom_model").style.display = "none";
-	   }	
+	   }
 	   else if (value=="file"){
 		   document.getElementById("ansible_args").value='src=/root/test.txt dest=/tmp/test.txt owner=root group=root mode=700 state=touch';
 		   document.getElementById("custom_model").style.display = "none";
-	   }	
+	   }
 	   else if (value=="copy"){
-		   document.getElementById("ansible_args").value='src=/root/test.txt dest=/tmp/test.txt';	
+		   document.getElementById("ansible_args").value='src=/root/test.txt dest=/tmp/test.txt';
 		   document.getElementById("custom_model").style.display = "none";
-	   }	
+	   }
 	   else if (value=="user"){
-		   document.getElementById("ansible_args").value="name=welliam password='$6yshUMNL8dhY'";	
+		   document.getElementById("ansible_args").value="name=welliam password='$6yshUMNL8dhY'";
 		   document.getElementById("custom_model").style.display = "none";
-	   }	
+	   }
 	   else if (value=="synchronize"){
-		   document.getElementById("ansible_args").value="src=/root/a dest=/tmp/ compress=yes --exclude=.git";	
+		   document.getElementById("ansible_args").value="src=/root/a dest=/tmp/ compress=yes --exclude=.git";
 		   document.getElementById("custom_model").style.display = "none";
-	   }		   
+	   }
 	   else if (value=="get_url"){
 		   document.getElementById("ansible_args").value="url=http://url/test.tar.gz dest=/tmp";
-		   document.getElementById("custom_model").style.display = "none"; 
-	   }		   
+		   document.getElementById("custom_model").style.display = "none";
+	   }
 	   else if(value=="custom"){
-		   document.getElementById("custom_model").style.display = "";  
+		   document.getElementById("custom_model").style.display = "";
 		   document.getElementById("ansible_args").value="";
 	   }
 	   else {
-		   document.getElementById("ansible_args").value="";	 
+		   document.getElementById("ansible_args").value="";
 	   }
 }
-	
-		
-    
+
+
+
 	function runAnsibleModel(obj) {
 		var btnObj = $(obj);
 		btnObj.attr('disabled',true);
@@ -159,14 +161,14 @@ function oBtAnsibleModel() {
 		};
 		$("#result").html("服务器正在处理，请稍等。。。");
 		/* 轮训获取结果 开始  */
-	   var interval = setInterval(function(){  
-	        $.ajax({  
-	            url : '/apps/run/',  
-	            type : 'post', 
+	   var interval = setInterval(function(){
+	        $.ajax({
+	            url : '/apps/run/',
+	            type : 'post',
 	            data:$('#ansibleModelRun').serialize(),
 	            success : function(result){
 	            	if (result["msg"] !== null ){
-	            		$("#result").append("<p>"+result["msg"]+"</p>"); 
+	            		$("#result").append("<p>"+result["msg"]+"</p>");
 	            		if (result["msg"].indexOf("[Done]") == 0){
 	            			clearInterval(interval);
 	            			window.wxc.xcConfirm("Ansible执行完成", window.wxc.xcConfirm.typeEnum.success);
@@ -177,10 +179,10 @@ function oBtAnsibleModel() {
 		    	error:function(response){
 		    		btnObj.removeAttr('disabled');
 		    		clearInterval(interval);
-		    	}	            
-	        });  
-	    },1000); 
-		
+		    	}
+	        });
+	    },1000);
+
 // 	    /* 轮训获取结果结束  */
 		$.ajax({
 			url:'/apps/model/', //请求地址
@@ -193,15 +195,15 @@ function oBtAnsibleModel() {
 					btnObj.removeAttr('disabled');
 					window.wxc.xcConfirm(response["msg"], window.wxc.xcConfirm.typeEnum.error);
 				}
-				
+
 			},
 	    	error:function(response){
 	    		btnObj.removeAttr('disabled');
 	    		window.wxc.xcConfirm("运行失败", window.wxc.xcConfirm.typeEnum.error);
 	    		clearInterval(interval);
 	    	}
-		})	
-	}	
+		})
+	}
 
 {% if errorInfo %}
 	window.wxc.xcConfirm("{{errorInfo}}", window.wxc.xcConfirm.typeEnum.error);

@@ -16,3 +16,4 @@ class APBase(object):
             pools = settings.REDSI_LPUSH_POOL
         connection = redis.Redis(connection_pool=pools)
         return connection
+
