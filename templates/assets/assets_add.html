@@ -122,8 +122,8 @@
 												 <div class="col-sm-6">
 												   <select class="form-control" name="asset_put_zone"  >
 												   		<option selected="selected" value="">请选择一个类型</option>
-															{% for z in baseAssets.zone %}
-																<option value="{{z.id}}" name="asset_put_zone">{{z.zone_name}}</option>
+															{% for z in baseAssets.idc %}
+																<option value="{{z.id}}" name="asset_put_zone">{{z.name}}</option>
 															{% endfor %}							   		
 													</select>							 	
 												 </div>
