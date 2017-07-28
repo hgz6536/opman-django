@@ -23,7 +23,7 @@
                                 <table class="table table-striped">
                                     <thead>
                                         <tr>
-                                            <th>#</th>
+                                            <th><i class="fa  fa-asterisk"></i></th>
                                             <th class="right">服务名称</th>
                                             <th class="right">操作</th>
                                         </tr>
@@ -54,7 +54,7 @@
                 <div class="col-lg-4">
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            	<i class="fa  fa-group  "></i> 业务分组
+                            	<i class="fa  fa-suitcase  "></i> 业务线
                         </div>
                         <!-- /.panel-heading -->
                         <div class="panel-body">
@@ -65,8 +65,8 @@
                                 <table class="table table-striped">
                                     <thead>
                                         <tr>
-                                            <th>#</th>
-                                            <th>组名</th>
+                                            <th><i class="fa  fa-asterisk"></i></th>
+                                            <th>业务名称</th>
                                             <th class="right">操作</th>
                                         </tr>
                                     </thead>
@@ -105,7 +105,7 @@
                                 <table class="table table-striped">
                                     <thead>
                                         <tr>
-                                            <th>#</th>
+                                            <th><i class="fa  fa-asterisk"></i></th>
                                             <th>机房名称</th>
                                             <th class="right">操作</th>
                                         </tr>
@@ -147,7 +147,7 @@
                                 <table class="table table-striped">
                                     <thead>
                                         <tr>
-                                            <th>#</th>
+                                            <th><i class="fa  fa-asterisk"></i></th>
                                             <th>线路类型</th>
                                             <th class="right">操作</th>
                                         </tr>
@@ -187,7 +187,7 @@
                                 <table class="table table-striped">
                                     <thead>
                                         <tr>
-                                            <th>#</th>
+                                            <th><i class="fa  fa-asterisk"></i></th>
                                             <th>Raid类型</th>
                                             <th class="right">操作</th>
                                         </tr>
@@ -387,7 +387,7 @@
 			<div class="modal-footer">
 				<button type="button" class="btn btn-default" data-dismiss="modal">关闭
 				</button>
-				<button type="button" class="btn btn-primary" onclick="addAssetsData(this,'zone')">
+				<button type="button" class="btn btn-primary" onclick="addIdcData(this)">
 					添加
 				</button>
 			</div>
@@ -493,7 +493,47 @@
 
 
 
-<script type="text/javascript"> 
+<script type="text/javascript">
+
+        function addIdcData(obj) {
+            var btnObj = $(obj);
+            btnObj.attr('disabled',true);
+            var required = ['name', 'address','tel','contact','contact_phone','jigui','ip_range','bandwidth'];
+            var post_data = {};
+            var putUrl = '/api/idc/';
+            var form = document.getElementById('idc_assets');
+            for (var i = 0; i < form.length; ++i) {
+                var name = form[i].name;
+                var value = form[i].value;
+                idx = $.inArray(name,required);
+                if (idx >= 0 && value.length ==0){
+					window.wxc.xcConfirm("请注意必填项不能为空~", window.wxc.xcConfirm.typeEnum.error);
+					btnObj.removeAttr('disabled');
+					return false;
+                }
+                else if( value.length != 0 && name.length != 0 ){
+                    post_data[name] =value
+                }
+            };
+            $.ajax({
+                dataType:"JSON",
+                type:"POST",
+                url:putUrl,
+                data:post_data,
+                success: function (response) {
+                    btnObj.removeAttr('disabled');
+                    window.wxc.xcConfirm("机房添加成功", window.wxc.xcConfirm.typeEnum.success);
+                    location.reload();
+                },
+                error: function (response) {
+                    btnObj.removeAttr('disabled');
+                    window.wxc.xcConfirm("机房添加失败", window.wxc.xcConfirm.typeEnum.error);
+                    location.reload();
+                }
+            })
+
+        }
+
 	function addAssetsData(obj,op) {
 		var btnObj = $(obj);
 		btnObj.attr('disabled',true);
