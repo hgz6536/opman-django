@@ -149,15 +149,15 @@
 											</div>			
 											
 											<div class="form-group">
-												 <label class="col-sm-2 control-label">放置区域</label>
+												 <label class="col-sm-2 control-label">放置机房</label>
 												 <div class="col-sm-6">
-<!-- 												 	<input type="text" class="form-control" name="asset_put_zone" placeholder="放置区域" value="{{ asset_main.put_zone }}" class="input-xlarge" /> -->
+<!-- 												 	<input type="text" class="form-control" name="asset_put_zone" placeholder="放置机房" value="{{ asset_main.put_zone }}" class="input-xlarge" /> -->
 													<select class="form-control" name="asset_put_zone"  >
-														{% for z in assets_data.zone %}
+														{% for z in assets_data.idc %}
 															{% if z.id == asset_main.zone %}
-																<option value="{{asset_main.zone}}" name="asset_put_zone" selected="selected" >{{z.zone_name}}</option>
+																<option value="{{asset_main.zone}}" name="asset_put_zone" selected="selected" >{{z.name}}</option>
 															{% else %}
-																<option value="{{z.id}}" name="asset_put_zone">{{z.zone_name}}</option>
+																<option value="{{z.id}}" name="asset_put_zone">{{z.name}}</option>
 															{% endif %}										
 														{% endfor %}						   																						
 													</select>												 
@@ -165,14 +165,14 @@
 											</div>		
 											
 											<div class="form-group">
-												 <label class="col-sm-2 control-label">使用组</label>
+												 <label class="col-sm-2 control-label">业务线</label>
 												 <div class="col-sm-6">
-												   <select class="form-control" name="asset_group"  >
-														{% for g in assets_data.group %}
-															{% if g.id == asset_main.group %}
-																<option value="{{g.id}}" name="asset_group" selected="selected" >{{g.name}}</option>
+												   <select class="form-control" name="asset_business"  >
+														{% for g in assets_data.business %}
+															{% if g.id == asset_main.business %}
+																<option value="{{g.id}}" name="asset_business" selected="selected" >{{g.business_name}}</option>
 															{% else %}
-																<option value="{{g.id}}" name="asset_group">{{g.name}}</option>
+																<option value="{{g.id}}" name="asset_business">{{g.business_name}}</option>
 															{% endif %}										
 														{% endfor %}						   																						
 													</select>
