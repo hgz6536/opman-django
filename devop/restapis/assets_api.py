@@ -42,7 +42,7 @@ def idc_detail(request, id, format=None):
 
     elif request.method == 'PUT':
         serializer = IdcSerializer(snippet, data=request.data)
-        old_name = snippet.business_name
+        old_name = snippet.name
         if serializer.is_valid():
             serializer.save()
             recordAssets.delay(user=str(request.user), content="更新资产：{name}".format(name=snippet.name), type="idc",id=id)

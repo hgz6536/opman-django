@@ -107,6 +107,13 @@
                                         <tr>
                                             <th><i class="fa  fa-asterisk"></i></th>
                                             <th>机房名称</th>
+                                            <th hidden="hidden">机房地址</th>
+                                            <th hidden="hidden">机房电话</th>
+                                            <th hidden="hidden">客户经理</th>
+                                            <th hidden="hidden">经理电话</th>
+                                            <th hidden="hidden">机柜信息</th>
+                                            <th hidden="hidden">IP范围</th>
+                                            <th hidden="hidden">接入带宽</th>
                                             <th class="right">操作</th>
                                         </tr>
                                     </thead>
@@ -115,8 +122,16 @@
 	                                        <tr>
 	                                            <td>{{ds.id}}</td>
 	                                            <td>{{ds.name}}</td>
+	                                            <td hidden="hidden">{{ds.address}}</td>
+	                                            <td hidden="hidden">{{ds.tel}}</td>
+	                                            <td hidden="hidden">{{ds.contact}}</td>
+	                                            <td hidden="hidden">{{ds.contact_phone}}</td>
+	                                            <td hidden="hidden">{{ds.jigui}}</td>
+	                                            <td hidden="hidden">{{ds.ip_range}}</td>
+	                                            <td hidden="hidden">{{ds.bandwidth}}</td>
 	                                            <td>
-                                                    <button  type="button" class="btn btn-default" onclick="modfAssetsData(this,'idc',{{ds.id}})"><abbr title="编辑"><i class="glyphicon glyphicon-edit"></i></abbr></button>
+                                                    <!--<button  type="button" class="btn btn-default" onclick="modfAssetsData(this,'idc',{{ds.id}})"><abbr title="编辑"><i class="glyphicon glyphicon-edit"></i></abbr></button>-->
+                                                    <button type="button" class="btn btn-default" onclick="get_update_record(this,{{ ds.id }});"><abbr title="编辑"><i class="glyphicon glyphicon-edit"></i></abbr></button>
                                                     <button  type="button" class="btn btn-default" onclick="delAssetsData(this,'idc',{{ds.id}})"><abbr title="删除"><i class="glyphicon glyphicon-trash"></i></abbr></button>
 	                                            </td>
 	                                        </tr>
@@ -491,7 +506,84 @@
 	</div><!-- /.modal -->
 </div>
 
+    <!--更新记录对话框-->
+    <div class="modal fade" id="update_one_record_modal" role="dialog" aria-describedby="update_one_record_modal">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">&times;</button>
+                    <h4 class="modal-title">更新记录</h4>
+                </div>
+                <div class="modal-body">
+                    <form id="update_one_record_form" role="form" data-remote="true" class="main form-horizontal">
+                        <fieldset>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label"><i class="fa fa-user"></i> ID</label>
+                            <div class="col-sm-6">
+                                <input class="form-control" type="text" id="update_id_input" placeholder="编号" name="id">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label"><i class="fa fa-university"></i> 名字</label>
+                            <div class="col-sm-6">
+                                <input class="form-control" type="text" id="update_name_input" placeholder="机房名称" name="name">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label"><i class="fa fa-map-signs"></i> 地址</label>
+                            <div class="col-sm-6">
+                                <input class="form-control" type="text" id="update_address_input" placeholder="机房地址" name="address">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label"><i class="fa fa-phone"></i> 电话</label>
+                            <div class="col-sm-6">
+                                <input class="form-control" type="text" id="update_tel_input" placeholder="机房电话" name="tel">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label"><i class="fa fa-briefcase"></i> 销售</label>
+                            <div class="col-sm-6">
+                                <input class="form-control" type="text" id="update_contact_input" placeholder="客户经理" name="contact">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label"><i class="fa fa-mobile"></i> 手机</label>
+                            <div class="col-sm-6">
+                                <input class="form-control" type="text" id="update_contact_phone_input" placeholder="经理电话" name="contact_phone">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label"><i class="fa fa-server"></i> 机柜</label>
+                            <div class="col-sm-6">
+                                <input class="form-control" type="text" id="update_jigui_input" placeholder="机柜信息" name="jigui">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label"><i class="fa fa-wifi"></i> IP</label>
+                            <div class="col-sm-6">
+                                <input class="form-control" type="text" id="update_ip_range_input" placeholder="IP范围" name="ip_range">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label"><i class="fa fa-globe"></i> 带宽</label>
+                            <div class="col-sm-6">
+                                <input class="form-control" type="text" id="update_bandwidth_input" placeholder="接入带宽" name="bandwidth">
+                            </div>
+                        </div>
 
+                        </fieldset>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-default" type="button" data-dismiss="modal">关闭</button>
+                    <!--<a class="btn btn-primary" id="submit_update_one_record_modal" href="#">更新</a>-->
+                    <button type="button" class="btn btn-primary" onclick="return get_update_record(this)" >更新</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
 
 <script type="text/javascript">
 
@@ -658,7 +750,6 @@
 	function delAssetsData(obj,op,id) {
 		var btnObj = $(obj);
 		btnObj.attr('disabled',true);
-		var post_data = {}; 
 		if (op=="service"){
 			var putUrl = '/api/service/'+ id + '/';
 		}
@@ -694,5 +785,56 @@
 	    	}
 		})	
 	}
+
+
+    function get_update_record(obj){
+        //获取要更新的记录信息, *** eq 从1 开始 ***
+        var btnObj = $(obj);
+        btnObj.attr('disabled',true);
+        var post_data = {};
+        var tr = $(obj).parent().parent().find('td');
+        var idn = $("#update_id_input").val(tr.eq(0).text());
+        var puturl = '/api/idc/'+ idn +'/';
+        var name = $("#update_name_input").val(tr.eq(1).text());
+        post_data['name'] = name;
+        var address = $("#update_address_input").val(tr.eq(2).text());
+        post_data['address'] = address;
+        var tel = $("#update_tel_input").val(tr.eq(3).text());
+        post_data['tel'] = tel;
+        var contact = $("#update_contact_input").val(tr.eq(4).text());
+        post_data['contact'] = contact;
+        var contact_phone = $("#update_contact_phone_input").val(tr.eq(5).text());
+        post_data['contact_phone'] = contact_phone;
+        var jigui = $("#update_jigui_input").val(tr.eq(6).text());
+        post_data['jigui'] = jigui;
+        var ip_range = $("#update_ip_range_input").val(tr.eq(7).text());
+        post_data['ip_range'] = ip_range;
+        var bandwidth = $("#update_bandwidth_input").val(tr.eq(8).text());
+        post_data['bandwidth'] = bandwidth;
+        $("#update_one_record_modal").modal('show');
+        alert(JSON.stringify(post_data));
+    }
+	$.ajax({
+        type:'PUT',
+        url:puturl,
+        data:post_data,
+        success:function(response){
+            btnObj.removeAttr('disabled');
+            window.wxc.xcConfirm("修改成功", window.wxc.xcConfirm.typeEnum.success);
+            location.reload();
+        },
+        error:function(response){
+            btnObj.removeAttr('disabled');
+            window.wxc.xcConfirm("修改失败！", window.wxc.xcConfirm.typeEnum.error);
+            location.reload();
+        },
+
+    });
+
+    $("#submit_update_one_record_modal").on('click', function(e){
+        e.preventDefault();
+        $("#update_one_record_form").submit();
+    });
+
 </script>
 {% endblock %}
