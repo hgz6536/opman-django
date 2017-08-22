@@ -20,6 +20,23 @@
 
 `sql_mode=NO_ENGINE_SUBSTITUTION,STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER`
 
+- 登录MySQL,并授权项目账号
+
+`GRANT ALL PRIVILEGES ON devop.* TO dbuser_op@'%' IDENTIFIED BY 'devop@2015***';`
+
+- MySQL连接配置在opman-django/devop/settings.py
+
+`DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'devop',
+        'USER': 'dbuser_op',
+        'PASSWORD': 'devop@2015***',
+        'HOST': 'localhost',
+        'PORT': '',
+    }
+}`
+
 - 安装Redis
 
 `https://niubilety.com/redis%E5%85%A5%E9%97%A8%E4%B8%80/`
