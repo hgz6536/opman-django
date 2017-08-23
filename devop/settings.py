@@ -40,7 +40,7 @@ AUTH_USER_MODEL = 'opman.MyUser'
 SECRET_KEY = 'j()3iuh6-_=f5fgs%*sdw$se1(&%ac*f+vq*u5siu#7j17@bib'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = []
 
@@ -146,3 +146,4 @@ STATICFILES_DIRS = (
     STATIC_PATH,
 )
 MEDIA_URL = '/media/'
+ALLOWED_HOSTS=['*']

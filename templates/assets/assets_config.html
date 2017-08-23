@@ -812,7 +812,7 @@
         var bandwidth = $("#update_bandwidth_input").val(tr.eq(8).text());
         post_data['bandwidth'] = bandwidth;
         $("#update_one_record_modal").modal('show');
-        alert(JSON.stringify(post_data));
+        //alert(JSON.stringify(post_data));
     }
 	$.ajax({
         type:'PUT',

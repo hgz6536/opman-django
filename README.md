@@ -12,6 +12,10 @@
 
 ## 部署方法 ##
 
+- 创建uwsgi,nginx进程运行的用户
+
+`useradd opman`
+
 - 安装MySQL5.7,并设置my.cnf
 
 `character-set-server = utf8`
@@ -60,6 +64,12 @@
 `python manage.py migrate`
 
 `python manage.py createsuperuser`
+
+- 导入样例数据
+
+`python manage.py loaddata initdb/opman.json`
+
+- 启动celery worker进程
 
 `/usr/bin/python manage.py celery worker --loglevel=info -E -c 2 &`
 

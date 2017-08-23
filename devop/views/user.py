@@ -33,11 +33,10 @@ def register(request):
                 else:
                     user = User()
                     if request.POST.get('rolename'):
-                        user.role = request.POST.get('rolename')
+                        user.role = RoleList.objects.get(name=request.POST.get('rolename'))
                     else:
-                        user.role = RoleList.objects.get(name='Ops')
+                        user.role = RoleList.objects.get(name='运维')
                     user.username = request.POST.get('username')
-                    # user.role = request.POST.get('rolename')
                     user.email = request.POST.get('email')
                     user.is_staff = 0
                     user.is_active = 0

@@ -324,7 +324,17 @@
                             <div class="form-group">
                                 <label class="col-sm-2 control-label"><i class="fa fa-group"></i></label>
                                 <div class="col-sm-6">
-                                    <input type="text" class="form-control" placeholder="部门" name="rolename" required/>
+                                    <select class="form-control" name="rolename" placeholder="部门">
+                                        <option value="运维"  name="rolename">运维</option>
+                                        {% for ds in groupList %}
+                                            {% if ds.name == "运维" %}
+                                                pass
+                                            {% else %}
+                                                <option value= {{ ds.name }} name="rolename">{{ ds.name }}</option>
+                                            {% endif %}
+
+                                        {% endfor %}
+                                    </select>
                                 </div>
                             </div>
                             <div class="form-group">
