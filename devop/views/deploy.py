@@ -317,6 +317,7 @@ def deploy_run(request, pid):
                 else:
                     # 获取要排除的文件
                     exclude = None
+                    ansible_exclude_list = None
                     if project.project_exclude:
                         try:
                             exclude = ''
