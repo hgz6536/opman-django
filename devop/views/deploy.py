@@ -317,12 +317,17 @@ def deploy_run(request, pid):
                 else:
                     # 获取要排除的文件
                     exclude = None
+                    ansible_exclude_list = None
                     if project.project_exclude:
                         try:
                             exclude = ''
+                            ansible_exclude_list = []
                             for s in project.project_exclude.split(','):
                                 exclude = '--exclude "{file}"'.format(
                                     file=s.replace('\r\n', '').replace('\n', '').strip()) + ' ' + exclude
+                                exclude_str = '--exclude="{file}"'.format(
+                                    file=s.replace('\r\n', '').replace('\n', '').strip())
+                                ansible_exclude_list.append(exclude_str)
                         except Exception as e:
                             return JsonResponse({'msg': str(e), "code": 500, 'data': []})
                     # 配置rsync同步文件到本地目录
@@ -354,9 +359,10 @@ def deploy_run(request, pid):
                     data["password"] = server.passwd
                 resource.append(data)
             if resource and hostList:
-                if exclude:
+                if ansible_exclude_list:
+                    ansible_exclude = ','.join(ansible_exclude_list)
                     args = '''src={srcDir} dest={desDir} links=yes recursive=yes compress=yes delete=yes rsync_opts="{exclude}"'''.format(
-                        srcDir=softdir, desDir=ds.dir, exclude=exclude)
+                        srcDir=softdir, desDir=ds.dir, exclude=ansible_exclude)
                 else:
                     args = '''src={srcDir} dest={desDir} links=yes recursive=yes compress=yes delete=yes'''.format(
                         srcDir=softdir, desDir=ds.dir)
