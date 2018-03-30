@@ -57,7 +57,7 @@
 
 `git clone https://github.com/hgz6536/opman-django.git`
 
-`cd opman-django && pip3 install -r requirements.txt`
+`cd opman-django && pip3 install -i https://pypi.douban.com/simple/ -r requirements.txt`
 
 - 初始化项目
 
