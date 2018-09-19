@@ -6,7 +6,7 @@
 
 软件：Python3.6,Django1.11.3,MySQL5.7
 
-注意：项目还在开发阶段，不能用于线上，如果想在线上用，自行完善哦，这里代码只提供思路和框架。
+docker容器镜像部署： 请查看docker_deploy.md 文档发说明
 
 ## 全新UI ##
 
@@ -57,7 +57,7 @@
 
 `git clone https://github.com/hgz6536/opman-django.git`
 
-`cd opman-django && pip3 install -i https://pypi.douban.com/simple/ -r requirements.txt`
+`cd opman-django && pip3 install -r requirements.txt`
 
 - 初始化项目
 
@@ -130,6 +130,15 @@ server {
 - 启动nginx
 
 `/etc/init.d/nginx start`
+
+\** 要注意的
+如果前端的图标访问不了，只需要在nginx配置 /static/ 路径中加入如下参数 
+```
+        add_header Access-Control-Allow-Origin opman.itcp.cc;
+        add_header Access-Control-Allow-Credentials 'true';
+        add_header Access-Control-Allow-Headers X-Requested-With;
+        add_header Access-Control-Allow-Methods GET,POST,OPTIONS;
+```
 
 ## 本项目交流群 ##
 `580838402`
