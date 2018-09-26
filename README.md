@@ -6,6 +6,8 @@
 
 软件：Python3.6,Django1.11.3,MySQL5.7
 
+注意：此项目尚未开发完整,尚不能部署线上使用,仅供学习,弱要看效果修改setting文件改成debug模式直接run起来就行,忽略下面的ngx配置(高手可无视)
+
 docker容器镜像部署： 请查看docker_deploy.md 文档发说明
 
 ## 全新UI ##
