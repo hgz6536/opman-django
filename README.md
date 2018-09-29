@@ -149,3 +149,12 @@ server {
 <a target="_blank" href="http://wpa.qq.com/msgrd?v=3&uin=847644968&site=qq&menu=yes">
      <img border="0" src="http://wpa.qq.com/pa?p=2:847644968:52" alt="点击这里给我发消息" title="点击这里给我发消息"/>
 </a>
+
+
+## 扫个红包以表支持 ##
+
+![](https://github.com/hgz6536/hgz6536.github.io/blob/master/images/hongbao.jpg)
+
+## 土豪可直接现金支持 ##
+
+![](https://github.com/hgz6536/hgz6536.github.io/blob/master/images/zhifubao.jpg)
