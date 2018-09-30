@@ -153,8 +153,8 @@ server {
 
 ## 扫个红包以表支持 ##
 
-![](https://github.com/hgz6536/hgz6536.github.io/blob/master/images/hongbao.jpg =50x100)
+![](https://github.com/hgz6536/hgz6536.github.io/blob/master/images/hongbao.jpg){:height="100px" width="400px"}
 
 ## 土豪可直接现金支持 ##
 
-![](https://github.com/hgz6536/hgz6536.github.io/blob/master/images/zhifubao.jpg =50x100)
+![](https://github.com/hgz6536/hgz6536.github.io/blob/master/images/zhifubao.jpg){:height="100px" width="400px"}
