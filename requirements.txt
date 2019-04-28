@@ -1,4 +1,4 @@
-Django==1.11.15
+Django
 Celery==3.1.25
 django-celery
 celery-with-redis
