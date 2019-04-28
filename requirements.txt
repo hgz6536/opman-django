@@ -3,7 +3,7 @@ Celery==3.1.25
 django-celery
 celery-with-redis
 djangorestframework
-ansible==2.3.1.0
+ansible>=2.5.15
 redis
 PyMySQL
 DBUtils
